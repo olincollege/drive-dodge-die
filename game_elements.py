@@ -21,6 +21,7 @@ class Car: #pylint: disable=too-few-public-methods
     # and they will have different gas tank percentages and reload times.
     # This is chosen by the user in the initial setup of the game.
 
+
 class Obstacle: #pylint: disable=too-few-public-methods
     '''
     A class to create and control obstacles in the game
