@@ -16,13 +16,13 @@ class Car:  # pylint: disable=too-few-public-methods
         acceleration_cap (private)
         maneuverability (private)
         """
-        self.x_coord = 600
-        self.y_coord = 550
-        self.width = 100
-        self.height = 140
-        self.speed = 2
-        self.acceleration = 0
-        self.gas = 100
+        self._x_coord = 600
+        self._y_coord = 550
+        self._width = 100
+        self._height = 140
+        self._speed = 2
+        self._acceleration = 0
+        self._gas = 100
 
     # Sub classes-
     # Different types of cars have different attributes(shape, color, size)
