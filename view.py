@@ -2,12 +2,16 @@ import pygame
 from game_elements import Car
 
 
+
 class View:
-    def __init__(self, car):
+    def __init__(self, car, road):
         self._car = car
+        self._road = road
         self._width = 1280
         self._height = 720
-        self._screen = pygame.display.set_mode((self._width, self._height))
+        self._screen = pygame.display.set_mode(
+            (self._road._width, self._road._height)
+        )
 
     def draw(self):
         self.draw_car()
