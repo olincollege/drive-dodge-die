@@ -7,6 +7,7 @@ from game_elements import Car
 # main screen setup
 pygame.init()
 clock = pygame.time.Clock()
+
 pygame.display.set_caption("Drive Dodge Die")
 
 car = Car()
@@ -18,5 +19,6 @@ while True:
     controller.handle_events()
     # model.update()
     view.draw()
+
     pygame.display.update()
     clock.tick(60)  # frame/sec
