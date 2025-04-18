@@ -6,16 +6,15 @@ class Car: #pylint: disable=too-few-public-methods
     '''
     A class that contains all the attributes of the car
     '''
-    def __init__(self):
+    def __init__(self, x_coord, y_coord):
         '''
             sprite (private)
-            x_coordinate (public)
-            y_coordinate (public)
             speed_cap (private)
             acceleration_cap (private)
             maneuverability (private)
         '''
-
+        self.x_coord = x_coord
+        self.y_coord = y_coord
     # Sub classes-
     # Different types of cars have different attributes(shape, color, size)
     # and they will have different gas tank percentages and reload times.
