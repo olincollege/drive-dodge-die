@@ -1,6 +1,6 @@
 """
 Creates two classes which are part of the track:
-Road and Status_tracker.
+Road and StatusTracker.
 """
 
 
@@ -34,3 +34,11 @@ class Road:
         returns display width
         """
         return self._display_width
+
+
+class StatusTracker:
+    def __init__(self):
+        self.paused = False
+
+    def toggle_pause(self):
+        self.paused = not self.paused
