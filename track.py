@@ -37,6 +37,12 @@ class Road:
 
 
 class StatusTracker:
+    """
+    tracks the status of various things
+
+    self.paused: boolean that tracks whether the game is paused or not
+    """
+
     def __init__(self):
         self.paused = False
 

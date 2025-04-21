@@ -3,6 +3,10 @@ from game_elements import Car
 
 
 class View:
+    """
+    class view - contains all functions related to the view of our game
+    """
+
     def __init__(self, car, road, status):
         self._car = car
         self._road = road
@@ -22,20 +26,31 @@ class View:
 
     @property
     def get_pause_button(self):
+        """returns the image of the pause button"""
         return self._pause_button
 
     def draw(self):
+        """
+        clears our screen and then draws components
+        consists of: car, pause button, timer
+        """
         self._screen.fill((0, 0, 0))  # Clear screen
         self.draw_pause_button()
         self.draw_car()
         self.draw_timer()
 
     def draw_car(self):
+        """
+        draws the car (currently a rectangle)
+        """
         pass
         # Drawing a rectangle (the car)
         # pygame.draw.rect(self._screen, (0,0,125), (self._car._x_coord, self._car._y_coord, self._car._width, self._car._height)) # should move part of this to model
 
     def draw_timer(self):
+        """
+        finds the elapsed time and draws teh timer on the screen
+        """
         elapsed_time_ms = pygame.time.get_ticks() - self._start_time
         timer_text = self._font.render(
             f"Time: {elapsed_time_ms/1000}s", True, (255, 255, 255)
@@ -43,8 +58,15 @@ class View:
         self._screen.blit(timer_text, (20, 20))
 
     def draw_pause_button(self):
+        """
+        draws the pause button
+        might add something to let it change between paused and unpaused states
+        """
         self._screen.blit(self._pause_img, self._pause_button)
 
     def draw_paused_overlay(self):
+        """
+        draws the overlay of when the game is paused
+        """
         overlay = self._font.render("Game Paused", True, (255, 255, 255))
         self._screen.blit(overlay, (self._width // 2 - 100, self._height // 2))

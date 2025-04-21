@@ -31,6 +31,11 @@ class Car:  # pylint: disable=too-few-public-methods
 
 
 class CarModel1(Car):
+    """
+    first subclass of class car
+    (the original car)
+    """
+
     def __init__(self):
         self.max_speed = 4
         self.min_speed = 1
