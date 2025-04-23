@@ -38,6 +38,30 @@ class View:
         self.draw_road()
         self.draw_car()
         self.draw_timer()
+        self.draw_minimap()
+
+    def draw_minimap(self):
+        """draws the minimap aka how far the car has traveled and how much distance is left"""
+        # draws the total length of race track
+        pygame.draw.rect(
+            self._screen,
+            (120, 0, 0),
+            (250, 30, self._road._length // 10, 20),
+        )
+        # draws the position of the car
+        pygame.draw.rect(
+            self._screen,
+            (0, 120, 0),
+            (250 + self._road._distance_traveled // 10, 40, 10, 10),
+        )
+        # writes out how far you have traveled
+        minimap_text = self._font.render(
+            "Distance left:"
+            f" {self._road._length - self._road._distance_traveled}",
+            True,
+            (255, 255, 255),
+        )
+        self._screen.blit(minimap_text, (250, 10))
 
     def draw_road(self):
         """
@@ -58,6 +82,7 @@ class View:
 
         # Update scroll position
         self._scroll += self._car._speed
+        self._road.update_travel_distance(self._scroll)
 
     def draw_car(self):
         """
