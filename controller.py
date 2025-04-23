@@ -2,9 +2,11 @@ import pygame
 
 
 class Controller:
-    def __init__(self, status, view):
+    def __init__(self, status, view, car):
         self._status = status
         self._view = view
+        self._car_controller = CarController(car)
+
 
     def basic_event(self):
         for event in pygame.event.get():
@@ -18,14 +20,15 @@ class Controller:
                     self._status.toggle_pause()
 
     def game_event(self):
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    print("Left arrow was pressed!")
-                if event.key == pygame.K_ESCAPE:
-                    self._status.toggle_pause()
-            # more function here
-
+        self._car_controller.handle_input()
 
 class CarController:
-    pass
+    def __init__(self, car):
+        self._car = car
+
+    def handle_input(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            self._car.move_left()
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            self._car.move_right()

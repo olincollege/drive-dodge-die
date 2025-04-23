@@ -50,9 +50,8 @@ class View:
         for i in range(tiles):
             self._screen.blit(image, (0, image_height * i + self._scroll))
 
-        self._scroll -= (
-            self._car._speed
-        )  # Scroll upward (positive = down, negative = up)
+        self._scroll -= self._car._speed
+        # Scroll upward (positive = down, negative = up)
 
         # Reset when one image scrolls fully offscreen
         if abs(self._scroll) > image_height:
@@ -73,7 +72,7 @@ class View:
                 self._car._height,
             ),
         )
-        # # should move part of this to models
+        # should move part of this to models
 
     def draw_timer(self):
         """

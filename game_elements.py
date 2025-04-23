@@ -3,18 +3,19 @@ Contains the classes that create the initial sprites and
 sets up the elements of the game
 """
 
+import pygame as py
+
 
 class Car:  # pylint: disable=too-few-public-methods
     """
     A class that contains all the attributes of the car
     """
 
-    def __init__(self):
+    def __init__(self, speed):
         """
         sprite (private)
         speed_cap (private)
         acceleration_cap (private)
-        maneuverability (private)
         """
         self._x_coord = 600
         self._y_coord = 550
@@ -23,6 +24,18 @@ class Car:  # pylint: disable=too-few-public-methods
         self._speed = 2
         self._acceleration = 0
         self._gas = 100
+        self._speed = speed
+        self._move_speed = 5
+
+    def move_left(self):
+        """To move left"""
+        if self._x_coord > 220:
+            self._x_coord -= self._move_speed
+
+    def move_right(self):
+        """To move right"""
+        if self._x_coord < 950:
+            self._x_coord += self._move_speed
 
     # Sub classes-
     # Different types of cars have different attributes(shape, color, size)

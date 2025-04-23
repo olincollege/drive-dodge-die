@@ -11,11 +11,11 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Drive Dodge Die")
 
-car = Car()
+car = Car(2)
 road = Road(5000)
 status = StatusTracker()
 view = View(car, road, status)
-controller = Controller(status, view)
+controller = Controller(status, view, car)
 
 # run the game
 while True:
