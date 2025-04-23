@@ -45,17 +45,19 @@ class View:
         """
         image = self._road._image.convert()
         image_height = image.get_height()
-        tiles = math.ceil(self._height / image_height) + 1
 
-        for i in range(tiles):
-            self._screen.blit(image, (0, image_height * i + self._scroll))
+        # Calculate the exact position of the first image
+        first_tile_position = self._scroll % image_height - image_height
 
-        self._scroll -= self._car._speed
-        # Scroll upward (positive = down, negative = up)
+        # Draw enough tiles to cover the screen
+        tiles_needed = math.ceil(self._height / image_height) + 2
 
-        # Reset when one image scrolls fully offscreen
-        if abs(self._scroll) > image_height:
-            self._scroll = 0
+        for i in range(tiles_needed):
+            position_y = first_tile_position + (image_height * i)
+            self._screen.blit(image, (0, position_y))
+
+        # Update scroll position
+        self._scroll += self._car._speed
 
     def draw_car(self):
         """
