@@ -37,6 +37,10 @@ class CarModel1(Car):
     """
 
     def __init__(self):
+        """
+        initializes the first car.
+
+        """
         self.max_speed = 4
         self.min_speed = 1
         self.max_acceleration = 0.01

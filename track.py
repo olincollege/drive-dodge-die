@@ -3,6 +3,8 @@ Creates two classes which are part of the track:
 Road and StatusTracker.
 """
 
+import pygame as py
+
 
 class Road:
     """
@@ -16,24 +18,30 @@ class Road:
         initializes the road
         """
         self._positions = 20
-        self._width = 1280
-        self._height = 750
+        self.__width = 1280
+        self.__height = 750
         self._total_length = length
         self._lane_size = 30  # should be 1/3 of the car width
+        self.__image = py.image.load("images/test_track.png")
 
     @property
-    def _display_height(self):
+    def _height(self):
         """
-        returns display height
+        returns height
         """
-        return self._display_height
+        return self.__height
 
     @property
-    def _display_width(self):
+    def _width(self):
         """
-        returns display width
+        returns width
         """
-        return self._display_width
+        return self.__width
+
+    @property
+    def _image(self):
+        """returns image"""
+        return self.__image
 
 
 class StatusTracker:
@@ -47,4 +55,7 @@ class StatusTracker:
         self.paused = False
 
     def toggle_pause(self):
+        """
+        toggles between paused and unpaused state
+        """
         self.paused = not self.paused
