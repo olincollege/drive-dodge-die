@@ -2,7 +2,7 @@ import pygame
 from sys import exit
 from controller import Controller, CarController
 from view import View
-from game_elements import Car
+from game_elements import Car, CarModel1, CarModel2, CarModel3
 from track import Road, StatusTracker
 
 # main screen setup
@@ -11,7 +11,9 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Drive Dodge Die")
 
-car = Car(2)
+# Create selection choices for cars here
+
+car = CarModel1()
 road = Road(5000)
 status = StatusTracker()
 view = View(car, road, status)
