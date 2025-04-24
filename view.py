@@ -41,6 +41,30 @@ class View:
         self.draw_car()
         self.draw_obstacle()
         self.draw_timer()
+        self.draw_minimap()
+
+    def draw_minimap(self):
+        """draws the minimap aka how far the car has traveled and how much distance is left"""
+        # draws the total length of race track
+        pygame.draw.rect(
+            self._screen,
+            (120, 0, 0),
+            (250, 30, self._road._length // 10, 20),
+        )
+        # draws the position of the car
+        pygame.draw.rect(
+            self._screen,
+            (0, 120, 0),
+            (250 + self._road._distance_traveled // 10, 40, 10, 10),
+        )
+        # writes out how far you have traveled
+        minimap_text = self._font.render(
+            "Distance left:"
+            f" {self._road._length - self._road._distance_traveled}",
+            True,
+            (255, 255, 255),
+        )
+        self._screen.blit(minimap_text, (250, 10))
 
     def draw_road(self):
         """
@@ -48,17 +72,20 @@ class View:
         """
         image = self._road._image.convert()
         image_height = image.get_height()
-        tiles = math.ceil(self._height / image_height) + 1
 
-        for i in range(tiles):
-            self._screen.blit(image, (0, image_height * i + self._scroll))
+        # Calculate the exact position of the first image
+        first_tile_position = self._scroll % image_height - image_height
 
-        self._scroll -= self._car._speed
-        # Scroll upward (positive = down, negative = up)
+        # Draw enough tiles to cover the screen
+        tiles_needed = math.ceil(self._height / image_height) + 2
 
-        # Reset when one image scrolls fully offscreen
-        if abs(self._scroll) > image_height:
-            self._scroll = 0
+        for i in range(tiles_needed):
+            position_y = first_tile_position + (image_height * i)
+            self._screen.blit(image, (0, position_y))
+
+        # Update scroll position
+        self._scroll += self._car._speed
+        self._road.update_travel_distance(self._scroll)
 
     def draw_car(self):
         """

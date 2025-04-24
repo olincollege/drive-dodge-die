@@ -20,9 +20,21 @@ class Road:
         self._positions = 20
         self.__width = 1280
         self.__height = 750
-        self._total_length = length
+        self.__length = length
         self._lane_size = 30  # should be 1/3 of the car width
         self.__image = py.image.load("images/test_track.png")
+        self._distance_traveled = 0
+
+    def update_travel_distance(self, new_distance):
+        """updates the distance traveled of the car"""
+        self._distance_traveled = new_distance
+
+    @property
+    def _length(self):
+        """
+        returns length
+        """
+        return self.__length
 
     @property
     def _height(self):
