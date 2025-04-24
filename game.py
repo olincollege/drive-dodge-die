@@ -2,7 +2,7 @@ import pygame
 from sys import exit
 from controller import Controller, CarController
 from view import View
-from game_elements import Car
+from game_elements import Car, Obstacle
 from track import Road, StatusTracker
 
 # main screen setup
@@ -12,9 +12,10 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("Drive Dodge Die")
 
 car = Car(2)
+obstacles = Obstacle()
 road = Road(5000)
 status = StatusTracker()
-view = View(car, road, status)
+view = View(car, obstacles, road, status)
 controller = Controller(status, view, car)
 
 # run the game

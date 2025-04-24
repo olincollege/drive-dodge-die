@@ -37,7 +37,8 @@ class Road:
         returns width
         """
         return self.__width
-
+    
+    
     @property
     def _image(self):
         """returns image"""

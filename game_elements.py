@@ -4,6 +4,9 @@ sets up the elements of the game
 """
 
 import pygame as py
+from track import Road
+
+road = Road(5000)
 
 
 class Car:  # pylint: disable=too-few-public-methods
@@ -72,6 +75,20 @@ class Obstacle:  # pylint: disable=too-few-public-methods
         x_coordinate (private)
         y_coordinate (private)
         """
+        # self._car = car
+        self._x_coord = 600
+        self._y_coord = 700
+        self._width = 5 * road._lane_size
+        self._height = 20
+        # self._speed = car._speed
+        self._speed = 4
+
+    def update_obstacle(self):
+        if self._y_coord < 750:
+            self._y_coord += self._speed
+        else:
+            self._y_coord = 0
+        return self._y_coord
 
     # Sub classes
     # Different types of obstacles? So they can appear at different times and
