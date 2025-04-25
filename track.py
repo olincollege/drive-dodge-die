@@ -18,11 +18,11 @@ class Road:
         initializes the road
         """
         self._positions = 20
-        self.__width = 1280
-        self.__height = 750
-        self.__length = length
+        self._width = 1280
+        self._height = 750
+        self._length = length
         self._lane_size = 30  # should be 1/3 of the car width
-        self.__image = py.image.load("images/test_track.png")
+        self._image = py.image.load("images/test_track.png")
         self._distance_traveled = 0
 
     def update_travel_distance(self, new_distance):
@@ -30,31 +30,35 @@ class Road:
         self._distance_traveled = new_distance
 
     @property
-    def _length(self):
+    def get_distance_traveled(self):
+        """returns distance traveled"""
+        return self._distance_traveled
+
+    @property
+    def get_length(self):
         """
         returns length
         """
-        return self.__length
+        return self._length
 
     @property
-    def _height(self):
+    def get_height(self):
         """
         returns height
         """
-        return self.__height
+        return self._height
 
     @property
-    def _width(self):
+    def get_width(self):
         """
         returns width
         """
-        return self.__width
-    
-    
+        return self._width
+
     @property
-    def _image(self):
+    def get_image(self):
         """returns image"""
-        return self.__image
+        return self._image
 
 
 class StatusTracker:
@@ -72,5 +76,3 @@ class StatusTracker:
         toggles between paused and unpaused state
         """
         self.paused = not self.paused
-
-    
