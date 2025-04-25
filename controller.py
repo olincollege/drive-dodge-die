@@ -25,14 +25,14 @@ class Controller:
 class CarController:
     """
     Controller class for the car
-
     """
+
     def __init__(self, car):
         self._car = car
 
     def handle_input(self):
         """
-        Determines what actions must be taken by the car 
+        Determines what actions must be taken by the car
         when arrow keys are pressed in the game
         """
         keys = pygame.key.get_pressed()
@@ -42,5 +42,7 @@ class CarController:
             self._car.move_right()
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             self._car.speed_up()
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            self._car.brake()
         else:
-            self._car.reset_speed()
+            self._car.idle()

@@ -23,7 +23,17 @@ class Car:
 
     """
 
-    def __init__(self, speed, min_speed, max_speed, acceleration, max_gas):
+    def __init__(
+        self,
+        speed,
+        min_speed,
+        max_speed,
+        acceleration,
+        max_gas,
+        idle,
+        brake,
+        gas_refresh,
+    ):
         """
         sprite (private)
         speed_cap (private)
@@ -42,6 +52,10 @@ class Car:
         self.min_speed = min_speed
         self.acceleration = acceleration
         self.max_gas = max_gas
+        self.gas_amt = max_gas
+        self.idle_speed = idle
+        self.brake_speed = brake
+        self.gas_refresh = gas_refresh
 
     def move_left(self):
         """To move left"""
@@ -53,14 +67,29 @@ class Car:
         if self._x_coord < 950:
             self._x_coord += self._move
 
-    def reset_speed(self):
-        """Resets speed to base speed"""
-        self._speed = self._base_speed
+    def idle(self):
+        """slowly reduces the speed when the acceleration is not pressed"""
+        if self._speed > self.min_speed:
+            self._speed -= self.idle_speed
+        if self.gas_amt < self.max_gas:
+            self.gas_amt += self.gas_refresh
 
     def speed_up(self):
-        """Increases speed up to max_speed"""
-        if self._speed < self.max_speed:
+        """Increases speed up to max_speed if there is gas left, otherwise it idles"""
+        if self.gas_amt > 0 and self._speed < self.max_speed:
             self._speed += self.acceleration
+            self.gas_amt -= 10
+        else:
+            self.accel = False
+            if self._speed > self.min_speed:
+                self._speed -= self.idle_speed
+
+    def brake(self):
+        """Decreases speed to min_speed"""
+        if self._speed > self.min_speed:
+            self._speed -= self.brake_speed
+        if self.gas_amt < self.max_gas:
+            self.gas_amt += self.gas_refresh
 
     @property
     def get_speed(self):
@@ -79,10 +108,13 @@ class CarModel1(Car):
         """
         super().__init__(
             speed=3,
-            max_speed=10,
+            max_speed=20,
             min_speed=3,
             acceleration=0.5,
-            max_gas=100,
+            max_gas=1000,
+            idle=0.1,
+            brake=0.2,
+            gas_refresh=2,
         )
 
 
@@ -97,7 +129,14 @@ class CarModel2(Car):
 
         """
         super().__init__(
-            speed=5, max_speed=5, min_speed=1, acceleration=0.05, max_gas=80
+            speed=5,
+            max_speed=5,
+            min_speed=1,
+            acceleration=0.05,
+            max_gas=80,
+            idle=0.005,
+            brake=0.008,
+            gas_refresh=3,
         )
 
 
@@ -112,7 +151,14 @@ class CarModel3(Car):
 
         """
         super().__init__(
-            speed=4, max_speed=5, min_speed=2, acceleration=0.03, max_gas=120
+            speed=4,
+            max_speed=5,
+            min_speed=2,
+            acceleration=0.03,
+            max_gas=120,
+            idle=0.003,
+            brake=0.006,
+            gas_refresh=5,
         )
 
 
