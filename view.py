@@ -12,8 +12,8 @@ class View:
         self._all_obstacles = all_obstacles
         self._road = road
         self._status = status
-        self._width = road._width
-        self._height = road._height
+        self._width = road.get_width
+        self._height = road.get_height
         self._scroll = 0
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._big_font = pygame.font.Font(None, 50)
@@ -57,17 +57,17 @@ class View:
         pygame.draw.rect(
             self._screen,
             (120, 0, 0),
-            (250, 30, self._road._length // 10, 20),
+            (250, 30, self._road.get_length // 10, 20),
         )
         # draws the position of the car
         pygame.draw.rect(
             self._screen,
             (0, 120, 0),
-            (250 + self._road._distance_traveled // 10, 40, 10, 10),
+            (250 + self._road.get_distance_traveled // 10, 40, 10, 10),
         )
         # writes out how far you have traveled
         distance_left = math.ceil(
-            self._road._length - self._road._distance_traveled
+            self._road.get_length - self._road.get_distance_traveled
         )
         minimap_text = self._small_font.render(
             f"Distance left: {distance_left}",
@@ -98,12 +98,20 @@ class View:
         """draws the speed of the car"""
         # draw circle that speed will be on
         pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
+        # writes the speed at the bottom of the circle
+        speed_text = self._small_font.render(
+            f"Speed: {math.ceil(self._car.get_speed)}", True, (255, 255, 255)
+        )
+        self._screen.blit(speed_text, (1160, 690))
+        # creates the arc
+        arc_rect = pygame.Rect(120, 120, center=(1190, 670))
+        pygame.draw.arc(self._screen, (250, 140, 20), arc_rect, 0, 260)
 
     def draw_road(self):
         """
         draws the road, updates based on the speed of the car
         """
-        image = self._road._image.convert()
+        image = self._road.get_image.convert()
         image_height = image.get_height()
 
         # Calculate the exact position of the first image
