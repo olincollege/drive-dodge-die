@@ -4,13 +4,12 @@ from controller import Controller, CarController
 from view import View
 from game_elements import (
     Car,
-    Obstacle,
     CarModel1,
     CarModel2,
     CarModel3,
-    Obstacle,
 )
 from track import Road, StatusTracker
+from obstacle import Obstacle
 
 # main screen setup
 pygame.init()
