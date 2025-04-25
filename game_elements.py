@@ -7,8 +7,6 @@ import pygame as py
 import random
 from track import Road
 
-road = Road(5000)
-
 
 class Car:
     """
@@ -48,14 +46,14 @@ class Car:
         self._speed = speed
         self._move = 5
 
-        self.max_speed = max_speed
-        self.min_speed = min_speed
-        self.acceleration = acceleration
-        self.max_gas = max_gas
-        self.gas_amt = max_gas
-        self.idle_speed = idle
-        self.brake_speed = brake
-        self.gas_refresh = gas_refresh
+        self._max_speed = max_speed
+        self._min_speed = min_speed
+        self._acceleration = acceleration
+        self._max_gas = max_gas
+        self._gas_amt = max_gas
+        self._idle_speed = idle
+        self._brake_speed = brake
+        self._gas_refresh = gas_refresh
 
     def move_left(self):
         """To move left"""
@@ -69,33 +67,67 @@ class Car:
 
     def idle(self):
         """slowly reduces the speed when the acceleration is not pressed"""
-        if self._speed > self.min_speed:
-            self._speed -= self.idle_speed
-        if self.gas_amt < self.max_gas:
-            self.gas_amt += self.gas_refresh
+        if self._speed > self._min_speed:
+            self._speed -= self._idle_speed
+        if self._gas_amt < self._max_gas:
+            self._gas_amt += self._gas_refresh
 
     def speed_up(self):
-        """Increases speed up to max_speed if there is gas left, 
+        """Increases speed up to max_speed if there is gas left,
         otherwise it idles"""
-        if self.gas_amt > 0 and self._speed < self.max_speed:
-            self._speed += self.acceleration
-            self.gas_amt -= 10
+        if self._gas_amt > 0 and self._speed < self._max_speed:
+            self._speed += self._acceleration
+            self._gas_amt -= 10
         else:
-            self.accel = False
-            if self._speed > self.min_speed:
-                self._speed -= self.idle_speed
+            if self._speed > self._min_speed:
+                self._speed -= self._idle_speed
 
     def brake(self):
         """Decreases speed to min_speed"""
-        if self._speed > self.min_speed:
-            self._speed -= self.brake_speed
-        if self.gas_amt < self.max_gas:
-            self.gas_amt += self.gas_refresh
+        if self._speed > self._min_speed:
+            self._speed -= self._brake_speed
+        if self._gas_amt < self._max_gas:
+            self._gas_amt += self._gas_refresh
 
     @property
     def get_speed(self):
         """Returns current speed of the car"""
         return self._speed
+
+    @property
+    def get_max_speed(self):
+        """Returns max speed of the car"""
+        return self._max_speed
+
+    @property
+    def get_gas_amt(self):
+        """return how much gas the car has"""
+        return self._gas_amt
+
+    @property
+    def get_max_gas(self):
+        """return what the max gas tank is"""
+        return self._max_gas
+
+    @property
+    def get_x_coord(self):
+        """return x_coord of car"""
+        return self._x_coord
+
+    @property
+    def get_y_coord(self):
+        """return y_coord of car"""
+        return self._y_coord
+
+    @property
+    def get_width(self):
+        """return width of car"""
+        return self._width
+
+    @property
+    def get_height(self):
+        """return height of car"""
+        return self._height
 
 
 class CarModel1(Car):
@@ -161,92 +193,3 @@ class CarModel3(Car):
             brake=0.006,
             gas_refresh=5,
         )
-
-
-class Obstacle:
-    """
-    A class to create and control obstacles in the game
-
-    Attributes:
-        car: contains all the methods of the car class
-        all_obstacles: dictionary to store all obstacles
-                        keys: strings representing type of obstacle
-                        values: list of all instances of obstacles
-        y_coord: int representing the y-coordinate of the obstacle
-        speed: int representing the car's current speed
-    """
-
-    def __init__(self, car):
-        self._car = car
-        self._all_obstacles = {"barriers": [], "holes": []}
-        self._y_coord = 0
-        self._speed = car._speed
-
-    @property
-    def get_all_obstacles(self):
-        """Returns the dictionary of all obstacles"""
-        return self._all_obstacles
-
-    def update_obstacles(self):
-        """Method that updates obstacles"""
-        self.update_obstacle(self._car)
-        self.check_remove_obstacles()
-        self.create_obstacles()
-
-    def check_remove_obstacles(self):
-        """Removes obstacles once they reach the end of the screen"""
-        for object_list in self._all_obstacles.values():
-            for obstacle in object_list:
-                if obstacle._y_coord > 750:
-                    object_list.remove(obstacle)
-
-    def update_obstacle(self, car):
-        """Updates speed of the obstacle"""
-        self._speed = car.get_speed
-        if self._y_coord < 760:
-            self._y_coord += self._speed
-        else:
-            self._y_coord = 0
-        return self._y_coord
-
-    def create_obstacles(self):
-        """Calls all functions to make the obstacles"""
-        self.create_barriers()
-
-    def create_barriers(self):
-        """Generates barriers randomly"""
-        barriers = self._all_obstacles["barriers"]
-        if random.random() < 0.01 and len(barriers) < 5:
-            new_barrier = Barrier(self._car)
-            barriers.append(new_barrier)
-
-    def check_collision(self):
-        """Checks if the car collides with an obstacle."""
-        car_rect = py.Rect(
-            self._car._x_coord,
-            self._car._y_coord,
-            self._car._width,
-            self._car._height,
-        )
-        for obstacle_list in self._all_obstacles.values():
-            for obstacle in obstacle_list:
-                obstacle_rect = py.Rect(
-                    obstacle._x_coord,
-                    obstacle._y_coord,
-                    obstacle._width,
-                    obstacle._height,
-                )
-                if car_rect.colliderect(obstacle_rect):
-                    return True
-        return False
-
-
-class Barrier(Obstacle):
-    """Class that creates a barrier shape"""
-
-    def __init__(self, car):
-        super().__init__(car)
-        self._x_coord = random.randint(220, 950)
-        self._y_coord = 0
-        self._width = 5 * road._lane_size
-        self._height = 15

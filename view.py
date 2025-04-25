@@ -82,20 +82,20 @@ class View:
         self._screen.blit(self._gas_img, self._gas_bar)
         background_color = (0, 0, 0)
         percent_gas_used = (
-            self._car.max_gas - self._car.gas_amt
-        ) / self._car.max_gas
+            self._car.get_max_gas - self._car.get_gas_amt
+        ) / self._car.get_max_gas
         percent_covered = percent_gas_used * 400
         pygame.draw.rect(
             self._screen, background_color, (1150, 180, 75, percent_covered)
         )
         # writes how much gas is left
         gas_text = self._small_font.render(
-            f"Gas left:{self._car.gas_amt}", True, (255, 255, 255)
+            f"Gas left:{self._car.get_gas_amt}", True, (255, 255, 255)
         )
         self._screen.blit(gas_text, (1150, 585))
 
     def draw_speed(self):
-        """draws the speed of the car"""
+        """writes the speed of the car and draws a speedometer"""
         # draw circle that speed will be on
         pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
         # writes the speed at the bottom of the circle
@@ -104,8 +104,33 @@ class View:
         )
         self._screen.blit(speed_text, (1160, 690))
         # creates the arc
-        arc_rect = pygame.Rect(120, 120, center=(1190, 670))
-        pygame.draw.arc(self._screen, (250, 140, 20), arc_rect, 0, 260)
+        arc_rect = pygame.Rect((1190, 670), (100, 100))
+        arc_rect.center = (1190, 670)
+        start_angle = -0.5
+        end_angle = 3.6
+        pygame.draw.arc(
+            self._screen,
+            (250, 140, 20),
+            arc_rect,
+            start_angle,
+            end_angle,
+            width=7,
+        )
+        total = end_angle - start_angle
+        angle = self._car.get_speed / self._car.get_max_speed
+
+        start = angle * total
+        start = total - start
+        start = start_angle + start
+        arc_rect.scale_by_ip(0.9)
+        pygame.draw.arc(
+            self._screen,
+            (250, 0, 20),
+            arc_rect,
+            start,
+            end_angle,
+            width=5,
+        )
 
     def draw_road(self):
         """
@@ -125,7 +150,7 @@ class View:
             self._screen.blit(image, (0, position_y))
 
         # Update scroll position
-        self._scroll += self._car._speed
+        self._scroll += self._car.get_speed
         self._road.update_travel_distance(self._scroll)
 
     def draw_car(self):
@@ -133,17 +158,13 @@ class View:
         draws the car (currently a rectangle)
         """
         # Drawing a rectangle (the car)
-        pygame.draw.rect(
-            self._screen,
-            (0, 0, 125),
-            (
-                self._car._x_coord,
-                self._car._y_coord,
-                self._car._width,
-                self._car._height,
-            ),
+        car_rect = pygame.Rect(
+            self._car.get_x_coord,
+            self._car.get_y_coord,
+            self._car.get_width,
+            self._car.get_height,
         )
-        # should move part of this to models
+        pygame.draw.rect(self._screen, (0, 0, 125), car_rect)
 
     def draw_obstacles(self):
         """Randomly generate obstacles"""
