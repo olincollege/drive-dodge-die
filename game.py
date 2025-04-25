@@ -39,6 +39,9 @@ while True:
 
         pygame.display.update()
         clock.tick(60)  # frame/sec
+        if obstacle.check_collision():
+            break
+
     else:
         controller.basic_event()
         view.draw_paused_overlay()

@@ -75,7 +75,8 @@ class Car:
             self.gas_amt += self.gas_refresh
 
     def speed_up(self):
-        """Increases speed up to max_speed if there is gas left, otherwise it idles"""
+        """Increases speed up to max_speed if there is gas left, 
+        otherwise it idles"""
         if self.gas_amt > 0 and self._speed < self.max_speed:
             self._speed += self.acceleration
             self.gas_amt -= 10
@@ -162,35 +163,45 @@ class CarModel3(Car):
         )
 
 
-class Obstacle:  # pylint: disable=too-few-public-methods
+class Obstacle:
     """
     A class to create and control obstacles in the game
+
+    Attributes:
+        car: contains all the methods of the car class
+        all_obstacles: dictionary to store all obstacles
+                        keys: strings representing type of obstacle
+                        values: list of all instances of obstacles
+        y_coord: int representing the y-coordinate of the obstacle
+        speed: int representing the car's current speed
     """
 
     def __init__(self, car):
         self._car = car
-        # create a dictrionary to store all obstacle, so that we can track crash more easily later
-        # values: a list of instances of different Obstacle subclasses
         self._all_obstacles = {"barriers": [], "holes": []}
         self._y_coord = 0
         self._speed = car._speed
 
     @property
     def get_all_obstacles(self):
+        """Returns the dictionary of all obstacles"""
         return self._all_obstacles
 
     def update_obstacles(self):
+        """Method that updates obstacles"""
         self.update_obstacle(self._car)
         self.check_remove_obstacles()
         self.create_obstacles()
 
     def check_remove_obstacles(self):
+        """Removes obstacles once they reach the end of the screen"""
         for object_list in self._all_obstacles.values():
             for obstacle in object_list:
                 if obstacle._y_coord > 750:
                     object_list.remove(obstacle)
 
     def update_obstacle(self, car):
+        """Updates speed of the obstacle"""
         self._speed = car.get_speed
         if self._y_coord < 760:
             self._y_coord += self._speed
@@ -199,21 +210,40 @@ class Obstacle:  # pylint: disable=too-few-public-methods
         return self._y_coord
 
     def create_obstacles(self):
+        """Calls all functions to make the obstacles"""
         self.create_barriers()
 
     def create_barriers(self):
+        """Generates barriers randomly"""
         barriers = self._all_obstacles["barriers"]
         if random.random() < 0.01 and len(barriers) < 5:
             new_barrier = Barrier(self._car)
             barriers.append(new_barrier)
 
-    # Sub classes
-    # Different types of obstacles? So they can appear at different times and
-    # move at different speeds. Also move across the screen vs with the car
-    # just slower
+    def check_collision(self):
+        """Checks if the car collides with an obstacle."""
+        car_rect = py.Rect(
+            self._car._x_coord,
+            self._car._y_coord,
+            self._car._width,
+            self._car._height,
+        )
+        for obstacle_list in self._all_obstacles.values():
+            for obstacle in obstacle_list:
+                obstacle_rect = py.Rect(
+                    obstacle._x_coord,
+                    obstacle._y_coord,
+                    obstacle._width,
+                    obstacle._height,
+                )
+                if car_rect.colliderect(obstacle_rect):
+                    return True
+        return False
 
 
 class Barrier(Obstacle):
+    """Class that creates a barrier shape"""
+
     def __init__(self, car):
         super().__init__(car)
         self._x_coord = random.randint(220, 950)
