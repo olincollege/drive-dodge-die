@@ -1,6 +1,5 @@
 import math
 import pygame
-from game_elements import Obstacle
 
 
 class View:
@@ -8,9 +7,9 @@ class View:
     class view - contains all functions related to the view of our game
     """
 
-    def __init__(self, car, obstacles, road, status):
+    def __init__(self, car, all_obstacles, road, status):
         self._car = car
-        self._obstacles = obstacles
+        self._all_obstacles = all_obstacles
         self._road = road
         self._status = status
         self._width = road._width
@@ -39,7 +38,7 @@ class View:
         self.draw_pause_button()
         self.draw_road()
         self.draw_car()
-        self.draw_obstacle()
+        self.draw_obstacles()
         self.draw_timer()
         self.draw_minimap()
 
@@ -106,19 +105,21 @@ class View:
 
     def draw_obstacles(self):
         """Randomly generate obstacles"""
-        pass
+        self.draw_barriers()
 
-    def draw_obstacle(self):
-        pygame.draw.rect(
-            self._screen,
-            (255, 255, 0),
-            (
-                self._obstacles._x_coord,
-                self._obstacles.update_obstacle(),
-                self._obstacles._width,
-                self._obstacles._height,
-            ),
-        )
+    def draw_barriers(self):
+        barriers = self._all_obstacles["barriers"]
+        for barrier in barriers:
+            pygame.draw.rect(
+                self._screen,
+                (255, 255, 0),
+                (
+                    barrier._x_coord,
+                    barrier.update_obstacle(self._car),
+                    barrier._width,
+                    barrier._height,
+                ),
+            )
 
     def draw_timer(self):
         """

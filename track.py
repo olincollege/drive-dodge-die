@@ -72,3 +72,5 @@ class StatusTracker:
         toggles between paused and unpaused state
         """
         self.paused = not self.paused
+
+    

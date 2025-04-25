@@ -2,7 +2,14 @@ import pygame
 from sys import exit
 from controller import Controller, CarController
 from view import View
-from game_elements import Car, Obstacle, CarModel1, CarModel2, CarModel3, Obstacle
+from game_elements import (
+    Car,
+    Obstacle,
+    CarModel1,
+    CarModel2,
+    CarModel3,
+    Obstacle,
+)
 from track import Road, StatusTracker
 
 # main screen setup
@@ -14,16 +21,18 @@ pygame.display.set_caption("Drive Dodge Die")
 # Create selection choices for cars here
 
 car = CarModel1()
-obstacles = Obstacle()
+obstacle = Obstacle(car)
+all_obstacles = obstacle.get_all_obstacles
 road = Road(5000)
 status = StatusTracker()
-view = View(car, obstacles, road, status)
+view = View(car, all_obstacles, road, status)
 controller = Controller(status, view, car)
 
 # run the game
 while True:
     if status.paused is False:
         controller.basic_event()
+        obstacle.update_obstacles()
         controller.game_event()
         # model.update()
         view.draw()

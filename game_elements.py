@@ -4,6 +4,7 @@ sets up the elements of the game
 """
 
 import pygame as py
+import random
 from track import Road
 
 road = Road(5000)
@@ -62,7 +63,7 @@ class Car:
             self._speed += self.acceleration
 
     @property
-    def speed(self):
+    def get_speed(self):
         """Returns current speed of the car"""
         return self._speed
 
@@ -120,29 +121,56 @@ class Obstacle:  # pylint: disable=too-few-public-methods
     A class to create and control obstacles in the game
     """
 
-    def __init__(self):
-        """
-        sprite (private)
-        timer (private)
-        x_coordinate (private)
-        y_coordinate (private)
-        """
-        # self._car = car
-        self._x_coord = 600
-        self._y_coord = 700
-        self._width = 5 * road._lane_size
-        self._height = 20
-        # self._speed = car._speed
-        self._speed = 4
+    def __init__(self, car):
+        self._car = car
+        # create a dictrionary to store all obstacle, so that we can track crash more easily later
+        # values: a list of instances of different Obstacle subclasses
+        self._all_obstacles = {"barriers": [], "holes": []}
+        self._y_coord = 0
+        self._speed = car._speed
 
-    def update_obstacle(self):
-        if self._y_coord < 750:
+    @property
+    def get_all_obstacles(self):
+        return self._all_obstacles
+
+    def update_obstacles(self):
+        self.update_obstacle(self._car)
+        self.check_remove_obstacles()
+        self.create_obstacles()
+
+    def check_remove_obstacles(self):
+        for object_list in self._all_obstacles.values():
+            for obstacle in object_list:
+                if obstacle._y_coord > 750:
+                    object_list.remove(obstacle)
+
+    def update_obstacle(self, car):
+        self._speed = car.get_speed
+        if self._y_coord < 760:
             self._y_coord += self._speed
         else:
             self._y_coord = 0
         return self._y_coord
 
+    def create_obstacles(self):
+        self.create_barriers()
+
+    def create_barriers(self):
+        barriers = self._all_obstacles["barriers"]
+        if random.random() < 0.01 and len(barriers) < 5:
+            new_barrier = Barrier(self._car)
+            barriers.append(new_barrier)
+
     # Sub classes
     # Different types of obstacles? So they can appear at different times and
     # move at different speeds. Also move across the screen vs with the car
     # just slower
+
+
+class Barrier(Obstacle):
+    def __init__(self, car):
+        super().__init__(car)
+        self._x_coord = random.randint(220, 950)
+        self._y_coord = 0
+        self._width = 5 * road._lane_size
+        self._height = 15
