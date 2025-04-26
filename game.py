@@ -10,7 +10,7 @@ from game_elements import (
     CarModel3,
     Obstacle,
 )
-from track import Road, StatusTracker
+from track import Road, StatusTracker, CheckPoint
 
 # main screen setup
 pygame.init()
@@ -25,7 +25,8 @@ obstacle = Obstacle(car)
 all_obstacles = obstacle.get_all_obstacles
 road = Road(5000)
 status = StatusTracker()
-view = View(car, all_obstacles, road, status)
+check_point = CheckPoint(5000, car, road)
+view = View(car, all_obstacles, road, status, check_point)
 controller = Controller(status, view, car)
 
 # run the game

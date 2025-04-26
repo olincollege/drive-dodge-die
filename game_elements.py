@@ -173,7 +173,8 @@ class Obstacle:  # pylint: disable=too-few-public-methods
         # values: a list of instances of different Obstacle subclasses
         self._all_obstacles = {"barriers": [], "holes": []}
         self._y_coord = 0
-        self._speed = car._speed
+        self._speed = car._speed  # initial speed
+        self._last_barrier_time = 0  # (ms)
 
     @property
     def get_all_obstacles(self):
@@ -191,7 +192,7 @@ class Obstacle:  # pylint: disable=too-few-public-methods
                     object_list.remove(obstacle)
 
     def update_obstacle(self, car):
-        self._speed = car.get_speed
+        self._speed = self._car.get_speed  # update speed
         if self._y_coord < 760:
             self._y_coord += self._speed
         else:
@@ -202,10 +203,16 @@ class Obstacle:  # pylint: disable=too-few-public-methods
         self.create_barriers()
 
     def create_barriers(self):
+        current_time = py.time.get_ticks()
         barriers = self._all_obstacles["barriers"]
-        if random.random() < 0.01 and len(barriers) < 5:
+        if (
+            (random.random() < 0.02)
+            and (current_time - self._last_barrier_time > 1000)
+            and (len(barriers) < 5)
+        ):
             new_barrier = Barrier(self._car)
             barriers.append(new_barrier)
+            self._last_barrier_time = current_time
 
     # Sub classes
     # Different types of obstacles? So they can appear at different times and

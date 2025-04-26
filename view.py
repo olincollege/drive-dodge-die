@@ -7,7 +7,7 @@ class View:
     class view - contains all functions related to the view of our game
     """
 
-    def __init__(self, car, all_obstacles, road, status):
+    def __init__(self, car, all_obstacles, road, status, check_point):
         self._car = car
         self._all_obstacles = all_obstacles
         self._road = road
@@ -23,12 +23,25 @@ class View:
         self._pause_img = pygame.image.load(
             "images/buttons/pause_2.png"
         ).convert_alpha()
-        self._pause_img = pygame.transform.scale(self._pause_img, (50, 50))
-        self._pause_button = self._pause_img.get_rect(topright=(1260, 20))
+        self._pause_img = pygame.transform.scale(
+            self._pause_img, (50, 50)
+        )  # width, height
+        self._pause_button = self._pause_img.get_rect(
+            topright=(1260, 20)
+        )  # x_coord, y_coord
 
         self._gas_img = pygame.image.load("images/gas_bar.png").convert_alpha()
         self._gas_img = pygame.transform.scale(self._gas_img, (75, 400))
         self._gas_bar = self._gas_img.get_rect(topleft=(1150, 180))
+
+        self._check_point = check_point
+        self._line_img = pygame.image.load(
+            "images/other/check_point.png"
+        ).convert_alpha()
+        self._line_img = pygame.transform.scale(
+            self._line_img,
+            (self._check_point._width, self._check_point._height),
+        )
 
     @property
     def get_pause_button(self):
@@ -43,6 +56,7 @@ class View:
         self._screen.fill((0, 0, 0))  # Clear screen
         self.draw_pause_button()
         self.draw_road()
+        self.draw_check_point()
         self.draw_car()
         self.draw_obstacles()
         self.draw_timer()
@@ -178,3 +192,12 @@ class View:
         """
         overlay = self._big_font.render("Game Paused", True, (255, 255, 255))
         self._screen.blit(overlay, (self._width // 2 - 100, self._height // 2))
+
+    def draw_check_point(self):
+        check_point = self._pause_img.get_rect(
+            topleft=(
+                self._check_point._x_coord,
+                self._check_point.update_check_point(),
+            )
+        )
+        self._screen.blit(self._line_img, check_point)
