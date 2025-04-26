@@ -10,6 +10,10 @@ from game_elements import (
 )
 from track import Road, StatusTracker
 from obstacle import Obstacle
+from start_screen import select_car
+
+# start screen set up
+car = select_car()
 
 # main screen setup
 pygame.init()
@@ -17,9 +21,6 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Drive Dodge Die")
 
-# Create selection choices for cars here
-
-car = CarModel1()
 obstacle = Obstacle(car)
 all_obstacles = obstacle.get_all_obstacles
 road = Road(5000)

@@ -48,7 +48,7 @@ class View:
         self.draw_timer()
         self.draw_minimap()
         self.draw_gas()
-        self.draw_speed()
+        # self.draw_speed()
 
     def draw_minimap(self):
         """draws the minimap
@@ -94,43 +94,18 @@ class View:
         )
         self._screen.blit(gas_text, (1150, 585))
 
-    def draw_speed(self):
-        """writes the speed of the car and draws a speedometer"""
-        # draw circle that speed will be on
-        pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
-        # writes the speed at the bottom of the circle
-        speed_text = self._small_font.render(
-            f"Speed: {math.ceil(self._car.get_speed)}", True, (255, 255, 255)
-        )
-        self._screen.blit(speed_text, (1160, 690))
-        # creates the arc
-        arc_rect = pygame.Rect((1190, 670), (100, 100))
-        arc_rect.center = (1190, 670)
-        start_angle = -0.5
-        end_angle = 3.6
-        pygame.draw.arc(
-            self._screen,
-            (250, 140, 20),
-            arc_rect,
-            start_angle,
-            end_angle,
-            width=7,
-        )
-        total = end_angle - start_angle
-        angle = self._car.get_speed / self._car.get_max_speed
-
-        start = angle * total
-        start = total - start
-        start = start_angle + start
-        arc_rect.scale_by_ip(0.9)
-        pygame.draw.arc(
-            self._screen,
-            (250, 0, 20),
-            arc_rect,
-            start,
-            end_angle,
-            width=5,
-        )
+    # def draw_speed(self):
+    #     """draws the speed of the car"""
+    #     # draw circle that speed will be on
+    #     pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
+    #     # writes the speed at the bottom of the circle
+    #     speed_text = self._small_font.render(
+    #         f"Speed: {math.ceil(self._car.get_speed)}", True, (255, 255, 255)
+    #     )
+    #     self._screen.blit(speed_text, (1160, 690))
+    #     # creates the arc
+    #     arc_rect = pygame.Rect(120, 120, center=(1190, 670))
+    #     pygame.draw.arc(self._screen, (250, 140, 20), arc_rect, 0, 260)
 
     def draw_road(self):
         """
@@ -157,14 +132,17 @@ class View:
         """
         draws the car (currently a rectangle)
         """
-        # Drawing a rectangle (the car)
-        car_rect = pygame.Rect(
-            self._car.get_x_coord,
-            self._car.get_y_coord,
-            self._car.get_width,
-            self._car.get_height,
+        car_image = pygame.image.load("images/car.png").convert_alpha()
+        car_image = pygame.transform.scale(
+            car_image,
+            (
+                self._car.get_width + 50,
+                self._car.get_height + 50,
+            ),  # adjusted due to original size of pic being different
         )
-        pygame.draw.rect(self._screen, (0, 0, 125), car_rect)
+        self._screen.blit(
+            car_image, (self._car.get_x_coord, self._car.get_y_coord)
+        )
 
     def draw_obstacles(self):
         """Randomly generate obstacles"""
