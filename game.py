@@ -4,13 +4,16 @@ from controller import Controller, CarController
 from view import View
 from game_elements import (
     Car,
-    Obstacle,
     CarModel1,
     CarModel2,
     CarModel3,
-    Obstacle,
 )
 from track import Road, StatusTracker, CheckPoint
+from obstacle import Obstacle
+from start_screen import select_car
+
+# start screen set up
+car = select_car()
 
 # main screen setup
 pygame.init()
@@ -18,9 +21,6 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Drive Dodge Die")
 
-# Create selection choices for cars here
-
-car = CarModel1()
 obstacle = Obstacle(car)
 all_obstacles = obstacle.get_all_obstacles
 road = Road(5000)
@@ -40,6 +40,9 @@ while True:
 
         pygame.display.update()
         clock.tick(60)  # frame/sec
+        if obstacle.check_collision():
+            break
+
     else:
         controller.basic_event()
         view.draw_paused_overlay()

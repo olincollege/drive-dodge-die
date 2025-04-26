@@ -7,8 +7,6 @@ import pygame as py
 import random
 from track import Road
 
-road = Road(5000)
-
 
 class Car:
     """
@@ -48,14 +46,14 @@ class Car:
         self._speed = speed
         self._move = 5
 
-        self.max_speed = max_speed
-        self.min_speed = min_speed
-        self.acceleration = acceleration
-        self.max_gas = max_gas
-        self.gas_amt = max_gas
-        self.idle_speed = idle
-        self.brake_speed = brake
-        self.gas_refresh = gas_refresh
+        self._max_speed = max_speed
+        self._min_speed = min_speed
+        self._acceleration = acceleration
+        self._max_gas = max_gas
+        self._gas_amt = max_gas
+        self._idle_speed = idle
+        self._brake_speed = brake
+        self._gas_refresh = gas_refresh
 
     def move_left(self):
         """To move left"""
@@ -69,32 +67,67 @@ class Car:
 
     def idle(self):
         """slowly reduces the speed when the acceleration is not pressed"""
-        if self._speed > self.min_speed:
-            self._speed -= self.idle_speed
-        if self.gas_amt < self.max_gas:
-            self.gas_amt += self.gas_refresh
+        if self._speed > self._min_speed:
+            self._speed -= self._idle_speed
+        if self._gas_amt < self._max_gas:
+            self._gas_amt += self._gas_refresh
 
     def speed_up(self):
-        """Increases speed up to max_speed if there is gas left, otherwise it idles"""
-        if self.gas_amt > 0 and self._speed < self.max_speed:
-            self._speed += self.acceleration
-            self.gas_amt -= 10
+        """Increases speed up to max_speed if there is gas left,
+        otherwise it idles"""
+        if self._gas_amt > 0 and self._speed < self._max_speed:
+            self._speed += self._acceleration
+            self._gas_amt -= 10
         else:
-            self.accel = False
-            if self._speed > self.min_speed:
-                self._speed -= self.idle_speed
+            if self._speed > self._min_speed:
+                self._speed -= self._idle_speed
 
     def brake(self):
         """Decreases speed to min_speed"""
-        if self._speed > self.min_speed:
-            self._speed -= self.brake_speed
-        if self.gas_amt < self.max_gas:
-            self.gas_amt += self.gas_refresh
+        if self._speed > self._min_speed:
+            self._speed -= self._brake_speed
+        if self._gas_amt < self._max_gas:
+            self._gas_amt += self._gas_refresh
 
     @property
     def get_speed(self):
         """Returns current speed of the car"""
         return self._speed
+
+    @property
+    def get_max_speed(self):
+        """Returns max speed of the car"""
+        return self._max_speed
+
+    @property
+    def get_gas_amt(self):
+        """return how much gas the car has"""
+        return self._gas_amt
+
+    @property
+    def get_max_gas(self):
+        """return what the max gas tank is"""
+        return self._max_gas
+
+    @property
+    def get_x_coord(self):
+        """return x_coord of car"""
+        return self._x_coord
+
+    @property
+    def get_y_coord(self):
+        """return y_coord of car"""
+        return self._y_coord
+
+    @property
+    def get_width(self):
+        """return width of car"""
+        return self._width
+
+    @property
+    def get_height(self):
+        """return height of car"""
+        return self._height
 
 
 class CarModel1(Car):

@@ -12,8 +12,8 @@ class View:
         self._all_obstacles = all_obstacles
         self._road = road
         self._status = status
-        self._width = road._width
-        self._height = road._height
+        self._width = road.get_width
+        self._height = road.get_height
         self._scroll = 0
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._big_font = pygame.font.Font(None, 50)
@@ -62,7 +62,7 @@ class View:
         self.draw_timer()
         self.draw_minimap()
         self.draw_gas()
-        self.draw_speed()
+        # self.draw_speed()
 
     def draw_minimap(self):
         """draws the minimap
@@ -71,17 +71,17 @@ class View:
         pygame.draw.rect(
             self._screen,
             (120, 0, 0),
-            (250, 30, self._road._length // 10, 20),
+            (250, 30, self._road.get_length // 10, 20),
         )
         # draws the position of the car
         pygame.draw.rect(
             self._screen,
             (0, 120, 0),
-            (250 + self._road._distance_traveled // 10, 40, 10, 10),
+            (250 + self._road.get_distance_traveled // 10, 40, 10, 10),
         )
         # writes out how far you have traveled
         distance_left = math.ceil(
-            self._road._length - self._road._distance_traveled
+            self._road.get_length - self._road.get_distance_traveled
         )
         minimap_text = self._small_font.render(
             f"Distance left: {distance_left}",
@@ -96,28 +96,36 @@ class View:
         self._screen.blit(self._gas_img, self._gas_bar)
         background_color = (0, 0, 0)
         percent_gas_used = (
-            self._car.max_gas - self._car.gas_amt
-        ) / self._car.max_gas
+            self._car.get_max_gas - self._car.get_gas_amt
+        ) / self._car.get_max_gas
         percent_covered = percent_gas_used * 400
         pygame.draw.rect(
             self._screen, background_color, (1150, 180, 75, percent_covered)
         )
         # writes how much gas is left
         gas_text = self._small_font.render(
-            f"Gas left:{self._car.gas_amt}", True, (255, 255, 255)
+            f"Gas left:{self._car.get_gas_amt}", True, (255, 255, 255)
         )
         self._screen.blit(gas_text, (1150, 585))
 
-    def draw_speed(self):
-        """draws the speed of the car"""
-        # draw circle that speed will be on
-        pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
+    # def draw_speed(self):
+    #     """draws the speed of the car"""
+    #     # draw circle that speed will be on
+    #     pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
+    #     # writes the speed at the bottom of the circle
+    #     speed_text = self._small_font.render(
+    #         f"Speed: {math.ceil(self._car.get_speed)}", True, (255, 255, 255)
+    #     )
+    #     self._screen.blit(speed_text, (1160, 690))
+    #     # creates the arc
+    #     arc_rect = pygame.Rect(120, 120, center=(1190, 670))
+    #     pygame.draw.arc(self._screen, (250, 140, 20), arc_rect, 0, 260)
 
     def draw_road(self):
         """
         draws the road, updates based on the speed of the car
         """
-        image = self._road._image.convert()
+        image = self._road.get_image.convert()
         image_height = image.get_height()
 
         # Calculate the exact position of the first image
@@ -131,25 +139,24 @@ class View:
             self._screen.blit(image, (0, position_y))
 
         # Update scroll position
-        self._scroll += self._car._speed
+        self._scroll += self._car.get_speed
         self._road.update_travel_distance(self._scroll)
 
     def draw_car(self):
         """
         draws the car (currently a rectangle)
         """
-        # Drawing a rectangle (the car)
-        pygame.draw.rect(
-            self._screen,
-            (0, 0, 125),
+        car_image = pygame.image.load("images/car.png").convert_alpha()
+        car_image = pygame.transform.scale(
+            car_image,
             (
-                self._car._x_coord,
-                self._car._y_coord,
-                self._car._width,
-                self._car._height,
-            ),
+                self._car.get_width + 50,
+                self._car.get_height + 50,
+            ),  # adjusted due to original size of pic being different
         )
-        # should move part of this to models
+        self._screen.blit(
+            car_image, (self._car.get_x_coord, self._car.get_y_coord)
+        )
 
     def draw_obstacles(self):
         """Randomly generate obstacles"""
