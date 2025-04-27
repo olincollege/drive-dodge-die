@@ -4,7 +4,7 @@ Road and StatusTracker.
 """
 
 import pygame as py
-
+import start_screen
 
 class Road:
     """
@@ -47,7 +47,7 @@ class Road:
         return self._length
 
     @property
-    def getget_height(self):
+    def get_height(self):
         """
         returns height
         """
@@ -55,7 +55,7 @@ class Road:
         return self._height
 
     @property
-    def getget_width(self):
+    def get_width(self):
         """
         returns width
         """
@@ -64,14 +64,9 @@ class Road:
         return self._width
 
     @property
-    def getget_image(self):
+    def get_image(self):
         """returns image"""
         return self._image
-
-    @property
-    def get_distance_traveled(self):
-        """returns distance traveled"""
-        return self._distance_traveled
 
 
 class StatusTracker:
@@ -89,6 +84,24 @@ class StatusTracker:
         toggles between paused and unpaused state
         """
         self.paused = not self.paused
+
+    def save(self):
+        """
+        saves the all the data of this game
+        """
+        pass
+
+    def load(self):
+        """
+        loads a previous game
+        """
+        pass
+
+    def back_to_home(self):
+        """
+        goes back to start screen
+        """
+        start_screen.select_car()
 
 
 class CheckPoint(Road):
@@ -113,3 +126,21 @@ class CheckPoint(Road):
             self._y_coord = 0
             self._distance_track += self._length
         return self._y_coord
+
+    def check_reach_checkpoint(self):
+        """Checks if the car collides with the check point."""
+        car_rect = py.Rect(
+            self._car.get_x_coord,
+            self._car.get_y_coord,
+            self._car.get_width,
+            self._car.get_height,
+        )
+        checkpoint_rect = py.Rect(
+            self._x_coord,
+            self._y_coord,
+            self._width,
+            self._height,
+        )
+        if car_rect.colliderect(checkpoint_rect):
+            return True
+        return False

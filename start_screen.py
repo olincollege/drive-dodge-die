@@ -18,19 +18,19 @@ def select_car():
     car3_subtext = subtext_font.render("Car Model 3", True, (200, 200, 200))
 
     # Load images
-    car1_image = pygame.image.load("images/car.png").convert_alpha()
-    car1_image = pygame.transform.scale(car1_image, (300, 300))
+    car1_image = pygame.image.load("images/cars/car.png").convert_alpha()
+    car1_image = pygame.transform.scale(car1_image, (200, 300))
 
-    car2_image = pygame.image.load("images/car2.png").convert_alpha()
-    car2_image = pygame.transform.scale(car2_image, (300, 300))
+    car2_image = pygame.image.load("images/cars/car2.png").convert_alpha()
+    car2_image = pygame.transform.scale(car2_image, (200, 300))
 
-    car3_image = pygame.image.load("images/car3.png").convert_alpha()
-    car3_image = pygame.transform.scale(car3_image, (300, 300))
+    car3_image = pygame.image.load("images/cars/car3.png").convert_alpha()
+    car3_image = pygame.transform.scale(car3_image, (200, 300))
 
     # Define car positions
-    car1_rect = car1_image.get_rect(center=(400, 400))
+    car1_rect = car1_image.get_rect(center=(300, 400))
     car2_rect = car2_image.get_rect(center=(600, 400))
-    car3_rect = car3_image.get_rect(center=(800, 400))
+    car3_rect = car3_image.get_rect(center=(900, 400))
 
     selected_car = None
     running = True

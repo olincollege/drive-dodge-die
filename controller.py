@@ -17,6 +17,13 @@ class Controller:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self._view.get_pause_button.collidepoint(event.pos):
                     self._status.toggle_pause()
+                for text, button in self._view.get_overlay_buttons.items():
+                    if text == "Resume" and button.collidepoint(event.pos):
+                        self._status.toggle_pause()
+                    if text == "Save" and button.collidepoint(event.pos):
+                        self._status.save()
+                    if text == "Back to Home Screen" and button.collidepoint(event.pos):
+                        self._status.back_to_home()
 
     def game_event(self):
         self._car_controller.handle_input()

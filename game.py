@@ -10,10 +10,10 @@ from game_elements import (
 )
 from track import Road, StatusTracker, CheckPoint
 from obstacle import Obstacle
-from start_screen import select_car
+import start_screen
 
 # start screen set up
-car = select_car()
+car = start_screen.select_car()
 
 # main screen setup
 pygame.init()
@@ -21,9 +21,9 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Drive Dodge Die")
 
-obstacle = Obstacle(car)
-all_obstacles = obstacle.get_all_obstacles
 road = Road(5000)
+obstacle = Obstacle(car, road)
+all_obstacles = obstacle.get_all_obstacles
 status = StatusTracker()
 check_point = CheckPoint(5000, car, road)
 view = View(car, all_obstacles, road, status, check_point)
@@ -42,6 +42,8 @@ while True:
         clock.tick(60)  # frame/sec
         if obstacle.check_collision():
             break
+        if check_point.check_reach_checkpoint():
+            print("Hit Checkpoint!")
 
     else:
         controller.basic_event()

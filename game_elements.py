@@ -5,7 +5,6 @@ sets up the elements of the game
 
 import pygame as py
 import random
-from track import Road
 
 
 class Car:
@@ -39,8 +38,8 @@ class Car:
         """
         self._x_coord = 600
         self._y_coord = 550
-        self._width = 100
-        self._height = 140
+        self._width = 60
+        self._height = 120
         self._base_speed = min_speed
         self._acceleration = 0
         self._speed = speed
@@ -193,70 +192,3 @@ class CarModel3(Car):
             brake=0.006,
             gas_refresh=5,
         )
-
-
-class Obstacle:  # pylint: disable=too-few-public-methods
-    """
-    A class to create and control obstacles in the game
-    """
-
-    def __init__(self, car):
-        self._car = car
-        # create a dictrionary to store all obstacle, so that we can track crash more easily later
-        # values: a list of instances of different Obstacle subclasses
-        self._all_obstacles = {"barriers": [], "holes": []}
-        self._y_coord = 0
-        self._speed = car._speed  # initial speed
-        self._last_barrier_time = 0  # (ms)
-
-    @property
-    def get_all_obstacles(self):
-        return self._all_obstacles
-
-    def update_obstacles(self):
-        self.update_obstacle(self._car)
-        self.check_remove_obstacles()
-        self.create_obstacles()
-
-    def check_remove_obstacles(self):
-        for object_list in self._all_obstacles.values():
-            for obstacle in object_list:
-                if obstacle._y_coord > 750:
-                    object_list.remove(obstacle)
-
-    def update_obstacle(self, car):
-        self._speed = self._car.get_speed  # update speed
-        if self._y_coord < 760:
-            self._y_coord += self._speed
-        else:
-            self._y_coord = 0
-        return self._y_coord
-
-    def create_obstacles(self):
-        self.create_barriers()
-
-    def create_barriers(self):
-        current_time = py.time.get_ticks()
-        barriers = self._all_obstacles["barriers"]
-        if (
-            (random.random() < 0.02)
-            and (current_time - self._last_barrier_time > 1000)
-            and (len(barriers) < 5)
-        ):
-            new_barrier = Barrier(self._car)
-            barriers.append(new_barrier)
-            self._last_barrier_time = current_time
-
-    # Sub classes
-    # Different types of obstacles? So they can appear at different times and
-    # move at different speeds. Also move across the screen vs with the car
-    # just slower
-
-
-class Barrier(Obstacle):
-    def __init__(self, car):
-        super().__init__(car)
-        self._x_coord = random.randint(220, 950)
-        self._y_coord = 0
-        self._width = 5 * road._lane_size
-        self._height = 15

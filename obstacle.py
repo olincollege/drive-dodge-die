@@ -2,10 +2,6 @@
 
 import random
 import pygame as py
-from game_elements import Car
-from track import Road
-
-road = Road(5000)
 
 
 class Obstacle:
@@ -21,8 +17,9 @@ class Obstacle:
         speed: int representing the car's current speed
     """
 
-    def __init__(self, car):
+    def __init__(self, car, road):
         self._car = car
+        self._road = road
         self._all_obstacles = {"barriers": [], "holes": []}
         self._y_coord = 0
         self._speed = car._speed
@@ -34,7 +31,7 @@ class Obstacle:
 
     def update_obstacles(self):
         """Method that updates obstacles"""
-        self.update_obstacle(self._car)
+        self.update_obstacle()
         self.check_remove_obstacles()
         self.create_obstacles()
 
@@ -45,9 +42,9 @@ class Obstacle:
                 if obstacle._y_coord > 750:
                     object_list.remove(obstacle)
 
-    def update_obstacle(self, car):
+    def update_obstacle(self):
         """Updates speed of the obstacle"""
-        self._speed = car.get_speed
+        self._speed = self._car.get_speed
         if self._y_coord < 760:
             self._y_coord += self._speed
         else:
@@ -62,7 +59,7 @@ class Obstacle:
         """Generates barriers randomly"""
         barriers = self._all_obstacles["barriers"]
         if random.random() < 0.01 and len(barriers) < 5:
-            new_barrier = Barrier(self._car)
+            new_barrier = Barrier(self._car, self._road)
             barriers.append(new_barrier)
 
     def check_collision(self):
@@ -89,9 +86,9 @@ class Obstacle:
 class Barrier(Obstacle):
     """Class that creates a barrier shape"""
 
-    def __init__(self, car):
-        super().__init__(car)
+    def __init__(self, car, road):
+        super().__init__(car, road)
         self._x_coord = random.randint(220, 950)
         self._y_coord = 0
-        self._width = 5 * road._lane_size
+        self._width = 5 * self._road._lane_size
         self._height = 15

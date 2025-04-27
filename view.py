@@ -42,6 +42,7 @@ class View:
             self._line_img,
             (self._check_point._width, self._check_point._height),
         )
+        self._overlay_buttons = {}
 
     @property
     def get_pause_button(self):
@@ -146,7 +147,7 @@ class View:
         """
         draws the car (currently a rectangle)
         """
-        car_image = pygame.image.load("images/car.png").convert_alpha()
+        car_image = pygame.image.load("images/cars/car.png").convert_alpha()
         car_image = pygame.transform.scale(
             car_image,
             (
@@ -170,7 +171,7 @@ class View:
                 (255, 255, 0),
                 (
                     barrier._x_coord,
-                    barrier.update_obstacle(self._car),
+                    barrier.update_obstacle(),
                     barrier._width,
                     barrier._height,
                 ),
@@ -193,13 +194,6 @@ class View:
         """
         self._screen.blit(self._pause_img, self._pause_button)
 
-    def draw_paused_overlay(self):
-        """
-        draws the overlay of when the game is paused
-        """
-        overlay = self._big_font.render("Game Paused", True, (255, 255, 255))
-        self._screen.blit(overlay, (self._width // 2 - 100, self._height // 2))
-
     def draw_check_point(self):
         check_point = self._pause_img.get_rect(
             topleft=(
@@ -208,3 +202,53 @@ class View:
             )
         )
         self._screen.blit(self._line_img, check_point)
+
+    def draw_paused_overlay(self):
+        """
+        draws the overlay of when the game is paused
+        """
+        # Create a semi-transparent surface
+        overlay_width = 750
+        overlay_height = 500
+        overlay = pygame.Surface((overlay_width, overlay_height))
+
+        overlay_x = (self._width - overlay_width) // 2
+        overlay_y = (self._height - overlay_height) // 2
+        self._screen.blit(overlay, (overlay_x, overlay_y))
+
+        # "Game Paused" text
+        title_text = self._big_font.render("Game Paused", True, (255, 255, 255))
+        title_rect = title_text.get_rect(
+            center=(self._width // 2, overlay_y + 70)
+        )
+        self._screen.blit(title_text, title_rect)
+
+        # Draw button rectangles
+        button_width = 150
+        button_height = 50
+        button_spacing = 50
+
+        button_texts = ["Resume", "Save", "Back to Home Screen"]
+
+        start_y = overlay_y + 175
+
+        for i, text in enumerate(button_texts):
+            rect = pygame.Rect(0, 0, button_width, button_height)
+            rect.center = (
+                self._width // 2,
+                start_y + i * (button_height + button_spacing),
+            )
+            button = pygame.draw.rect(
+                self._screen, (255, 255, 255), rect, border_radius=10
+            )
+            self._overlay_buttons[text] = button
+            button_text = self._small_font.render(text, True, (0, 0, 0))
+            button_text_rect = button_text.get_rect(center=rect.center)
+            self._screen.blit(button_text, button_text_rect)
+    
+    @property
+    def get_overlay_buttons(self):
+        """
+        returns the dictionary of all buttons on pause overlay
+        """
+        return self._overlay_buttons
