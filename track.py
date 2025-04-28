@@ -110,6 +110,7 @@ class CheckPoint(Road):
         self._road = road
         self._distance_track = length
         self._checkpoints_reached = 0
+        self._is_colliding = False
 
     def update_check_point(self):
         self._speed = self._car.get_speed
@@ -135,13 +136,13 @@ class CheckPoint(Road):
             self._width,
             self._height,
         )
-        if car_rect.colliderect(checkpoint_rect):
-            return True
-        return False
 
-    def add_one(self):
-        """adds one to the number of checkpoints reached"""
-        self._checkpoints_reached += 1
+        if car_rect.colliderect(checkpoint_rect):
+            if not self._is_colliding:
+                self._checkpoints_reached += 1
+                self._is_colliding = True
+        else:
+            self._is_colliding = False
 
     @property
     def get_checkpoints_reached(self):
