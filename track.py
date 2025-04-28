@@ -6,6 +6,7 @@ Road and StatusTracker.
 import pygame as py
 import start_screen
 
+
 class Road:
     """
     our road is one really long road. It is meant
@@ -21,11 +22,7 @@ class Road:
         self._width = 1280
         self._height = 750
         self._length = length
-        self._width = 1280
-        self._height = 750
-        self._length = length
         self._lane_size = 30  # should be 1/3 of the car width
-        self._image = py.image.load("images/test_track.png")
         self._image = py.image.load("images/test_track.png")
         self._distance_traveled = 0
 
@@ -44,7 +41,6 @@ class Road:
         returns length
         """
         return self._length
-        return self._length
 
     @property
     def get_height(self):
@@ -52,15 +48,12 @@ class Road:
         returns height
         """
         return self._height
-        return self._height
 
     @property
     def get_width(self):
         """
         returns width
         """
-        return self._width
-
         return self._width
 
     @property
@@ -116,6 +109,7 @@ class CheckPoint(Road):
         self._length = length
         self._road = road
         self._distance_track = length
+        self._checkpoints_reached = 0
 
     def update_check_point(self):
         self._speed = self._car.get_speed
@@ -144,3 +138,12 @@ class CheckPoint(Road):
         if car_rect.colliderect(checkpoint_rect):
             return True
         return False
+
+    def add_one(self):
+        """adds one to the number of checkpoints reached"""
+        self._checkpoints_reached += 1
+
+    @property
+    def get_checkpoints_reached(self):
+        """returns checkpoints reached"""
+        return self._checkpoints_reached

@@ -11,6 +11,7 @@ from game_elements import (
 from track import Road, StatusTracker, CheckPoint
 from obstacle import Obstacle
 import start_screen
+import end_screen
 
 # start screen set up
 car = start_screen.select_car()
@@ -41,9 +42,10 @@ while True:
         pygame.display.update()
         clock.tick(60)  # frame/sec
         if obstacle.check_collision():
+            end_screen.draw_end(road, check_point, view)
             break
         if check_point.check_reach_checkpoint():
-            print("Hit Checkpoint!")
+            check_point.add_one()
 
     else:
         controller.basic_event()

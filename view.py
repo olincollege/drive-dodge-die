@@ -53,6 +53,8 @@ class View:
         """
         clears our screen and then draws components
         consists of: car, pause button, timer
+
+        note: screen size = (1280, 750)
         """
         self._screen.fill((0, 0, 0))  # Clear screen
         self.draw_pause_button()
@@ -63,7 +65,7 @@ class View:
         self.draw_timer()
         self.draw_minimap()
         self.draw_gas()
-        # self.draw_speed()
+        self.draw_speed()
 
     def draw_minimap(self):
         """draws the minimap
@@ -109,18 +111,45 @@ class View:
         )
         self._screen.blit(gas_text, (1150, 585))
 
-    # def draw_speed(self):
-    #     """draws the speed of the car"""
-    #     # draw circle that speed will be on
-    #     pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
-    #     # writes the speed at the bottom of the circle
-    #     speed_text = self._small_font.render(
-    #         f"Speed: {math.ceil(self._car.get_speed)}", True, (255, 255, 255)
-    #     )
-    #     self._screen.blit(speed_text, (1160, 690))
-    #     # creates the arc
-    #     arc_rect = pygame.Rect(120, 120, center=(1190, 670))
-    #     pygame.draw.arc(self._screen, (250, 140, 20), arc_rect, 0, 260)
+    def draw_speed(self):
+        """draws the speed of the car"""
+        # draw circle that speed will be on
+        pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
+        # writes the speed at the bottom of the circle
+        speed_text = self._small_font.render(
+            f"Speed: {math.ceil(self._car.get_speed)}", True, (255, 255, 255)
+        )
+        self._screen.blit(speed_text, (1160, 690))
+        # draws the full arc
+        arc_rect = pygame.Rect((1190, 670), (100, 100))
+        arc_rect.center = (1190, 670)
+        start_angle = -0.5
+        end_angle = 3.6
+        pygame.draw.arc(
+            self._screen,
+            (250, 140, 20),
+            arc_rect,
+            start_angle,
+            end_angle,
+            width=7,
+        )
+        # calculate angle of changing arc
+        total = end_angle - start_angle
+        angle = self._car.get_speed / self._car.get_max_speed
+
+        start = angle * total
+        start = total - start
+        start = start_angle + start
+        # draws changing arc
+        arc_rect.scale_by_ip(0.9)
+        pygame.draw.arc(
+            self._screen,
+            (250, 0, 20),
+            arc_rect,
+            start,
+            end_angle,
+            width=5,
+        )
 
     def draw_road(self):
         """
@@ -245,10 +274,15 @@ class View:
             button_text = self._small_font.render(text, True, (0, 0, 0))
             button_text_rect = button_text.get_rect(center=rect.center)
             self._screen.blit(button_text, button_text_rect)
-    
+
     @property
     def get_overlay_buttons(self):
         """
         returns the dictionary of all buttons on pause overlay
         """
         return self._overlay_buttons
+
+    @property
+    def get_start_time(self):
+        """returns start time"""
+        return self._start_time
