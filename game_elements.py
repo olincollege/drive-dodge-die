@@ -3,9 +3,6 @@ Contains the classes that create the initial sprites and
 sets up the elements of the game
 """
 
-import pygame as py
-import random
-
 
 class Car:
     """
@@ -30,6 +27,7 @@ class Car:
         idle,
         brake,
         gas_refresh,
+        car_image_path,
     ):
         """
         sprite (private)
@@ -53,6 +51,12 @@ class Car:
         self._idle_speed = idle
         self._brake_speed = brake
         self._gas_refresh = gas_refresh
+        self._car_image = car_image_path
+
+    @property
+    def get_image_path(self):
+        """Returns the image of selected car"""
+        return self._car_image
 
     def move_left(self):
         """To move left"""
@@ -147,6 +151,7 @@ class CarModel1(Car):
             idle=0.1,
             brake=0.2,
             gas_refresh=2,
+            car_image_path="images/cars/car.png",
         )
 
 
@@ -161,14 +166,15 @@ class CarModel2(Car):
 
         """
         super().__init__(
-            speed=5,
-            max_speed=5,
-            min_speed=1,
-            acceleration=0.05,
-            max_gas=80,
-            idle=0.005,
-            brake=0.008,
+            speed=3,
+            max_speed=15,
+            min_speed=3,
+            acceleration=0.3,
+            max_gas=800,
+            idle=0.5,
+            brake=0.8,
             gas_refresh=3,
+            car_image_path="images/cars/car2.png",
         )
 
 
@@ -184,11 +190,12 @@ class CarModel3(Car):
         """
         super().__init__(
             speed=4,
-            max_speed=5,
+            max_speed=18,
             min_speed=2,
-            acceleration=0.03,
-            max_gas=120,
-            idle=0.003,
-            brake=0.006,
+            acceleration=0.1,
+            max_gas=1200,
+            idle=0.3,
+            brake=0.6,
             gas_refresh=5,
+            car_image_path="images/cars/car3.png",
         )

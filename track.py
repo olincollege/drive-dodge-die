@@ -4,7 +4,7 @@ Road and StatusTracker.
 """
 
 import pygame as py
-import start_screen
+import selection_screen
 
 
 class Road:
@@ -94,7 +94,7 @@ class StatusTracker:
         """
         goes back to start screen
         """
-        start_screen.select_car()
+        selection_screen.select_car()
 
 
 class CheckPoint(Road):

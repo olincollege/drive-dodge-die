@@ -1,9 +1,11 @@
+"""Sets up the car selection screen"""
+
 import pygame
-from sys import exit
 from game_elements import CarModel1, CarModel2, CarModel3
 
 
 def select_car():
+    """function that sets up the car selection page"""
     pygame.init()
     screen = pygame.display.set_mode((1200, 800))
     pygame.display.set_caption("Select Your Car")

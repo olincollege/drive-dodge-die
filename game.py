@@ -1,25 +1,19 @@
+"""Main game file"""
+
 import pygame
-from sys import exit
-from controller import Controller, CarController
+from controller import Controller
 from view import View
-from game_elements import (
-    Car,
-    CarModel1,
-    CarModel2,
-    CarModel3,
-)
 from track import Road, StatusTracker, CheckPoint
 from obstacle import Obstacle
-import start_screen
+import selection_screen
 import end_screen
 
 # start screen set up
-car = start_screen.select_car()
+car = selection_screen.select_car()
 
 # main screen setup
 pygame.init()
 clock = pygame.time.Clock()
-
 pygame.display.set_caption("Drive Dodge Die")
 
 road = Road(5000)
@@ -36,11 +30,10 @@ while True:
         controller.basic_event()
         obstacle.update_obstacles()
         controller.game_event()
-        # model.update()
         view.draw()
 
         pygame.display.update()
-        clock.tick(60)  # frame/sec
+        clock.tick(60)
         if obstacle.check_collision():
             end_screen.draw_end(road, check_point, view)
             break

@@ -1,3 +1,5 @@
+"""View file"""
+
 import math
 import pygame
 
@@ -30,18 +32,8 @@ class View:
             topright=(1260, 20)
         )  # x_coord, y_coord
 
-        self._gas_img = pygame.image.load("images/gas_bar.png").convert_alpha()
-        self._gas_img = pygame.transform.scale(self._gas_img, (75, 400))
-        self._gas_bar = self._gas_img.get_rect(topleft=(1150, 180))
-
         self._check_point = check_point
-        self._line_img = pygame.image.load(
-            "images/other/check_point.png"
-        ).convert_alpha()
-        self._line_img = pygame.transform.scale(
-            self._line_img,
-            (self._check_point._width, self._check_point._height),
-        )
+
         self._overlay_buttons = {}
 
     @property
@@ -96,7 +88,11 @@ class View:
     def draw_gas(self):
         """draws amount of gas left"""
         # draws gas bar gradient
-        self._screen.blit(self._gas_img, self._gas_bar)
+        gas_img = pygame.image.load("images/gas_bar.png").convert_alpha()
+        gas_img = pygame.transform.scale(gas_img, (75, 400))
+        gas_bar = gas_img.get_rect(topleft=(1150, 180))
+
+        self._screen.blit(gas_img, gas_bar)
         background_color = (0, 0, 0)
         percent_gas_used = (
             self._car.get_max_gas - self._car.get_gas_amt
@@ -176,7 +172,8 @@ class View:
         """
         draws the car (currently a rectangle)
         """
-        car_image = pygame.image.load("images/cars/car.png").convert_alpha()
+        image_path = self._car.get_image_path
+        car_image = pygame.image.load(image_path).convert_alpha()
         car_image = pygame.transform.scale(
             car_image,
             (
@@ -224,13 +221,23 @@ class View:
         self._screen.blit(self._pause_img, self._pause_button)
 
     def draw_check_point(self):
+        """
+        draws the checkpoint line
+        """
+        line_img = pygame.image.load(
+            "images/other/check_point.png"
+        ).convert_alpha()
+        line_img = pygame.transform.scale(
+            line_img,
+            (self._check_point._width, self._check_point._height),
+        )
         check_point = self._pause_img.get_rect(
             topleft=(
                 self._check_point._x_coord,
                 self._check_point.update_check_point(),
             )
         )
-        self._screen.blit(self._line_img, check_point)
+        self._screen.blit(line_img, check_point)
 
     def draw_paused_overlay(self):
         """
