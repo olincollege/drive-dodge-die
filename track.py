@@ -31,33 +31,33 @@ class Road:
         self._distance_traveled = new_distance
 
     @property
-    def get_distance_traveled(self):
+    def distance_traveled(self):
         """returns distance traveled"""
         return self._distance_traveled
 
     @property
-    def get_length(self):
+    def length(self):
         """
         returns length
         """
         return self._length
 
     @property
-    def get_height(self):
+    def height(self):
         """
         returns height
         """
         return self._height
 
     @property
-    def get_width(self):
+    def width(self):
         """
         returns width
         """
         return self._width
 
     @property
-    def get_image(self):
+    def image(self):
         """returns image"""
         return self._image
 
@@ -106,8 +106,8 @@ class CheckPoint(Road):
         self.is_colliding_checkpoint = False
 
     def update_check_point_y_coord(self):
-        self._speed = self._car.get_speed
-        distance_traveled = self._road.get_distance_traveled
+        self._speed = self._car.speed
+        distance_traveled = self._road.distance_traveled
         if self._y_coord < 960:
             self._y_coord += self._speed
         elif distance_traveled - self._distance_track > 0:
@@ -118,10 +118,10 @@ class CheckPoint(Road):
     def check_reach_checkpoint(self):
         """Checks if the car collides with the check point."""
         car_rect = py.Rect(
-            self._car.get_x_coord,
-            self._car.get_y_coord,
-            self._car.get_width,
-            self._car.get_height,
+            self._car.x_coord,
+            self._car.y_coord,
+            self._car.width,
+            self._car.height,
         )
         checkpoint_rect = py.Rect(
             self._x_coord,
@@ -132,19 +132,19 @@ class CheckPoint(Road):
 
         if car_rect.colliderect(checkpoint_rect):
             if not self.is_colliding_checkpoint:
-                self.get_checkpoints_reached += 1
+                self.checkpoints_reached += 1
                 self.is_colliding_checkpoint = True
         else:
             self.is_colliding_checkpoint = False
 
     @property
-    def get_checkpoints_reached(self):
+    def checkpoints_reached(self):
         """returns checkpoints reached"""
         return self._checkpoints_reached
 
-    @get_checkpoints_reached.setter
+    @checkpoints_reached.setter
     # has to be the same name as the previous property
-    def get_checkpoints_reached(self, value):
+    def checkpoints_reached(self, value):
         """trigger powerup when checkpoints count changes"""
         if value > self._checkpoints_reached:
             self._status.toggle_powerup()

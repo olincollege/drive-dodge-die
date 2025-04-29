@@ -25,7 +25,7 @@ class Obstacle:
         self._speed = car._speed
 
     @property
-    def get_all_obstacles(self):
+    def all_obstacles(self):
         """Returns the dictionary of all obstacles"""
         return self._all_obstacles
 
@@ -44,7 +44,7 @@ class Obstacle:
 
     def update_obstacle(self):
         """Updates speed of the obstacle"""
-        self._speed = self._car.get_speed
+        self._speed = self._car.speed
         if self._y_coord < 950:
             self._y_coord += self._speed
         else:
@@ -65,10 +65,10 @@ class Obstacle:
     def check_collision(self):
         """Checks if the car collides with an obstacle."""
         car_rect = py.Rect(
-            self._car.get_x_coord,
-            self._car.get_y_coord,
-            self._car.get_width,
-            self._car.get_height,
+            self._car.x_coord,
+            self._car.y_coord,
+            self._car.width,
+            self._car.height,
         )
         for obstacle_list in self._all_obstacles.values():
             for obstacle in obstacle_list:

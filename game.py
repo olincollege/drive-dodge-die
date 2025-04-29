@@ -18,7 +18,7 @@ pygame.display.set_caption("Drive Dodge Die")
 
 road = Road(5000)
 obstacle = Obstacle(car, road)
-all_obstacles = obstacle.get_all_obstacles
+all_obstacles = obstacle.all_obstacles
 status = StatusTracker()
 check_point = CheckPoint(5000, car, road, status)
 view = View(car, all_obstacles, road, status, check_point)
