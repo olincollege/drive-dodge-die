@@ -20,10 +20,10 @@ class Road:
         """
         self._positions = 20
         self._width = 1280
-        self._height = 750
+        self._height = 950
         self._length = length
         self._lane_size = 30  # should be 1/3 of the car width
-        self._image = py.image.load("images/test_track.png")
+        self._image = py.image.load("images/track.png")
         self._distance_traveled = 0
 
     def update_travel_distance(self, new_distance):
@@ -114,7 +114,7 @@ class CheckPoint(Road):
     def update_check_point(self):
         self._speed = self._car.get_speed
         distance_traveled = self._road.get_distance_traveled
-        if self._y_coord < 760:
+        if self._y_coord < 960:
             self._y_coord += self._speed
         elif distance_traveled - self._distance_track > 0:
             self._y_coord = 0

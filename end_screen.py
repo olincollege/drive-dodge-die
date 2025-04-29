@@ -9,7 +9,7 @@ def draw_end(road, checkpoint, view):
     """draws the end screen"""
     # initialize things
     pygame.init()
-    screen = pygame.display.set_mode((1250, 750))
+    screen = pygame.display.set_mode((1250, 950))
     pygame.display.set_caption("End Screen")
     pygame.font.init()
     subtext_font = pygame.font.Font(None, 20)
@@ -75,15 +75,18 @@ def draw_end(road, checkpoint, view):
 
 def draw_high_score(screen):
     """draw high scores"""
+    # initiate variables
     heading_font = pygame.font.Font(None, 40)
-    score_rect = pygame.Rect((300, 480), (400, 200))
+    score_rect = pygame.Rect((300, 480), (400, 400))
     score_rect.centerx = screen.get_width() // 2
     header_text = heading_font.render("High Scores:", True, (0, 0, 0))
     x_pos = score_rect.w // 2 - header_text.get_width() // 2 + score_rect.x
     screen.blit(header_text, (x_pos, 430))
     heading_font = pygame.font.Font(None, 40)
     subtext_font = pygame.font.Font(None, 20)
+    # draw high score box
     pygame.draw.rect(screen, (0, 0, 255), score_rect)
+    # initiate and write words inside of the high score box
     username_header = heading_font.render("Username: ", True, (0, 0, 0))
     score_header = heading_font.render("Score: ", True, (0, 0, 0))
     screen.blit(username_header, (score_rect.x + 10, score_rect.y + 10))
