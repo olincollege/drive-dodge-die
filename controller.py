@@ -13,10 +13,18 @@ class Controller:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            if (
+                event.type == pygame.KEYDOWN
+                and event.key == pygame.K_ESCAPE
+                and not self._status.is_powerup
+            ):
+                # disable pause when choosing powerups
                 self._status.toggle_pause()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self._view.pause_button.collidepoint(event.pos):
+                if (
+                    self._view.pause_button.collidepoint(event.pos)
+                    and not self._status.is_powerup
+                ):
                     self._status.toggle_pause()
                 for text, button in self._view.overlay_buttons.items():
                     if (
@@ -44,6 +52,7 @@ class Controller:
                         self._status.toggle_pause()
                         self._car.increase_max_speed()
                         self._view.reset_chosen_texts()
+
                     if (
                         text == "Increase Max Gas"
                         and self._status.is_powerup
@@ -106,9 +115,10 @@ class CarController:
             self._car.move_left()
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self._car.move_right()
+
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             self._car.speed_up()
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self._car.brake()
         else:
             self._car.idle()

@@ -76,12 +76,14 @@ class Car:
             self._gas_amt += self._gas_refresh
 
     def speed_up(self):
-        """Increases speed up to max_speed if there is gas left,
-        otherwise it idles"""
+        """Increases speed up to max_speed if there is gas left"""
         if self._gas_amt > 0 and self._speed < self._max_speed:
-            self._speed += self._acceleration
-            self._gas_amt -= 10
+            self._gas_amt -= min(3, self._gas_amt)
+            self._speed += min(
+                (self._max_speed - self._speed), self._acceleration
+            )
         else:
+            self._gas_amt -= min(3, self._gas_amt)
             if self._speed > self._min_speed:
                 self._speed -= self._idle_speed
 
@@ -94,6 +96,7 @@ class Car:
 
     # Power ups
     def increase_max_speed(self):
+        print("increase max speed")
         if self._max_speed <= 6:
             self._max_speed += 1
         elif self._max_speed <= 10:
@@ -102,6 +105,7 @@ class Car:
             self._max_speed += 2
 
     def increase_max_gas(self):
+        print("increase max gas")
         if self._max_gas <= 600:
             self._max_gas += 200
         elif self._max_gas <= 1200:
@@ -110,14 +114,15 @@ class Car:
             self._max_gas += 300
 
     def increase_acceleration(self):
-        if self._acceleration <= 0.3:
-            self._acceleration += 0.1
-        elif self._acceleration <= 0.6:
-            self._acceleration += 0.15
+        if self._acceleration <= 0.1:
+            self._acceleration += 0.02
+        elif self._acceleration <= 0.14:
+            self._acceleration += 0.03
         else:
-            self._acceleration += 0.2
+            self._acceleration += 0.04
 
     def increase_gas_refresh(self):
+        print("increase gas refresh")
         if self._gas_refresh <= 3:
             self._gas_refresh += 0.5
         elif self._gas_refresh <= 5:
@@ -126,6 +131,7 @@ class Car:
             self._gas_refresh += 1
 
     def gas_refill(self):
+        print("gas refill")
         if self._max_gas <= 800:
             self._gas_amt += 300
         elif self._max_gas <= 1200:
@@ -191,7 +197,7 @@ class CarModel1(Car):
             speed=3,
             max_speed=8,
             min_speed=3,
-            acceleration=0.5,
+            acceleration=0.1,
             max_gas=800,
             idle=0.1,
             brake=0.2,
@@ -214,10 +220,10 @@ class CarModel2(Car):
             speed=3,
             max_speed=5,
             min_speed=3,
-            acceleration=0.7,
+            acceleration=0.12,
             max_gas=600,
-            idle=0.5,
-            brake=0.8,
+            idle=0.1,
+            brake=0.2,
             gas_refresh=3,
             car_image_path="images/cars/car2.png",
         )
@@ -237,10 +243,10 @@ class CarModel3(Car):
             speed=4,
             max_speed=6,
             min_speed=2,
-            acceleration=0.4,
+            acceleration=0.08,
             max_gas=1000,
-            idle=0.3,
-            brake=0.6,
+            idle=0.1,
+            brake=0.2,
             gas_refresh=5,
             car_image_path="images/cars/car3.png",
         )
