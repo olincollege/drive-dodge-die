@@ -2,6 +2,7 @@
 
 import math
 import pygame
+import random
 
 
 class View:
@@ -36,6 +37,7 @@ class View:
 
         self._overlay_buttons = {}
         self._powerup_choice = {}
+        self._chosen_texts = None
 
         self.countdown_time = 30 * 1000 #change this to be the idle speed x distance till next checkpoint
         self._time_left = self.countdown_time
@@ -294,18 +296,28 @@ class View:
         """
         Draws two powerup choices
         """
+        self._powerup_choice.clear()
         button_width = 400
         button_height = 700
         button_spacing = 50
 
-        button_texts = ["Increase Max Speed", "Increase Max Gas"]
+        button_texts = [
+            "Increase Max Speed",
+            "Increase Max Gas",
+            "Increase Acceleration",
+            "Increase Gas Refresh Rate",
+            "Immediate Gas Refill",
+        ]
 
         # Calculate button positions so that they are centered
         total_width = 2 * button_width + button_spacing
         start_x = (self._width - total_width) // 2
         center_y = self._height // 2
 
-        for i, text in enumerate(button_texts):
+        if self._chosen_texts is None:
+            self._chosen_texts = random.sample(button_texts, 2)
+
+        for i, text in enumerate(self._chosen_texts):
             rect = pygame.Rect(0, 0, button_width, button_height)
             rect.center = (
                 start_x
@@ -321,6 +333,9 @@ class View:
             button_text = self._small_font.render(text, True, (0, 0, 0))
             button_text_rect = button_text.get_rect(center=rect.center)
             self._screen.blit(button_text, button_text_rect)
+
+    def reset_chosen_texts(self):
+        self._chosen_texts = None
 
     @property
     def overlay_buttons(self):

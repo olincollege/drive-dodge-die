@@ -118,6 +118,7 @@ def save_score(username, score):
     new_row = pd.DataFrame({"Username": [username], "Score": [score]})
     all_scores = pd.concat([all_scores, new_row], ignore_index=True)
     all_scores = all_scores.sort_values(by="Score", ascending=False)
+    all_scores = all_scores.iloc[0:14, 0:2]
     all_scores.to_csv("high_score.csv", index=False)
 
 
