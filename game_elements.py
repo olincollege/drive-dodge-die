@@ -119,13 +119,23 @@ class Car:
 
     def increase_gas_refresh(self):
         if self._gas_refresh <= 3:
-            self._gas_refresh += 1
-        elif self._gas_refresh <= 6:
-            self._gas_refresh += 1.5
+            self._gas_refresh += 0.5
+        elif self._gas_refresh <= 5:
+            self._gas_refresh += 0.8
         else:
-            self._gas_refresh += 2
+            self._gas_refresh += 1
 
-    # immediately get gas refill; more time; shield; faster gas refresh
+    def gas_refill(self):
+        if self._max_gas <= 800:
+            self._gas_amt += 300
+        elif self._max_gas <= 1200:
+            self._gas_amt += 400
+        elif self._max_gas <= 1800:
+            self._gas_amt += 600
+        else:
+            self._gas_amt += 900
+
+    # more time; shield
 
     @property
     def speed(self):

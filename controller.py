@@ -33,6 +33,7 @@ class Controller:
                         and button.collidepoint(event.pos)
                     ):
                         self._status.back_to_home()
+
                 for text, button in self._view.powerup_choice.items():
                     if (
                         text == "Increase Max Speed"
@@ -42,6 +43,7 @@ class Controller:
                         self._status.toggle_powerup()
                         self._status.toggle_pause()
                         self._car.increase_max_speed()
+                        self._view.reset_chosen_texts()
                     if (
                         text == "Increase Max Gas"
                         and self._status.is_powerup
@@ -50,6 +52,37 @@ class Controller:
                         self._status.toggle_powerup()
                         self._status.toggle_pause()
                         self._car.increase_max_gas()
+                        self._view.reset_chosen_texts()
+
+                    if (
+                        text == "Increase Acceleration"
+                        and self._status.is_powerup
+                        and button.collidepoint(event.pos)
+                    ):
+                        self._status.toggle_powerup()
+                        self._status.toggle_pause()
+                        self._car.increase_acceleration()
+                        self._view.reset_chosen_texts()
+
+                    if (
+                        text == "Increase Gas Refresh Rate"
+                        and self._status.is_powerup
+                        and button.collidepoint(event.pos)
+                    ):
+                        self._status.toggle_powerup()
+                        self._status.toggle_pause()
+                        self._car.increase_gas_refresh()
+                        self._view.reset_chosen_texts()
+
+                    if (
+                        text == "Immediate Gas Refill"
+                        and self._status.is_powerup
+                        and button.collidepoint(event.pos)
+                    ):
+                        self._status.toggle_powerup()
+                        self._status.toggle_pause()
+                        self._car.gas_refill()
+                        self._view.reset_chosen_texts()
 
     def game_event(self):
         self._car_controller.handle_input()
