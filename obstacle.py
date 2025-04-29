@@ -39,7 +39,7 @@ class Obstacle:
         """Removes obstacles once they reach the end of the screen"""
         for object_list in self._all_obstacles.values():
             for obstacle in object_list:
-                if obstacle._y_coord > 950:
+                if obstacle.get_y_coord > 950:
                     object_list.remove(obstacle)
 
     def update_obstacle(self):
@@ -73,14 +73,19 @@ class Obstacle:
         for obstacle_list in self._all_obstacles.values():
             for obstacle in obstacle_list:
                 obstacle_rect = py.Rect(
-                    obstacle._x_coord,
-                    obstacle._y_coord,
-                    obstacle._width,
-                    obstacle._height,
+                    obstacle.get_x_coord,
+                    obstacle.get_y_coord,
+                    obstacle.get_width,
+                    obstacle.get_height,
                 )
                 if car_rect.colliderect(obstacle_rect):
                     return True
         return False
+
+    @property
+    def get_y_coord(self):
+        """return y_coord"""
+        return self._y_coord
 
 
 class Barrier(Obstacle):
@@ -92,3 +97,18 @@ class Barrier(Obstacle):
         self._y_coord = 0
         self._width = 5 * self._road._lane_size
         self._height = 15
+
+    @property
+    def get_x_coord(self):
+        """return x_coord"""
+        return self._x_coord
+
+    @property
+    def get_width(self):
+        """return width"""
+        return self._width
+
+    @property
+    def get_height(self):
+        """return height"""
+        return self._height
