@@ -23,7 +23,7 @@ class View:
         self._start_time = pygame.time.get_ticks()
 
         self._pause_img = pygame.image.load(
-            "images/buttons/pause_2.png"
+            "images/buttons/pause.png"
         ).convert_alpha()
         self._pause_img = pygame.transform.scale(
             self._pause_img, (50, 50)
