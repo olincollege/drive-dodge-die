@@ -7,7 +7,7 @@ from game_elements import CarModel1, CarModel2, CarModel3
 def select_car():
     """function that sets up the car selection page"""
     pygame.init()
-    screen = pygame.display.set_mode((1200, 800))
+    screen = pygame.display.set_mode((1280, 950))
     pygame.display.set_caption("Select Your Car")
     pygame.font.init()
     heading_font = pygame.font.Font(None, 60)

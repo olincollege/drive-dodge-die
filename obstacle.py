@@ -39,7 +39,7 @@ class Obstacle:
         """Removes obstacles once they reach the end of the screen"""
         for object_list in self._all_obstacles.values():
             for obstacle in object_list:
-                if obstacle._y_coord > 750:
+                if obstacle._y_coord > 950:
                     object_list.remove(obstacle)
 
     def update_obstacle(self):

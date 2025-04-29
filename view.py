@@ -49,7 +49,6 @@ class View:
         note: screen size = (1280, 750)
         """
         self._screen.fill((0, 0, 0))  # Clear screen
-        self.draw_pause_button()
         self.draw_road()
         self.draw_check_point()
         self.draw_car()
@@ -58,6 +57,7 @@ class View:
         self.draw_minimap()
         self.draw_gas()
         self.draw_speed()
+        self.draw_pause_button()
 
     def draw_minimap(self):
         """draws the minimap
@@ -158,7 +158,7 @@ class View:
         first_tile_position = self._scroll % image_height - image_height
 
         # Draw enough tiles to cover the screen
-        tiles_needed = math.ceil(self._height / image_height) + 2
+        tiles_needed = math.ceil(self._height / image_height) + 1
 
         for i in range(tiles_needed):
             position_y = first_tile_position + (image_height * i)
