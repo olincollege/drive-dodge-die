@@ -39,7 +39,7 @@ class Obstacle:
         """Removes obstacles once they reach the end of the screen"""
         for object_list in self._all_obstacles.values():
             for obstacle in object_list:
-                if obstacle.get_y_coord > 950:
+                if obstacle.y_coord > 950:
                     object_list.remove(obstacle)
 
     def update_obstacle(self):
@@ -58,9 +58,24 @@ class Obstacle:
     def create_barriers(self):
         """Generates barriers randomly"""
         barriers = self._all_obstacles["barriers"]
-        if random.random() < 0.01 and len(barriers) < 5:
+        if (
+            random.random() < 0.05
+            and len(barriers) < 5
+            and self.check_distance(300)
+        ):
             new_barrier = Barrier(self._car, self._road)
             barriers.append(new_barrier)
+
+    def check_distance(self, distance):
+        """checks the distance of the closest obstacle.
+        returns true if there can be another obstacle, false if there can't"""
+        min_y = 950
+        for item in self._all_obstacles:
+            for obstacle in self._all_obstacles[item]:
+                min_y = min(min_y, obstacle.y_coord)
+        if min_y > distance:
+            return True
+        return False
 
     def check_collision(self):
         """Checks if the car collides with an obstacle."""
@@ -74,7 +89,7 @@ class Obstacle:
             for obstacle in obstacle_list:
                 obstacle_rect = py.Rect(
                     obstacle.get_x_coord,
-                    obstacle.get_y_coord,
+                    obstacle.y_coord,
                     obstacle.get_width,
                     obstacle.get_height,
                 )
@@ -83,7 +98,7 @@ class Obstacle:
         return False
 
     @property
-    def get_y_coord(self):
+    def y_coord(self):
         """return y_coord"""
         return self._y_coord
 
