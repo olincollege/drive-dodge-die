@@ -71,6 +71,7 @@ class StatusTracker:
 
     def __init__(self):
         self.paused = False
+        self.is_powerup = False
 
     def toggle_pause(self):
         """
@@ -78,17 +79,8 @@ class StatusTracker:
         """
         self.paused = not self.paused
 
-    def save(self):
-        """
-        saves the all the data of this game
-        """
-        pass
-
-    def load(self):
-        """
-        loads a previous game
-        """
-        pass
+    def toggle_powerup(self):
+        self.is_powerup = not self.is_powerup
 
     def back_to_home(self):
         """
@@ -98,7 +90,7 @@ class StatusTracker:
 
 
 class CheckPoint(Road):
-    def __init__(self, length, car, road):
+    def __init__(self, length, car, road, status):
         super().__init__(length)
         self._car = car
         self._speed = car._speed
@@ -108,11 +100,12 @@ class CheckPoint(Road):
         self._height = 50
         self._length = length
         self._road = road
+        self._status = status
         self._distance_track = length
         self._checkpoints_reached = 0
-        self._is_colliding = False
+        self.is_colliding_checkpoint = False
 
-    def update_check_point(self):
+    def update_check_point_y_coord(self):
         self._speed = self._car.get_speed
         distance_traveled = self._road.get_distance_traveled
         if self._y_coord < 960:
@@ -138,13 +131,22 @@ class CheckPoint(Road):
         )
 
         if car_rect.colliderect(checkpoint_rect):
-            if not self._is_colliding:
-                self._checkpoints_reached += 1
-                self._is_colliding = True
+            if not self.is_colliding_checkpoint:
+                self.get_checkpoints_reached += 1
+                self.is_colliding_checkpoint = True
         else:
-            self._is_colliding = False
+            self.is_colliding_checkpoint = False
 
     @property
     def get_checkpoints_reached(self):
         """returns checkpoints reached"""
         return self._checkpoints_reached
+
+    @get_checkpoints_reached.setter
+    # has to be the same name as the previous property
+    def get_checkpoints_reached(self, value):
+        """trigger powerup when checkpoints count changes"""
+        if value > self._checkpoints_reached:
+            self._status.toggle_powerup()
+            self._status.toggle_pause()
+        self._checkpoints_reached = value

@@ -35,7 +35,7 @@ class Car:
         acceleration_cap (private)
         """
         self._x_coord = 600
-        self._y_coord = 550
+        self._y_coord = 750
         self._width = 60
         self._height = 120
         self._base_speed = min_speed
@@ -92,6 +92,21 @@ class Car:
         if self._gas_amt < self._max_gas:
             self._gas_amt += self._gas_refresh
 
+    # Power ups
+    def increase_max_speed(self):
+        if self._max_speed < 6:
+            self._max_speed += 1
+        elif self._max_speed < 10:
+            self._max_speed += 2
+
+    def increase_max_gas(self):
+        if self._max_gas < 600:
+            self._max_gas += 200
+        elif self._max_gas < 1200:
+            self._max_gas += 300
+
+    # immediately get gas refill; increase acceleration; more time; shield; faster gas refresh
+
     @property
     def get_speed(self):
         """Returns current speed of the car"""
@@ -144,10 +159,10 @@ class CarModel1(Car):
         """
         super().__init__(
             speed=3,
-            max_speed=20,
+            max_speed=8,
             min_speed=3,
             acceleration=0.5,
-            max_gas=1000,
+            max_gas=800,
             idle=0.1,
             brake=0.2,
             gas_refresh=2,
@@ -167,10 +182,10 @@ class CarModel2(Car):
         """
         super().__init__(
             speed=3,
-            max_speed=15,
+            max_speed=5,
             min_speed=3,
             acceleration=0.3,
-            max_gas=800,
+            max_gas=600,
             idle=0.5,
             brake=0.8,
             gas_refresh=3,
@@ -190,10 +205,10 @@ class CarModel3(Car):
         """
         super().__init__(
             speed=4,
-            max_speed=18,
+            max_speed=6,
             min_speed=2,
             acceleration=0.1,
-            max_gas=1200,
+            max_gas=1000,
             idle=0.3,
             brake=0.6,
             gas_refresh=5,

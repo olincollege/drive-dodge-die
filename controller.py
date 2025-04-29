@@ -5,6 +5,7 @@ class Controller:
     def __init__(self, status, view, car):
         self._status = status
         self._view = view
+        self._car = car
         self._car_controller = CarController(car)
 
     def basic_event(self):
@@ -20,10 +21,23 @@ class Controller:
                 for text, button in self._view.get_overlay_buttons.items():
                     if text == "Resume" and button.collidepoint(event.pos):
                         self._status.toggle_pause()
-                    if text == "Save" and button.collidepoint(event.pos):
-                        self._status.save()
-                    if text == "Back to Home Screen" and button.collidepoint(event.pos):
+                    if text == "Back to Home Screen" and button.collidepoint(
+                        event.pos
+                    ):
                         self._status.back_to_home()
+                for text, button in self._view.get_powerup_choice.items():
+                    if text == "Increase Max Speed" and button.collidepoint(
+                        event.pos
+                    ):
+                        self._status.toggle_powerup()
+                        self._status.toggle_pause()
+                        self._car.increase_max_speed()
+                    if text == "Increase Max Gas" and button.collidepoint(
+                        event.pos
+                    ):
+                        self._status.toggle_powerup()
+                        self._status.toggle_pause()
+                        self._car.increase_max_gas()
 
     def game_event(self):
         self._car_controller.handle_input()

@@ -20,7 +20,7 @@ road = Road(5000)
 obstacle = Obstacle(car, road)
 all_obstacles = obstacle.get_all_obstacles
 status = StatusTracker()
-check_point = CheckPoint(5000, car, road)
+check_point = CheckPoint(5000, car, road, status)
 view = View(car, all_obstacles, road, status, check_point)
 controller = Controller(status, view, car)
 
@@ -40,7 +40,13 @@ while True:
             break
 
     else:
-        controller.basic_event()
-        view.draw_paused_overlay()
-        pygame.display.update()
-        clock.tick(60)
+        if status.is_powerup:
+            controller.basic_event()
+            view.draw_powerup_overlay()
+            pygame.display.update()
+            clock.tick(60)
+        else:
+            controller.basic_event()
+            view.draw_paused_overlay()
+            pygame.display.update()
+            clock.tick(60)

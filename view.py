@@ -35,6 +35,7 @@ class View:
         self._check_point = check_point
 
         self._overlay_buttons = {}
+        self._powerup_choice = {}
 
     @property
     def get_pause_button(self):
@@ -46,7 +47,7 @@ class View:
         clears our screen and then draws components
         consists of: car, pause button, timer
 
-        note: screen size = (1280, 750)
+        note: screen size = (1280, 950)
         """
         self._screen.fill((0, 0, 0))  # Clear screen
         self.draw_road()
@@ -234,7 +235,7 @@ class View:
         check_point = self._pause_img.get_rect(
             topleft=(
                 self._check_point._x_coord,
-                self._check_point.update_check_point(),
+                self._check_point.update_check_point_y_coord(),
             )
         )
         self._screen.blit(line_img, check_point)
@@ -246,8 +247,10 @@ class View:
         # Create a semi-transparent surface
         overlay_width = 750
         overlay_height = 500
-        overlay = pygame.Surface((overlay_width, overlay_height))
-
+        overlay = pygame.Surface(
+            (overlay_width, overlay_height), pygame.SRCALPHA
+        ).convert_alpha()
+        overlay.fill((0, 0, 0, 0))
         overlay_x = (self._width - overlay_width) // 2
         overlay_y = (self._height - overlay_height) // 2
         self._screen.blit(overlay, (overlay_x, overlay_y))
@@ -264,7 +267,7 @@ class View:
         button_height = 50
         button_spacing = 50
 
-        button_texts = ["Resume", "Save", "Back to Home Screen"]
+        button_texts = ["Resume", "Back to Home Screen"]
 
         start_y = overlay_y + 175
 
@@ -282,12 +285,51 @@ class View:
             button_text_rect = button_text.get_rect(center=rect.center)
             self._screen.blit(button_text, button_text_rect)
 
+    def draw_powerup_overlay(self):
+        """
+        Draws two powerup choices
+        """
+        button_width = 400
+        button_height = 700
+        button_spacing = 50
+
+        button_texts = ["Increase Max Speed", "Increase Max Gas"]
+
+        # Calculate button positions so that they are centered
+        total_width = 2 * button_width + button_spacing
+        start_x = (self._width - total_width) // 2
+        center_y = self._height // 2
+
+        for i, text in enumerate(button_texts):
+            rect = pygame.Rect(0, 0, button_width, button_height)
+            rect.center = (
+                start_x
+                + i * (button_width + button_spacing)
+                + button_width // 2,
+                center_y,
+            )
+            button = pygame.draw.rect(
+                self._screen, (200, 50, 100, 200), rect, border_radius=20
+            )
+            self._powerup_choice[text] = button
+
+            button_text = self._small_font.render(text, True, (0, 0, 0))
+            button_text_rect = button_text.get_rect(center=rect.center)
+            self._screen.blit(button_text, button_text_rect)
+
     @property
     def get_overlay_buttons(self):
         """
         returns the dictionary of all buttons on pause overlay
         """
         return self._overlay_buttons
+
+    @property
+    def get_powerup_choice(self):
+        """
+        returns the dictionary of all choices on powerup overlay
+        """
+        return self._powerup_choice
 
     @property
     def get_start_time(self):

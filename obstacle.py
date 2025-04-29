@@ -45,7 +45,7 @@ class Obstacle:
     def update_obstacle(self):
         """Updates speed of the obstacle"""
         self._speed = self._car.get_speed
-        if self._y_coord < 760:
+        if self._y_coord < 950:
             self._y_coord += self._speed
         else:
             self._y_coord = 0
