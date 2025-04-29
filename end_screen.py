@@ -162,9 +162,9 @@ def render_lines(lines, subtext_font, heading_font):
 def calculate_score(road, checkpoint, view):
     """calculate total score"""
     score = {}
-    score["distance"] = math.ceil(road.get_distance_traveled)
-    score["checkpoints"] = checkpoint.get_checkpoints_reached
-    score["time"] = (pygame.time.get_ticks() - view.get_start_time) // 1000
+    score["distance"] = math.ceil(road.distance_traveled)
+    score["checkpoints"] = checkpoint.checkpoints_reached
+    score["time"] = (pygame.time.get_ticks() - view.start_time) // 1000
 
     score["total"] = score["distance"] // score["time"] + score["checkpoints"]
 

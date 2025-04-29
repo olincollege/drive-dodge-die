@@ -54,7 +54,7 @@ class Car:
         self._car_image = car_image_path
 
     @property
-    def get_image_path(self):
+    def image_path(self):
         """Returns the image of selected car"""
         return self._car_image
 
@@ -108,46 +108,62 @@ class Car:
             self._max_gas += 250
         else:
             self._max_gas += 300
-git
-    # immediately get gas refill; increase acceleration; more time; shield; faster gas refresh; slower gas comsuption
+
+    def increase_acceleration(self):
+        if self._acceleration <= 0.3:
+            self._acceleration += 0.1
+        elif self._acceleration <= 0.6:
+            self._acceleration += 0.15
+        else:
+            self._acceleration += 0.2
+
+    def increase_gas_refresh(self):
+        if self._gas_refresh <= 3:
+            self._gas_refresh += 1
+        elif self._gas_refresh <= 6:
+            self._gas_refresh += 1.5
+        else:
+            self._gas_refresh += 2
+
+    # immediately get gas refill; more time; shield; faster gas refresh
 
     @property
-    def get_speed(self):
+    def speed(self):
         """Returns current speed of the car"""
         return self._speed
 
     @property
-    def get_max_speed(self):
+    def max_speed(self):
         """Returns max speed of the car"""
         return self._max_speed
 
     @property
-    def get_gas_amt(self):
+    def gas_amt(self):
         """return how much gas the car has"""
         return self._gas_amt
 
     @property
-    def get_max_gas(self):
+    def max_gas(self):
         """return what the max gas tank is"""
         return self._max_gas
 
     @property
-    def get_x_coord(self):
+    def x_coord(self):
         """return x_coord of car"""
         return self._x_coord
 
     @property
-    def get_y_coord(self):
+    def y_coord(self):
         """return y_coord of car"""
         return self._y_coord
 
     @property
-    def get_width(self):
+    def width(self):
         """return width of car"""
         return self._width
 
     @property
-    def get_height(self):
+    def height(self):
         """return height of car"""
         return self._height
 
@@ -188,7 +204,7 @@ class CarModel2(Car):
             speed=3,
             max_speed=5,
             min_speed=3,
-            acceleration=0.3,
+            acceleration=0.7,
             max_gas=600,
             idle=0.5,
             brake=0.8,
@@ -211,7 +227,7 @@ class CarModel3(Car):
             speed=4,
             max_speed=6,
             min_speed=2,
-            acceleration=0.1,
+            acceleration=0.4,
             max_gas=1000,
             idle=0.3,
             brake=0.6,

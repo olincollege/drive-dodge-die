@@ -14,8 +14,8 @@ class View:
         self._all_obstacles = all_obstacles
         self._road = road
         self._status = status
-        self._width = road.get_width
-        self._height = road.get_height
+        self._width = road.width
+        self._height = road.height
         self._scroll = 0
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._big_font = pygame.font.Font(None, 50)
@@ -38,7 +38,7 @@ class View:
         self._powerup_choice = {}
 
     @property
-    def get_pause_button(self):
+    def pause_button(self):
         """returns the image of the pause button"""
         return self._pause_button
 
@@ -67,17 +67,17 @@ class View:
         pygame.draw.rect(
             self._screen,
             (120, 0, 0),
-            (250, 30, self._road.get_length // 10, 20),
+            (250, 30, self._road.length // 10, 20),
         )
         # draws the position of the car
         pygame.draw.rect(
             self._screen,
             (0, 120, 0),
-            (250 + self._road.get_distance_traveled // 10, 40, 10, 10),
+            (250 + self._road.distance_traveled // 10, 40, 10, 10),
         )
         # writes out how far you have traveled
         distance_left = math.ceil(
-            self._road.get_length - self._road.get_distance_traveled
+            self._road.length - self._road.distance_traveled
         )
         minimap_text = self._small_font.render(
             f"Distance left: {distance_left}",
@@ -96,15 +96,15 @@ class View:
         self._screen.blit(gas_img, gas_bar)
         background_color = (0, 0, 0)
         percent_gas_used = (
-            self._car.get_max_gas - self._car.get_gas_amt
-        ) / self._car.get_max_gas
+            self._car.max_gas - self._car.gas_amt
+        ) / self._car.max_gas
         percent_covered = percent_gas_used * 400
         pygame.draw.rect(
             self._screen, background_color, (1150, 180, 75, percent_covered)
         )
         # writes how much gas is left
         gas_text = self._small_font.render(
-            f"Gas left:{self._car.get_gas_amt}", True, (255, 255, 255)
+            f"Gas left:{self._car.gas_amt}", True, (255, 255, 255)
         )
         self._screen.blit(gas_text, (1150, 585))
 
@@ -114,7 +114,7 @@ class View:
         pygame.draw.circle(self._screen, (100, 100, 100), (1190, 670), 60)
         # writes the speed at the bottom of the circle
         speed_text = self._small_font.render(
-            f"Speed: {math.ceil(self._car.get_speed)}", True, (255, 255, 255)
+            f"Speed: {math.ceil(self._car.speed)}", True, (255, 255, 255)
         )
         self._screen.blit(speed_text, (1160, 690))
         # draws the full arc
@@ -132,7 +132,7 @@ class View:
         )
         # calculate angle of changing arc
         total = end_angle - start_angle
-        angle = self._car.get_speed / self._car.get_max_speed
+        angle = self._car.speed / self._car.max_speed
 
         start = angle * total
         start = total - start
@@ -152,7 +152,7 @@ class View:
         """
         draws the road, updates based on the speed of the car
         """
-        image = self._road.get_image.convert()
+        image = self._road.image.convert()
         image_height = image.get_height()
 
         # Calculate the exact position of the first image
@@ -166,25 +166,23 @@ class View:
             self._screen.blit(image, (0, position_y))
 
         # Update scroll position
-        self._scroll += self._car.get_speed
+        self._scroll += self._car.speed
         self._road.update_travel_distance(self._scroll)
 
     def draw_car(self):
         """
         draws the car (currently a rectangle)
         """
-        image_path = self._car.get_image_path
+        image_path = self._car.image_path
         car_image = pygame.image.load(image_path).convert_alpha()
         car_image = pygame.transform.scale(
             car_image,
             (
-                self._car.get_width + 50,
-                self._car.get_height + 50,
+                self._car.width + 50,
+                self._car.height + 50,
             ),  # adjusted due to original size of pic being different
         )
-        self._screen.blit(
-            car_image, (self._car.get_x_coord, self._car.get_y_coord)
-        )
+        self._screen.blit(car_image, (self._car.x_coord, self._car.y_coord))
 
     def draw_obstacles(self):
         """Randomly generate obstacles"""
@@ -318,20 +316,20 @@ class View:
             self._screen.blit(button_text, button_text_rect)
 
     @property
-    def get_overlay_buttons(self):
+    def overlay_buttons(self):
         """
         returns the dictionary of all buttons on pause overlay
         """
         return self._overlay_buttons
 
     @property
-    def get_powerup_choice(self):
+    def powerup_choice(self):
         """
         returns the dictionary of all choices on powerup overlay
         """
         return self._powerup_choice
 
     @property
-    def get_start_time(self):
+    def start_time(self):
         """returns start time"""
         return self._start_time

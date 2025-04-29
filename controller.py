@@ -16,9 +16,9 @@ class Controller:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self._status.toggle_pause()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self._view.get_pause_button.collidepoint(event.pos):
+                if self._view.pause_button.collidepoint(event.pos):
                     self._status.toggle_pause()
-                for text, button in self._view.get_overlay_buttons.items():
+                for text, button in self._view.overlay_buttons.items():
                     if (
                         text == "Resume"
                         and self._status.paused
@@ -33,7 +33,7 @@ class Controller:
                         and button.collidepoint(event.pos)
                     ):
                         self._status.back_to_home()
-                for text, button in self._view.get_powerup_choice.items():
+                for text, button in self._view.powerup_choice.items():
                     if (
                         text == "Increase Max Speed"
                         and self._status.is_powerup
