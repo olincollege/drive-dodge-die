@@ -94,18 +94,22 @@ class Car:
 
     # Power ups
     def increase_max_speed(self):
-        if self._max_speed < 6:
+        if self._max_speed <= 6:
             self._max_speed += 1
-        elif self._max_speed < 10:
+        elif self._max_speed <= 10:
+            self._max_speed += 1.5
+        else:
             self._max_speed += 2
 
     def increase_max_gas(self):
-        if self._max_gas < 600:
+        if self._max_gas <= 600:
             self._max_gas += 200
-        elif self._max_gas < 1200:
+        elif self._max_gas <= 1200:
+            self._max_gas += 250
+        else:
             self._max_gas += 300
-
-    # immediately get gas refill; increase acceleration; more time; shield; faster gas refresh
+git
+    # immediately get gas refill; increase acceleration; more time; shield; faster gas refresh; slower gas comsuption
 
     @property
     def get_speed(self):

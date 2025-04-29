@@ -19,21 +19,33 @@ class Controller:
                 if self._view.get_pause_button.collidepoint(event.pos):
                     self._status.toggle_pause()
                 for text, button in self._view.get_overlay_buttons.items():
-                    if text == "Resume" and button.collidepoint(event.pos):
+                    if (
+                        text == "Resume"
+                        and self._status.paused
+                        and self._status.is_powerup is False
+                        and button.collidepoint(event.pos)
+                    ):
                         self._status.toggle_pause()
-                    if text == "Back to Home Screen" and button.collidepoint(
-                        event.pos
+                    if (
+                        text == "Back to Home Screen"
+                        and self._status.paused
+                        and self._status.is_powerup is False
+                        and button.collidepoint(event.pos)
                     ):
                         self._status.back_to_home()
                 for text, button in self._view.get_powerup_choice.items():
-                    if text == "Increase Max Speed" and button.collidepoint(
-                        event.pos
+                    if (
+                        text == "Increase Max Speed"
+                        and self._status.is_powerup
+                        and button.collidepoint(event.pos)
                     ):
                         self._status.toggle_powerup()
                         self._status.toggle_pause()
                         self._car.increase_max_speed()
-                    if text == "Increase Max Gas" and button.collidepoint(
-                        event.pos
+                    if (
+                        text == "Increase Max Gas"
+                        and self._status.is_powerup
+                        and button.collidepoint(event.pos)
                     ):
                         self._status.toggle_powerup()
                         self._status.toggle_pause()
