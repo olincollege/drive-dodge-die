@@ -30,6 +30,7 @@ while True:
         controller.basic_event()
         obstacle.update_obstacles()
         controller.game_event()
+        check_point.check_reach_checkpoint()
         view.draw()
 
         pygame.display.update()
@@ -37,8 +38,6 @@ while True:
         if obstacle.check_collision():
             end_screen.draw_end(road, check_point, view)
             break
-        if check_point.check_reach_checkpoint():
-            check_point.add_one()
 
     else:
         controller.basic_event()
