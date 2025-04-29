@@ -37,6 +37,9 @@ class View:
         self._overlay_buttons = {}
         self._powerup_choice = {}
 
+        self.countdown_time = 30 * 1000 #change this to be the idle speed x distance till next checkpoint
+        self._time_left = self.countdown_time
+
     @property
     def pause_button(self):
         """returns the image of the pause button"""
@@ -207,10 +210,14 @@ class View:
         finds the elapsed time and draws teh timer on the screen
         """
         elapsed_time_ms = pygame.time.get_ticks() - self._start_time
+        self._time_left = max(self.countdown_time - elapsed_time_ms, 0)
+        time_left_seconds = math.ceil(self._time_left / 1000)
+
         timer_text = self._big_font.render(
-            f"Time: {elapsed_time_ms/1000}s", True, (255, 255, 255)
+            f"Time Left: {time_left_seconds}s", True, (255, 255, 255)
         )
         self._screen.blit(timer_text, (20, 20))
+        if 
 
     def draw_pause_button(self):
         """
