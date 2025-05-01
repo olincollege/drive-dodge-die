@@ -22,7 +22,6 @@ class Road:
         self._width = 1280
         self._height = 950
         self._length = length
-        self._lane_size = 30  # should be 1/3 of the car width
         self._image = py.image.load("images/track.png")
         self._distance_traveled = 0
 

@@ -39,7 +39,9 @@ class View:
         self._powerup_choice = {}
         self._chosen_texts = None
 
-        self.countdown_time = 30 * 1000 #change this to be the idle speed x distance till next checkpoint
+        self.countdown_time = (
+            30 * 1000
+        )  # change this to be the idle speed x distance till next checkpoint
         self._time_left = self.countdown_time
 
     @property
@@ -85,7 +87,7 @@ class View:
             self._road.length - self._road.distance_traveled
         )
         minimap_text = self._small_font.render(
-            f"Distance left: {distance_left}",
+            f"Distance left until next checkpoint: {distance_left}",
             True,
             (255, 255, 255),
         )
@@ -194,18 +196,11 @@ class View:
         self.draw_barriers()
 
     def draw_barriers(self):
+        """draws and updates the y coord of the barriers"""
         barriers = self._all_obstacles["barriers"]
         for barrier in barriers:
-            pygame.draw.rect(
-                self._screen,
-                (255, 255, 0),
-                (
-                    barrier._x_coord,
-                    barrier.update_obstacle(),
-                    barrier._width,
-                    barrier._height,
-                ),
-            )
+            barrier.update_obstacle()
+            self._screen.blit(barrier.image, (barrier.x_coord, barrier.y_coord))
 
     def draw_timer(self):
         """
@@ -219,7 +214,6 @@ class View:
             f"Time Left: {time_left_seconds}s", True, (255, 255, 255)
         )
         self._screen.blit(timer_text, (20, 20))
-        if 
 
     def draw_pause_button(self):
         """

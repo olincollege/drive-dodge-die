@@ -49,6 +49,8 @@ def draw_end(road, checkpoint, view):
                 else:
                     active = False
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SLASH:
+                    running = False
                 if event.key == pygame.K_RETURN:
                     save_score(user_text, score["total"])
                     running = False
