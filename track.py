@@ -14,14 +14,14 @@ class Road:
     moves forward.
     """
 
-    def __init__(self, length):
+    def __init__(self):
         """
         initializes the road
         """
         self._positions = 20
         self._width = 1280
         self._height = 950
-        self._length = length
+        self._length = 5000
         self._image = py.image.load("images/track.png")
         self._distance_traveled = 0
 
@@ -40,6 +40,10 @@ class Road:
         returns length
         """
         return self._length
+
+    @length.setter
+    def length(self, new_length):
+        self._length = new_length
 
     @property
     def height(self):
@@ -89,18 +93,17 @@ class StatusTracker:
 
 
 class CheckPoint(Road):
-    def __init__(self, length, car, road, status):
-        super().__init__(length)
+    def __init__(self, car, road, status):
+        super().__init__()
         self._car = car
         self._speed = car._speed
         self._x_coord = 0
         self._y_coord = 500
         self._width = 1280
         self._height = 50
-        self._length = length
         self._road = road
         self._status = status
-        self._distance_track = length
+        self._distance_track = self._length
         self._checkpoints_reached = 0
         self.is_colliding_checkpoint = False
 
@@ -148,4 +151,6 @@ class CheckPoint(Road):
         if value > self._checkpoints_reached:
             self._status.toggle_powerup()
             self._status.toggle_pause()
+            self._road.length = self._road.length + 500 * int(self._checkpoints_reached)
+            print(self._road.length)
         self._checkpoints_reached = value
