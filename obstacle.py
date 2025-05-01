@@ -49,7 +49,6 @@ class Obstacle:
             self._y_coord += self._speed
         else:
             self._y_coord = 0
-        return self._y_coord
 
     def create_obstacles(self):
         """Calls all functions to make the obstacles"""
@@ -88,10 +87,10 @@ class Obstacle:
         for obstacle_list in self._all_obstacles.values():
             for obstacle in obstacle_list:
                 obstacle_rect = py.Rect(
-                    obstacle.get_x_coord,
+                    obstacle.x_coord,
                     obstacle.y_coord,
-                    obstacle.get_width,
-                    obstacle.get_height,
+                    obstacle.width,
+                    obstacle.height,
                 )
                 if car_rect.colliderect(obstacle_rect):
                     return True
@@ -110,20 +109,28 @@ class Barrier(Obstacle):
         super().__init__(car, road)
         self._x_coord = random.randint(220, 950)
         self._y_coord = 0
-        self._width = 5 * self._road._lane_size
-        self._height = 15
+        self._width = 150
+        self._height = 30
+        self._image = py.image.load(
+            "images/obstacles/barrier.png"
+        ).convert_alpha()
 
     @property
-    def get_x_coord(self):
+    def x_coord(self):
         """return x_coord"""
         return self._x_coord
 
     @property
-    def get_width(self):
+    def width(self):
         """return width"""
         return self._width
 
     @property
-    def get_height(self):
+    def height(self):
         """return height"""
         return self._height
+
+    @property
+    def image(self):
+        """return image"""
+        return self._image
