@@ -65,7 +65,7 @@ class Car:
 
     def move_right(self):
         """To move right"""
-        if self._x_coord < 950:
+        if self._x_coord < 850:
             self._x_coord += self._move
 
     def idle(self):
@@ -195,13 +195,13 @@ class CarModel1(Car):
         """
         super().__init__(
             speed=3,
-            max_speed=8,
+            max_speed=15,
             min_speed=3,
             acceleration=0.1,
             max_gas=800,
             idle=0.1,
             brake=0.2,
-            gas_refresh=2,
+            gas_refresh=5,
             car_image_path="images/cars/car.png",
         )
 
@@ -218,10 +218,10 @@ class CarModel2(Car):
         """
         super().__init__(
             speed=3,
-            max_speed=5,
+            max_speed=18,
             min_speed=3,
             acceleration=0.12,
-            max_gas=600,
+            max_gas=900,
             idle=0.1,
             brake=0.2,
             gas_refresh=3,
@@ -240,10 +240,10 @@ class CarModel3(Car):
 
         """
         super().__init__(
-            speed=4,
-            max_speed=6,
-            min_speed=2,
-            acceleration=0.08,
+            speed=8,
+            max_speed=13,
+            min_speed=5,
+            acceleration=0.8,
             max_gas=1000,
             idle=0.1,
             brake=0.2,

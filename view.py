@@ -219,7 +219,6 @@ class View:
             f"Time Left: {time_left_seconds}s", True, (255, 255, 255)
         )
         self._screen.blit(timer_text, (20, 20))
-        if 
 
     def draw_pause_button(self):
         """

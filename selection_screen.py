@@ -10,14 +10,14 @@ def select_car():
     screen = pygame.display.set_mode((1280, 950))
     pygame.display.set_caption("Select Your Car")
     pygame.font.init()
-    heading_font = pygame.font.Font(None, 60)
-    subtext_font = pygame.font.Font(None, 40)
+    heading_font = pygame.font.SysFont("Times New Roman", 50)
+    subtext_font = pygame.font.SysFont("Times New Roman", 20)
 
     # Text content
     heading_text = heading_font.render("Select Your Car", True, (255, 255, 255))
-    car1_subtext = subtext_font.render("Car Model 1", True, (200, 200, 200))
-    car2_subtext = subtext_font.render("Car Model 2", True, (200, 200, 200))
-    car3_subtext = subtext_font.render("Car Model 3", True, (200, 200, 200))
+    car1_subtext = subtext_font.render("Car Model 1", True, (255, 255, 255))
+    car2_subtext = subtext_font.render("Car Model 2", True, (255, 255, 255))
+    car3_subtext = subtext_font.render("Car Model 3", True, (255, 255, 255))
 
     # Load images
     car1_image = pygame.image.load("images/cars/car.png").convert_alpha()
@@ -50,7 +50,7 @@ def select_car():
             car1_subtext,
             (
                 car1_rect.centerx - car1_subtext.get_width() // 2,
-                car1_rect.bottom + 10,
+                car1_rect.bottom + 30,
             ),
         )
 
@@ -59,7 +59,7 @@ def select_car():
             car2_subtext,
             (
                 car2_rect.centerx - car2_subtext.get_width() // 2,
-                car2_rect.bottom + 10,
+                car2_rect.bottom + 30,
             ),
         )
 
@@ -68,7 +68,7 @@ def select_car():
             car3_subtext,
             (
                 car3_rect.centerx - car3_subtext.get_width() // 2,
-                car3_rect.bottom + 10,
+                car3_rect.bottom + 30,
             ),
         )
 

@@ -12,8 +12,8 @@ def draw_end(road, checkpoint, view):
     screen = pygame.display.set_mode((1250, 950))
     pygame.display.set_caption("End Screen")
     pygame.font.init()
-    subtext_font = pygame.font.Font(None, 20)
-    heading_font = pygame.font.Font(None, 50)
+    subtext_font = pygame.font.SysFont("Times New Roman", 20)
+    heading_font = pygame.font.SysFont("Times New Roman", 45)
 
     # text content
     score = calculate_score(road, checkpoint, view)
@@ -27,7 +27,7 @@ def draw_end(road, checkpoint, view):
     input_rect.centerx = screen.get_width() // 2 + 5
 
     color_active = (0, 0, 0)
-    color_passive = (255, 0, 0)
+    color_passive = (100, 255, 175)
     color = color_passive
     active = False
 
@@ -35,7 +35,7 @@ def draw_end(road, checkpoint, view):
     running = True
     while running:
         # give screen a color and draw text that does not change
-        screen.fill((50, 168, 76))
+        screen.fill((30, 30, 30))
         draw_text(screen, rendered)
         draw_high_score(screen)
 
@@ -76,16 +76,16 @@ def draw_end(road, checkpoint, view):
 def draw_high_score(screen):
     """draw high scores"""
     # initiate variables
-    heading_font = pygame.font.Font(None, 40)
+    heading_font = pygame.font.SysFont("Times New Roman", 40)
     score_rect = pygame.Rect((300, 480), (400, 400))
     score_rect.centerx = screen.get_width() // 2
-    header_text = heading_font.render("High Scores:", True, (0, 0, 0))
+    header_text = heading_font.render("High Scores:", True, (255, 255, 255))
     x_pos = score_rect.w // 2 - header_text.get_width() // 2 + score_rect.x
     screen.blit(header_text, (x_pos, 430))
-    heading_font = pygame.font.Font(None, 40)
-    subtext_font = pygame.font.Font(None, 20)
+    heading_font = pygame.font.SysFont("Times New Roman", 30)
+    subtext_font = pygame.font.SysFont("Times New Roman", 20)
     # draw high score box
-    pygame.draw.rect(screen, (0, 0, 255), score_rect)
+    pygame.draw.rect(screen, (255, 200, 255), score_rect)
     # initiate and write words inside of the high score box
     username_header = heading_font.render("Username: ", True, (0, 0, 0))
     score_header = heading_font.render("Score: ", True, (0, 0, 0))
@@ -138,7 +138,7 @@ def draw_text(screen, rendered):
 def get_text(score):
     """returns a dictionary of the 5 lines of text"""
     line = {}
-    line[1] = "oh no! you died."
+    line[1] = "Oh no! You died."
     line[2] = f"Total Score: {score["total"]}"
     line[3] = "Good job!"
     line[4] = (
@@ -155,8 +155,8 @@ def render_lines(lines, subtext_font, heading_font):
     """returns a dictionary of the rendered 5 lines of text"""
     rendered = {}
     for i in [1, 3, 4, 5]:
-        rendered[i] = subtext_font.render(lines[i], True, (0, 0, 0))
-    rendered[2] = heading_font.render(lines[2], True, (0, 0, 0))
+        rendered[i] = subtext_font.render(lines[i], True, (255, 255, 255))
+    rendered[2] = heading_font.render(lines[2], True, (255, 255, 255))
     return rendered
 
 
