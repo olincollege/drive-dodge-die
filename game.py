@@ -7,6 +7,7 @@ from track import Road, StatusTracker, CheckPoint
 from obstacle import Obstacle
 import selection_screen
 import end_screen
+import sounds
 
 # start screen set up
 car = selection_screen.select_car()
@@ -15,7 +16,7 @@ car = selection_screen.select_car()
 pygame.init()
 clock = pygame.time.Clock()
 pygame.display.set_caption("Drive Dodge Die")
-
+sounds.play()
 road = Road()
 obstacle = Obstacle(car, road)
 all_obstacles = obstacle.all_obstacles
@@ -32,6 +33,7 @@ while True:
         controller.game_event()
         check_point.check_reach_checkpoint()
         view.draw()
+        sounds.unpause_sound()
 
         pygame.display.update()
         clock.tick(60)
@@ -43,6 +45,7 @@ while True:
         if status.is_powerup:
             controller.basic_event()
             view.draw_powerup_overlay()
+            sounds.pause_sound()
             pygame.display.update()
             clock.tick(60)
         else:

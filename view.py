@@ -1,16 +1,36 @@
 """View file"""
 
 import math
-import pygame
 import random
+import pygame
 
 
 class View:
     """
     class view - contains all functions related to the view of our game
+
+    Attributes:
+        car: car object being controlled by the player
+        all_obstacles: dict of all obstacles in the game
+        road: road object that the car drives on
+        status: status object that tracks game states
+        check_point: checkpoint object the car must reach
+        screen: pygame display surface for rendering the game
+        big_font: pygame font object for large text
+        small_font: pygame font object for small text
+        pause_img: pause button image
+        pause_button: pygame Rect object of the pause button
+        overlay_buttons: dict of buttons on the pause overlay
+        powerup_choice: dict of buttons for powerup choices
+        countdown_time: int of time in milliseconds for the countdown
+        time_left: int representing the remaining time in milliseconds
     """
 
     def __init__(self, car, all_obstacles, road, status, check_point):
+        """
+        Initializes the View object with the given game components 
+        and screen settings
+        """
         self._car = car
         self._all_obstacles = all_obstacles
         self._road = road
@@ -42,19 +62,18 @@ class View:
         self.countdown_time = (
             30 * 1000
         )  # change this to be the idle speed x distance till next checkpoint
-        self._time_left = self.countdown_time
 
     @property
     def pause_button(self):
-        """returns the image of the pause button"""
+        """
+        Returns the image of the pause button
+        """
         return self._pause_button
 
     def draw(self):
         """
-        clears our screen and then draws components
+        Clears the screen and then calls the functions that draws components
         consists of: car, pause button, timer
-
-        note: screen size = (1280, 950)
         """
         self._screen.fill((0, 0, 0))  # Clear screen
         self.draw_road()
@@ -62,14 +81,18 @@ class View:
         self.draw_car()
         self.draw_obstacles()
         self.draw_timer()
-        self.draw_minimap()
+        self.draw_progress_bar()
         self.draw_gas()
         self.draw_speed()
         self.draw_pause_button()
 
-    def draw_minimap(self):
-        """draws the minimap
-        aka how far the car has traveled and how much distance is left"""
+    def draw_progress_bar(self):
+        """
+        Draws a progress bar on the screen that shows 
+        the total distance of the race track, 
+        how far the car has traveled, 
+        and the distance left until the next checkpoint
+        """
         # draws the total length of race track
         pygame.draw.rect(
             self._screen,
@@ -207,8 +230,8 @@ class View:
         finds the elapsed time and draws teh timer on the screen
         """
         elapsed_time_ms = pygame.time.get_ticks() - self._start_time
-        self._time_left = max(self.countdown_time - elapsed_time_ms, 0)
-        time_left_seconds = math.ceil(self._time_left / 1000)
+        time_left = max(self.countdown_time - elapsed_time_ms, 0)
+        time_left_seconds = math.ceil(time_left / 1000)
 
         timer_text = self._big_font.render(
             f"Time Left: {time_left_seconds}s", True, (255, 255, 255)

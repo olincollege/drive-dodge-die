@@ -3,12 +3,13 @@
 import math
 import pygame
 import pandas as pd
-
+import sounds
 
 def draw_end(road, checkpoint, view):
     """draws the end screen"""
     # initialize things
     pygame.init()
+    sounds.stop_sound()
     screen = pygame.display.set_mode((1250, 950))
     pygame.display.set_caption("End Screen")
     pygame.font.init()

@@ -1,4 +1,5 @@
 import pygame
+import sounds
 
 
 class Controller:
