@@ -88,6 +88,18 @@ def select_car():
                 elif car3_rect.collidepoint(event.pos):
                     selected_car = "CarModel3"
                     running = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1 or pygame.K_KP1:
+                    selected_car = "CarModel1"
+                    running = False
+                elif event.key == pygame.K_2 or pygame.K_KP2:
+                    selected_car = "CarModel2"
+                    running = False
+                elif event.key == pygame.K_3 or pygame.K_KP3:
+                    selected_car = "CarModel3"
+                    running = False
+
         if selected_car == "CarModel1":
             return CarModel1()
         if selected_car == "CarModel2":

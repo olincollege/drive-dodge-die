@@ -42,6 +42,8 @@ class Car:
         self._acceleration = 0
         self._speed = speed
         self._move = 5
+        self._road_right = 1010
+        self._road_left = 220
 
         self._max_speed = max_speed
         self._min_speed = min_speed
@@ -60,12 +62,12 @@ class Car:
 
     def move_left(self):
         """To move left"""
-        if self._x_coord > 220:
+        if self._x_coord > self._road_left:
             self._x_coord -= self._move
 
     def move_right(self):
         """To move right"""
-        if self._x_coord < 950:
+        if self._x_coord < (self._road_right - self._width):
             self._x_coord += self._move
 
     def idle(self):
@@ -182,6 +184,16 @@ class Car:
     def height(self):
         """return height of car"""
         return self._height
+
+    @property
+    def road_left(self):
+        """return left side of the road"""
+        return self._road_left
+
+    @property
+    def road_right(self):
+        """return right side of the road"""
+        return self._road_right
 
 
 class CarModel1(Car):

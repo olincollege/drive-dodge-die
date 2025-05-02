@@ -30,6 +30,10 @@ class Road:
         """updates the distance traveled of the car"""
         self._distance_traveled = new_distance
 
+    def update_length(self, new_length):
+        """updates the length of the road at each new checkpoint"""
+        self._length = new_length
+
     @property
     def distance_traveled(self):
         """returns distance traveled"""
@@ -41,10 +45,6 @@ class Road:
         returns length
         """
         return self._length
-
-    @length.setter
-    def length(self, new_length):
-        self._length = new_length
 
     @property
     def height(self):
@@ -128,31 +128,29 @@ class CheckPoint(Road):
     def __init__(self, car, road, status):
         super().__init__()
         self._car = car
-        self._speed = car._speed
         self._x_coord = 0
         self._y_coord = 500
         self._width = 1280
         self._height = 50
         self._road = road
         self._status = status
-        self._distance_track = self._length
+        self._tracked_distance = self._length
         self._checkpoints_reached = 0
         self.is_colliding_checkpoint = False
+        self._checkpoint_length = 5000
 
-    def update_check_point_y_coord(self):
-        self._speed = self._car.speed
+    def update_coords(self):
+        """updates y coordinate of the checkpoint"""
+        speed = self._car.speed
         distance_traveled = self._road.distance_traveled
-        if distance_traveled < 5000:
+        if distance_traveled < self._road.length:
             self._y_coord = -100
-            return self._y_coord
-        if self._y_coord < 960:
-            self._y_coord += self._speed
-        elif distance_traveled - self._distance_track > 0:
+        if self._y_coord < 960 and self._y_coord >= 0:
+            self._y_coord += speed
+        elif distance_traveled - self._tracked_distance >= 0:
             self._y_coord = 0
-            self._distance_track += self._length
-        return self._y_coord
+            self._tracked_distance += self._length
 
-    # return self._y_coord
     def check_reach_checkpoint(self):
         """Checks if the car collides with the check point."""
         car_rect = py.Rect(
@@ -170,26 +168,45 @@ class CheckPoint(Road):
 
         if car_rect.colliderect(checkpoint_rect):
             if not self.is_colliding_checkpoint:
-                self.checkpoints_reached += 1
+                self.trigger_checkpoint()
                 self.is_colliding_checkpoint = True
         else:
             self.is_colliding_checkpoint = False
+
+    def trigger_checkpoint(self):
+        """
+        triggers the things that happen when the car reaches
+        the checkpoint: pause game/timer, show power up options,
+        update number of checkpoints reached, update length of
+        the next checkpoint, add time to the countdown clock"""
+        self._status.toggle_pause()
+        self._status.toggle_powerup()
+        self._checkpoints_reached += 1
+        self._checkpoint_length = 500 * int(self._checkpoints_reached)
+        self._road.update_length(self._road.length + self._checkpoint_length)
+        self._status.add_time(self._checkpoints_reached)
 
     @property
     def checkpoints_reached(self):
         """returns checkpoints reached"""
         return self._checkpoints_reached
 
-    @checkpoints_reached.setter
-    # has to be the same name as the previous property
-    def checkpoints_reached(self, value):
-        """trigger powerup when checkpoints count changes"""
-        if value > self._checkpoints_reached:
-            self._status.toggle_powerup()
-            self._status.toggle_pause()
-            self._road.length = self._road.length + 500 * int(
-                self._checkpoints_reached
-            )
-            print(self._road.length)
-            self._status.add_time(self._checkpoints_reached)
-        self._checkpoints_reached = value
+    @property
+    def checkpoint_length(self):
+        """returns checkpoint length"""
+        return self._checkpoint_length
+
+    @property
+    def x_coord(self):
+        """returns x_coord"""
+        return self._x_coord
+
+    @property
+    def y_coord(self):
+        """returns y_coord"""
+        return self._y_coord
+
+    @property
+    def tracked_distance(self):
+        """returns distance_track"""
+        return self._tracked_distance

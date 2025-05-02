@@ -55,7 +55,7 @@ class View:
             topright=(1260, 20)
         )  # x_coord, y_coord
 
-        self._check_point = check_point
+        self._checkpoint = check_point
 
         self._overlay_buttons = {}
         self._powerup_choice = {}
@@ -95,7 +95,7 @@ class View:
         how far the car has traveled,
         and the distance left until the next checkpoint
         """
-        # draws the total length of race track
+        # draws the total length of the road
         pygame.draw.rect(
             self._screen,
             (120, 0, 0),
@@ -107,12 +107,32 @@ class View:
             (0, 120, 0),
             (250 + self._road.distance_traveled // 10, 40, 10, 10),
         )
+
+        # draws length until next checkpoint.
+        pygame.draw.rect(
+            self._screen,
+            (120, 0, 0),
+            (250, 60, self._checkpoint.checkpoint_length // 10, 20),
+        )
+
+        # draws the position of the car in the checkpoint
+        checkpoint_traveled = self._checkpoint.checkpoint_length - (
+            self._checkpoint.tracked_distance - self._road.distance_traveled
+        )
+        print(checkpoint_traveled)
+        pygame.draw.rect(
+            self._screen,
+            (0, 120, 0),
+            (250 + checkpoint_traveled // 10, 70, 10, 10),
+        )
+
         # writes out how far you have traveled
         distance_left = math.ceil(
             self._road.length - self._road.distance_traveled
         )
         minimap_text = self._small_font.render(
-            f"Distance left until next checkpoint: {distance_left}",
+            f"Distance left until next checkpoint: {distance_left}, length:"
+            f" {self._road.length}, dist: {self._road.distance_traveled}",
             True,
             (255, 255, 255),
         )
@@ -254,12 +274,13 @@ class View:
         ).convert_alpha()
         line_img = pygame.transform.scale(
             line_img,
-            (self._check_point._width, self._check_point._height),
+            (self._checkpoint.width, self._checkpoint.height),
         )
+        self._checkpoint.update_coords()
         check_point = self._pause_img.get_rect(
             topleft=(
-                self._check_point._x_coord,
-                self._check_point.update_check_point_y_coord(),
+                self._checkpoint.x_coord,
+                self._checkpoint.y_coord,
             )
         )
         self._screen.blit(line_img, check_point)
