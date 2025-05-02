@@ -142,6 +142,9 @@ class CheckPoint(Road):
     def update_check_point_y_coord(self):
         self._speed = self._car.speed
         distance_traveled = self._road.distance_traveled
+        if distance_traveled < 5000:
+            self._y_coord = -100
+            return self._y_coord
         if self._y_coord < 960:
             self._y_coord += self._speed
         elif distance_traveled - self._distance_track > 0:
@@ -149,6 +152,7 @@ class CheckPoint(Road):
             self._distance_track += self._length
         return self._y_coord
 
+    # return self._y_coord
     def check_reach_checkpoint(self):
         """Checks if the car collides with the check point."""
         car_rect = py.Rect(
@@ -186,5 +190,6 @@ class CheckPoint(Road):
             self._road.length = self._road.length + 500 * int(
                 self._checkpoints_reached
             )
+            print(self._road.length)
             self._status.add_time(self._checkpoints_reached)
         self._checkpoints_reached = value

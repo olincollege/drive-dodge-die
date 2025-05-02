@@ -17,6 +17,7 @@ class View:
         check_point: checkpoint object the car must reach
         screen: pygame display surface for rendering the game
         big_font: pygame font object for large text
+        middle_font: pygame font object for middle size text
         small_font: pygame font object for small text
         pause_img: pause button image
         pause_button: pygame Rect object of the pause button
@@ -40,6 +41,7 @@ class View:
         self._scroll = 0
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._big_font = pygame.font.Font(None, 50)
+        self._middle_font = pygame.font.Font(None, 35)
         self._small_font = pygame.font.Font(None, 20)
         # self._start_time = pygame.time.get_ticks()
 
@@ -309,11 +311,11 @@ class View:
 
     def draw_powerup_overlay(self):
         """
-        Draws two powerup choices
+        Draws two powerup choices with associated images.
         """
         self._powerup_choice.clear()
         button_width = 400
-        button_height = 700
+        button_height = 600
         button_spacing = 50
 
         button_texts = [
@@ -323,6 +325,17 @@ class View:
             "Increase Gas Refresh Rate",
             "Immediate Gas Refill",
         ]
+
+        image_paths = [
+            "images/powerup/speed.png",
+            "images/powerup/gas_max.png",
+            "images/powerup/acceleration.png",
+            "images/powerup/gas_refresh.png",
+            "images/powerup/gas_refill.png",
+        ]
+
+        # Map text to image paths
+        text_to_image = dict(zip(button_texts, image_paths))
 
         # Calculate button positions so that they are centered
         total_width = 2 * button_width + button_spacing
@@ -340,13 +353,30 @@ class View:
                 + button_width // 2,
                 center_y,
             )
+
+            # Draw button background
             button = pygame.draw.rect(
-                self._screen, (200, 50, 100, 200), rect, border_radius=20
+                self._screen, (137, 207, 240), rect, border_radius=20
             )
             self._powerup_choice[text] = button
 
-            button_text = self._small_font.render(text, True, (0, 0, 0))
-            button_text_rect = button_text.get_rect(center=rect.center)
+            # Load and scale image
+            image = pygame.image.load(text_to_image[text]).convert_alpha()
+            image = pygame.transform.scale(
+                image, (button_width - 60, button_height - 150)
+            )
+
+            # Get image rect and center it in the button
+            image_rect = image.get_rect(
+                center=(rect.centerx, rect.centery - 30)
+            )
+            self._screen.blit(image, image_rect)
+
+            # Draw text label under the image
+            button_text = self._middle_font.render(text, True, (0, 0, 0))
+            button_text_rect = button_text.get_rect(
+                center=(rect.centerx, rect.bottom - 50)
+            )
             self._screen.blit(button_text, button_text_rect)
 
     def reset_chosen_texts(self):

@@ -1,7 +1,7 @@
 """Sets up the car selection screen"""
 
 import pygame
-from game_elements import CarModel1, CarModel2, CarModel3
+from car import CarModel1, CarModel2, CarModel3
 
 
 def select_car():

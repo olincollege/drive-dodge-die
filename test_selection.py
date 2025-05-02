@@ -2,7 +2,7 @@
 
 import pytest
 import pygame
-from game_elements import CarModel1, CarModel2, CarModel3
+from car import CarModel1, CarModel2, CarModel3
 from selection_screen import select_car
 
 
