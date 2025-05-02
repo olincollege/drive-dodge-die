@@ -37,8 +37,8 @@ while True:
 
         pygame.display.update()
         clock.tick(60)
-        if obstacle.check_collision():
-            end_screen.draw_end(road, check_point, view)
+        if obstacle.check_collision() or status.check_time_up():
+            end_screen.draw_end(road, check_point, status)
             break
 
     else:

@@ -4,6 +4,7 @@ Road and StatusTracker.
 """
 
 import pygame as py
+import math
 import selection_screen
 
 
@@ -75,6 +76,19 @@ class StatusTracker:
     def __init__(self):
         self.paused = False
         self.is_powerup = False
+        self._start_time = py.time.get_ticks()
+        self._countdown_time_ms = 20 * 1000
+        self._time_left = None
+
+    @property
+    def time_left(self):
+        """returns time left"""
+        return self._time_left
+
+    @property
+    def start_time(self):
+        """returns start time"""
+        return self._start_time
 
     def toggle_pause(self):
         """
@@ -90,6 +104,24 @@ class StatusTracker:
         goes back to start screen
         """
         selection_screen.select_car()
+
+    def update_time_left(self):
+        """update time left"""
+        elapsed_time_ms = py.time.get_ticks() - self._start_time
+        time_left_ms = max(self._countdown_time_ms - elapsed_time_ms, 0)
+        self._time_left = math.ceil(time_left_ms / 1000)
+        return self._time_left
+
+    def add_time(self, checkpoint_num):
+        self._countdown_time_ms = (
+            self._countdown_time_ms
+            + (10 + int(5 * (checkpoint_num) ** 0.5)) * 1000
+        )
+
+    def check_time_up(self):
+        """check if time is up"""
+        if self._time_left == 0:
+            return True
 
 
 class CheckPoint(Road):
@@ -151,6 +183,8 @@ class CheckPoint(Road):
         if value > self._checkpoints_reached:
             self._status.toggle_powerup()
             self._status.toggle_pause()
-            self._road.length = self._road.length + 500 * int(self._checkpoints_reached)
-            print(self._road.length)
+            self._road.length = self._road.length + 500 * int(
+                self._checkpoints_reached
+            )
+            self._status.add_time(self._checkpoints_reached)
         self._checkpoints_reached = value

@@ -28,7 +28,7 @@ class View:
 
     def __init__(self, car, all_obstacles, road, status, check_point):
         """
-        Initializes the View object with the given game components 
+        Initializes the View object with the given game components
         and screen settings
         """
         self._car = car
@@ -41,7 +41,7 @@ class View:
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._big_font = pygame.font.Font(None, 50)
         self._small_font = pygame.font.Font(None, 20)
-        self._start_time = pygame.time.get_ticks()
+        # self._start_time = pygame.time.get_ticks()
 
         self._pause_img = pygame.image.load(
             "images/buttons/pause.png"
@@ -59,9 +59,9 @@ class View:
         self._powerup_choice = {}
         self._chosen_texts = None
 
-        self.countdown_time = (
-            30 * 1000
-        )  # change this to be the idle speed x distance till next checkpoint
+        # self.countdown_time = (
+        #     30 * 1000
+        # )  # change this to be the idle speed x distance till next checkpoint
 
     @property
     def pause_button(self):
@@ -88,9 +88,9 @@ class View:
 
     def draw_progress_bar(self):
         """
-        Draws a progress bar on the screen that shows 
-        the total distance of the race track, 
-        how far the car has traveled, 
+        Draws a progress bar on the screen that shows
+        the total distance of the race track,
+        how far the car has traveled,
         and the distance left until the next checkpoint
         """
         # draws the total length of race track
@@ -229,12 +229,10 @@ class View:
         """
         finds the elapsed time and draws teh timer on the screen
         """
-        elapsed_time_ms = pygame.time.get_ticks() - self._start_time
-        time_left = max(self.countdown_time - elapsed_time_ms, 0)
-        time_left_seconds = math.ceil(time_left / 1000)
+        time_left = self._status.update_time_left()
 
         timer_text = self._big_font.render(
-            f"Time Left: {time_left_seconds}s", True, (255, 255, 255)
+            f"Time Left: {time_left}s", True, (255, 255, 255)
         )
         self._screen.blit(timer_text, (20, 20))
 
@@ -368,7 +366,7 @@ class View:
         """
         return self._powerup_choice
 
-    @property
-    def start_time(self):
-        """returns start time"""
-        return self._start_time
+    # @property
+    # def start_time(self):
+    #     """returns start time"""
+    #     return self._start_time

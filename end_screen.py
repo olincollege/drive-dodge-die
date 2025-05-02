@@ -5,7 +5,8 @@ import pygame
 import pandas as pd
 import sounds
 
-def draw_end(road, checkpoint, view):
+
+def draw_end(road, checkpoint, status):
     """draws the end screen"""
     # initialize things
     pygame.init()
@@ -17,7 +18,7 @@ def draw_end(road, checkpoint, view):
     heading_font = pygame.font.SysFont("Times New Roman", 45)
 
     # text content
-    score = calculate_score(road, checkpoint, view)
+    score = calculate_score(road, checkpoint, status)
     lines = get_text(score)
     rendered = render_lines(lines, subtext_font, heading_font)
 
@@ -163,12 +164,12 @@ def render_lines(lines, subtext_font, heading_font):
     return rendered
 
 
-def calculate_score(road, checkpoint, view):
+def calculate_score(road, checkpoint, status):
     """calculate total score"""
     score = {}
     score["distance"] = math.ceil(road.distance_traveled)
     score["checkpoints"] = checkpoint.checkpoints_reached
-    score["time"] = (pygame.time.get_ticks() - view.start_time) // 1000
+    score["time"] = (pygame.time.get_ticks() - status.start_time) // 1000
 
     score["total"] = score["distance"] // score["time"] + score["checkpoints"]
 

@@ -65,7 +65,7 @@ class Car:
 
     def move_right(self):
         """To move right"""
-        if self._x_coord < 850:
+        if self._x_coord < 950:
             self._x_coord += self._move
 
     def idle(self):
