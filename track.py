@@ -77,7 +77,7 @@ class StatusTracker:
         self.paused = False
         self.is_powerup = False
         self._start_time = py.time.get_ticks()
-        self._countdown_time_ms = 20 * 1000
+        self._countdown_time_ms = 15 * 1000
         self._time_left = None
 
     @property
@@ -115,7 +115,7 @@ class StatusTracker:
     def add_time(self, checkpoint_num):
         self._countdown_time_ms = (
             self._countdown_time_ms
-            + (10 + int(5 * (checkpoint_num) ** 0.5)) * 1000
+            + (5 + int(5 * (checkpoint_num) ** 0.5)) * 1000
         )
 
     def check_time_up(self):
@@ -129,7 +129,7 @@ class CheckPoint(Road):
         super().__init__()
         self._car = car
         self._x_coord = 0
-        self._y_coord = 500
+        self._y_coord = -100
         self._width = 1280
         self._height = 50
         self._road = road
@@ -142,12 +142,9 @@ class CheckPoint(Road):
     def update_coords(self):
         """updates y coordinate of the checkpoint"""
         speed = self._car.speed
-        distance_traveled = self._road.distance_traveled
-        if distance_traveled < self._road.length:
-            self._y_coord = -100
         if self._y_coord < 960 and self._y_coord >= 0:
             self._y_coord += speed
-        elif distance_traveled - self._tracked_distance >= 0:
+        elif self._road.distance_traveled - self._tracked_distance >= 0:
             self._y_coord = 0
             self._tracked_distance += self._length
 
@@ -183,8 +180,9 @@ class CheckPoint(Road):
         self._status.toggle_powerup()
         self._checkpoints_reached += 1
         self._checkpoint_length = 500 * int(self._checkpoints_reached)
-        self._road.update_length(self._road.length + self._checkpoint_length)
+        self.update_length(self.length + self._checkpoint_length)
         self._status.add_time(self._checkpoints_reached)
+        print(self._road.distance_traveled)
 
     @property
     def checkpoints_reached(self):
