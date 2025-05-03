@@ -8,6 +8,10 @@ from obstacle import Obstacle
 import selection_screen
 import end_screen
 import sounds
+import welcome_screen
+
+# welcome screen
+welcome_screen.welcome()
 
 # start screen set up
 car = selection_screen.select_car()

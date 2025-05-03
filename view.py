@@ -119,7 +119,6 @@ class View:
         checkpoint_traveled = self._checkpoint.checkpoint_length - (
             self._checkpoint.tracked_distance - self._road.distance_traveled
         )
-        print(checkpoint_traveled)
         pygame.draw.rect(
             self._screen,
             (0, 120, 0),
