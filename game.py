@@ -41,9 +41,9 @@ while True:
 
         pygame.display.update()
         clock.tick(60)
-        if obstacle.check_collision() or status.check_time_up():
-            end_screen.draw_end(road, check_point, status)
-            break
+        # if obstacle.check_collision() or status.check_time_up():
+        #     end_screen.draw_end(road, check_point, status)
+        #     break
 
     else:
         if status.is_powerup:

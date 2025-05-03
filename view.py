@@ -119,6 +119,7 @@ class View:
         checkpoint_traveled = self._checkpoint.checkpoint_length - (
             self._checkpoint.tracked_distance - self._road.distance_traveled
         )
+        # print(checkpoint_traveled)
         pygame.draw.rect(
             self._screen,
             (0, 120, 0),
@@ -354,10 +355,8 @@ class View:
             "images/powerup/gas_refill.png",
         ]
 
-        # Map text to image paths
         text_to_image = dict(zip(button_texts, image_paths))
 
-        # Calculate button positions so that they are centered
         total_width = 2 * button_width + button_spacing
         start_x = (self._width - total_width) // 2
         center_y = self._height // 2
@@ -374,7 +373,6 @@ class View:
                 center_y,
             )
 
-            # Draw button background
             button = pygame.draw.rect(
                 self._screen, (137, 207, 240), rect, border_radius=20
             )
@@ -383,21 +381,35 @@ class View:
             # Load and scale image
             image = pygame.image.load(text_to_image[text]).convert_alpha()
             image = pygame.transform.scale(
-                image, (button_width - 60, button_height - 150)
+                image, (button_width - 100, button_height - 200)
             )
 
-            # Get image rect and center it in the button
-            image_rect = image.get_rect(
-                center=(rect.centerx, rect.centery - 30)
-            )
+            image_rect = image.get_rect(center=(rect.centerx, rect.top + 240))
             self._screen.blit(image, image_rect)
 
-            # Draw text label under the image
-            button_text = self._middle_font.render(text, True, (0, 0, 0))
-            button_text_rect = button_text.get_rect(
-                center=(rect.centerx, rect.bottom - 50)
-            )
-            self._screen.blit(button_text, button_text_rect)
+            # Split long text into two lines
+            max_line_width = button_width - 60
+
+            words = text.split()
+            lines = []
+            current_line = words[0]
+
+            for word in words[1:]:
+                test_line = current_line + " " + word
+                if self._big_font.size(test_line)[0] <= max_line_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            lines.append(current_line)
+
+            # Draw each line
+            for j, line in enumerate(lines):
+                text_surface = self._big_font.render(line, True, (0, 0, 0))
+                text_rect = text_surface.get_rect(
+                    center=(rect.centerx, rect.bottom - 100 + j * 30)
+                )
+                self._screen.blit(text_surface, text_rect)
 
     def reset_chosen_texts(self):
         self._chosen_texts = None
