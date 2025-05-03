@@ -109,7 +109,7 @@ def info_text():
     """
     Creates a pop-up window with game info
     """
-    popup_width, popup_height = 600, 400
+    popup_width, popup_height = 700, 700
     popup_screen = pygame.display.set_mode((popup_width, popup_height))
     pygame.display.set_caption("Game Info")
 
