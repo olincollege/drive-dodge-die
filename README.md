@@ -1,33 +1,25 @@
-# Python Project Template Repository
+# drive-dodge-die
 
-This is a template repository for a Python project. Feel free to use and edit
-this repository (including this file) for your needs. Below, find some
-instructions and tips for using this template repository.
+drive-dodge-die is a Python-based car racing game that uses the Model-View-Controller (MVC) architecture. The objective is to get to the checkpoint within the time limit while avoiding obstacles. The score is calculated based on how far you get and how quickly you can get there. The farther you get in the track, the more obstacles there will be. As the game goes on, you can get power ups so that you can accelerate more or hit obstacles without dying.
+["start"](images/website/start.png)
 
-## How to Use
-
-Click on the "Use this template" button in the top right corner to create a new
-repository based on this template. If this is for a class project, we ask that
-you keep it in the `olincollege` GitHub organization, and that you refrain from
-keeping the repository private. This will ensure that relevant people can access
-your repository for assessment, etc.
-
-## Requirements
-
-The `requirements.txt` file is blank and should be filled out with any project
-dependencies. There is a Python package called `pipreqs` that autogenerates the
-contents of the `requirements.txt` file based on the `import` statements in your
-`.py` files. To get this, run
-
+## Setup
+### Cloning the repository
+To run this project, clone the repository -
 ```
-pip install pipreqs
+git clone https://github.com/olincollege/drive-dodge-die
+```
+### Dependencies
+This project uses pygame, a Python library containing many game design elements, which can be installed by running the code below. 
+``` python
+pip install -r requirements.txt
 ```
 
-Then, in the root of your project repository, run:
-
+## Executing the game
+To run the program, simply run game.py
+``` python
+python3 game.py
 ```
-pipreqs --mode compat
-```
 
-If you already have a `requirements.txt`, the above command will ask you to
-rerun the command with the `--force` flag to overwrite it.
+## Authors
+Antara Mazumdar, Ellie Kung, Yunzhu Chen
