@@ -22,9 +22,9 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("Drive Dodge Die")
 sounds.play()
 road = Road()
-obstacle = Obstacle(car, road)
-all_obstacles = obstacle.all_obstacles
 status = StatusTracker()
+obstacle = Obstacle(car, road, status)
+all_obstacles = obstacle.all_obstacles
 check_point = CheckPoint(car, road, status)
 view = View(car, all_obstacles, road, status, check_point)
 controller = Controller(status, view, car)

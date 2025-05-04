@@ -5,7 +5,7 @@ Road and StatusTracker.
 
 import pygame as py
 import math
-import selection_screen
+import welcome_screen
 
 
 class Road:
@@ -103,7 +103,7 @@ class StatusTracker:
         """
         goes back to start screen
         """
-        selection_screen.select_car()
+        welcome_screen.welcome()
 
     def update_time_left(self):
         """update time left"""

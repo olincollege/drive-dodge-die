@@ -19,6 +19,12 @@ def select_car():
     car2_subtext = subtext_font.render("Car Model 2", True, (255, 255, 255))
     car3_subtext = subtext_font.render("Car Model 3", True, (255, 255, 255))
 
+# CarModel1: Balanced and beginner-friendly.
+
+# CarModel2: High top speed and fast acceleration.
+
+# CarModel3: Quick start and strong acceleration, great for short bursts.
+    
     # Load images
     car1_image = pygame.image.load("images/cars/car.png").convert_alpha()
     car1_image = pygame.transform.scale(car1_image, (200, 300))
