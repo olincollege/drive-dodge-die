@@ -8,6 +8,10 @@ from obstacle import Obstacle
 import selection_screen
 import end_screen
 import sounds
+import welcome_screen
+
+# welcome screen
+welcome_screen.welcome()
 
 # start screen set up
 car = selection_screen.select_car()
@@ -37,9 +41,9 @@ while True:
 
         pygame.display.update()
         clock.tick(60)
-        if obstacle.check_collision() or status.check_time_up():
-            end_screen.draw_end(road, check_point, status)
-            break
+        # if obstacle.check_collision() or status.check_time_up():
+        #     end_screen.draw_end(road, check_point, status)
+        #     break
 
     else:
         if status.is_powerup:
