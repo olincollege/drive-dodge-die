@@ -41,7 +41,7 @@ class Car:
         self._base_speed = min_speed
         self._acceleration = 0
         self._speed = speed
-        self._move = 5
+        self._move = 10
         self._road_right = 1010
         self._road_left = 220
 
@@ -99,12 +99,12 @@ class Car:
     # Power ups
     def increase_max_speed(self):
         print("increase max speed")
-        if self._max_speed <= 6:
-            self._max_speed += 1
-        elif self._max_speed <= 10:
-            self._max_speed += 1.5
-        else:
+        if self._max_speed <= 12:
             self._max_speed += 2
+        elif self._max_speed <= 20:
+            self._max_speed += 3
+        else:
+            self._max_speed += 4
 
     def increase_max_gas(self):
         print("increase max gas")
@@ -116,21 +116,21 @@ class Car:
             self._max_gas += 300
 
     def increase_acceleration(self):
-        if self._acceleration <= 0.1:
-            self._acceleration += 0.02
-        elif self._acceleration <= 0.14:
-            self._acceleration += 0.03
+        if self._acceleration <= 0.2:
+            self._acceleration += 0.05
+        elif self._acceleration <= 0.3:
+            self._acceleration += 0.075
         else:
-            self._acceleration += 0.04
+            self._acceleration += 0.1
 
     def increase_gas_refresh(self):
         print("increase gas refresh")
-        if self._gas_refresh <= 3:
-            self._gas_refresh += 0.5
-        elif self._gas_refresh <= 5:
-            self._gas_refresh += 0.8
-        else:
+        if self._gas_refresh <= 6:
             self._gas_refresh += 1
+        elif self._gas_refresh <= 10:
+            self._gas_refresh += 1.6
+        else:
+            self._gas_refresh += 2
 
     def gas_refill(self):
         print("gas refill")
@@ -206,14 +206,14 @@ class CarModel1(Car):
         initializes the first car.
         """
         super().__init__(
-            speed=3,
-            max_speed=15,
-            min_speed=3,
-            acceleration=0.1,
+            speed=6,
+            max_speed=30,
+            min_speed=6,
+            acceleration=0.2,
             max_gas=800,
-            idle=0.1,
-            brake=0.2,
-            gas_refresh=5,
+            idle=0.2,
+            brake=0.4,
+            gas_refresh=10,
             car_image_path="images/cars/car.png",
         )
 
@@ -229,14 +229,14 @@ class CarModel2(Car):
 
         """
         super().__init__(
-            speed=3,
-            max_speed=18,
-            min_speed=3,
-            acceleration=0.12,
+            speed=6,
+            max_speed=36,
+            min_speed=6,
+            acceleration=0.24,
             max_gas=900,
-            idle=0.1,
-            brake=0.2,
-            gas_refresh=3,
+            idle=0.2,
+            brake=0.4,
+            gas_refresh=6,
             car_image_path="images/cars/car2.png",
         )
 
@@ -252,13 +252,13 @@ class CarModel3(Car):
 
         """
         super().__init__(
-            speed=8,
-            max_speed=13,
-            min_speed=5,
-            acceleration=0.8,
+            speed=16,
+            max_speed=26,
+            min_speed=10,
+            acceleration=1.6,
             max_gas=1000,
-            idle=0.1,
-            brake=0.2,
-            gas_refresh=5,
+            idle=0.2,
+            brake=0.3,
+            gas_refresh=10,
             car_image_path="images/cars/car3.png",
         )

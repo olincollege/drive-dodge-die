@@ -23,8 +23,6 @@ pygame.display.set_caption("Drive Dodge Die")
 sounds.play()
 road = Road()
 status = StatusTracker()
-obstacle = Obstacle(car, road, status)
-all_obstacles = obstacle.all_obstacles
 check_point = CheckPoint(car, road, status)
 obstacle = Obstacle(car, road, check_point)
 all_obstacles = obstacle.all_obstacles
@@ -40,9 +38,10 @@ while True:
         check_point.check_reach_checkpoint()
         view.draw()
         sounds.unpause_sound()
-
+        print(car.speed)
+        print("new frame")
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(30)
         # if obstacle.check_collision() or status.check_time_up():
         #     end_screen.draw_end(road, check_point, status)
         #     break
