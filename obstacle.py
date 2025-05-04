@@ -17,9 +17,11 @@ class Obstacle:
         speed: int representing the car's current speed
     """
 
-    def __init__(self, car, road):
+    def __init__(self, car, road, checkpoint):
         self._car = car
         self._road = road
+        self._checkpoint = checkpoint
+        self._obstacle_percentage = checkpoint.checkpoints_reached * 0.01
         self._all_obstacles = {"barriers": [], "holes": []}
         self._y_coord = 0
         self._speed = car._speed
@@ -61,22 +63,22 @@ class Obstacle:
         """Generates barriers randomly"""
         barriers = self._all_obstacles["barriers"]
         if (
-            random.random() < 0.05
+            random.random() < (0.05 + self._obstacle_percentage)
             and len(barriers) < 5
             and self.check_distance(300)
         ):
-            new_barrier = Barrier(self._car, self._road)
+            new_barrier = Barrier(self._car, self._road, self._checkpoint)
             barriers.append(new_barrier)
 
     def create_holes(self):
         """Generates holes randomly"""
         holes = self._all_obstacles["holes"]
         if (
-            random.random() < 0.05
+            random.random() < (0.05 + self._obstacle_percentage)
             and len(holes) < 5
             and self.check_distance(300)
         ):
-            new_hole = Hole(self._car, self._road)
+            new_hole = Hole(self._car, self._road, self._checkpoint)
             holes.append(new_hole)
 
     def check_distance(self, distance):
@@ -119,8 +121,8 @@ class Obstacle:
 class Barrier(Obstacle):
     """Class that creates a barrier shape"""
 
-    def __init__(self, car, road):
-        super().__init__(car, road)
+    def __init__(self, car, road, checkpoint):
+        super().__init__(car, road, checkpoint)
         self._x_coord = random.randint(220, 950)
         self._y_coord = 0
         self._width = 150
@@ -153,10 +155,11 @@ class Barrier(Obstacle):
 class Hole(Obstacle):
     """class that creates a hole object as an obstacle in the road"""
 
-    def __init__(self, car, road):
+    def __init__(self, car, road, checkpoint):
         super().__init__(
             car,
             road,
+            checkpoint,
         )
         self._x_coord = random.randint(220, 950)
         self._y_coord = 0
