@@ -52,7 +52,10 @@ class Obstacle:
 
     def create_obstacles(self):
         """Calls all functions to make the obstacles"""
-        self.create_barriers()
+        if random.random() < 0.5:
+            self.create_barriers()
+        else:
+            self.create_holes()
 
     def create_barriers(self):
         """Generates barriers randomly"""
@@ -64,6 +67,17 @@ class Obstacle:
         ):
             new_barrier = Barrier(self._car, self._road)
             barriers.append(new_barrier)
+
+    def create_holes(self):
+        """Generates holes randomly"""
+        holes = self._all_obstacles["holes"]
+        if (
+            random.random() < 0.05
+            and len(holes) < 5
+            and self.check_distance(300)
+        ):
+            new_hole = Hole(self._car, self._road)
+            holes.append(new_hole)
 
     def check_distance(self, distance):
         """checks the distance of the closest obstacle.
@@ -114,6 +128,41 @@ class Barrier(Obstacle):
         self._image = py.image.load(
             "images/obstacles/barrier.png"
         ).convert_alpha()
+
+    @property
+    def x_coord(self):
+        """return x_coord"""
+        return self._x_coord
+
+    @property
+    def width(self):
+        """return width"""
+        return self._width
+
+    @property
+    def height(self):
+        """return height"""
+        return self._height
+
+    @property
+    def image(self):
+        """return image"""
+        return self._image
+
+
+class Hole(Obstacle):
+    """class that creates a hole object as an obstacle in the road"""
+
+    def __init__(self, car, road):
+        super().__init__(
+            car,
+            road,
+        )
+        self._x_coord = random.randint(220, 950)
+        self._y_coord = 0
+        self._width = 150
+        self._height = 50
+        self._image = py.image.load("images/obstacles/hole.png").convert_alpha()
 
     @property
     def x_coord(self):

@@ -119,7 +119,6 @@ class View:
         checkpoint_traveled = self._checkpoint.checkpoint_length - (
             self._checkpoint.tracked_distance - self._road.distance_traveled
         )
-        print(checkpoint_traveled)
         pygame.draw.rect(
             self._screen,
             (0, 120, 0),
@@ -239,6 +238,7 @@ class View:
     def draw_obstacles(self):
         """Randomly generate obstacles"""
         self.draw_barriers()
+        self.draw_holes()
 
     def draw_barriers(self):
         """draws and updates the y coord of the barriers"""
@@ -246,6 +246,13 @@ class View:
         for barrier in barriers:
             barrier.update_obstacle()
             self._screen.blit(barrier.image, (barrier.x_coord, barrier.y_coord))
+
+    def draw_holes(self):
+        """draws and updates the y coord of the barriers"""
+        holes = self._all_obstacles["holes"]
+        for hole in holes:
+            hole.update_obstacle()
+            self._screen.blit(hole.image, (hole.x_coord, hole.y_coord))
 
     def draw_timer(self):
         """
