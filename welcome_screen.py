@@ -17,7 +17,7 @@ def welcome():
     heading_text = heading_font.render("drive-dodge-die", True, (255, 255, 255))
     subtext = subtext_font.render("Click to play", True, (255, 255, 255))
     option1 = subtext_font.render("Info", True, (255, 255, 255))
-    option2 = subtext_font.render("High Scores", True, (255, 255, 255))
+    option2 = subtext_font.render("Leaderboard", True, (255, 255, 255))
 
     # Load images
     play = pygame.image.load("images/buttons/play-button.png").convert_alpha()
@@ -91,7 +91,7 @@ def welcome():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()
+                pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_rect.collidepoint(event.pos):
@@ -99,9 +99,11 @@ def welcome():
                     return
                 if info_rect.collidepoint(event.pos):
                     running = True
+                    pygame.quit()
                     info_text()
                 if highscore_rect.collidepoint(event.pos):
                     running = True
+                    pygame.quit()
                     show_high_scores()
 
 
@@ -156,6 +158,7 @@ def show_high_scores():
     h = 700
     w = 700
     screen = pygame.display.set_mode((w, h))
+    pygame.display.set_caption("Leaderboard")
     # initiate variables
     heading_font = pygame.font.SysFont("Times New Roman", 40)
     header_text = heading_font.render("Leaderboard", True, (255, 255, 255))
