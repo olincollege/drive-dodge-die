@@ -17,10 +17,11 @@ class Obstacle:
         speed: int representing the car's current speed
     """
 
-    def __init__(self, car, road, status):
+    def __init__(self, car, road, checkpoint):
         self._car = car
         self._road = road
-        self._status = status
+        self._checkpoint = checkpoint
+        self._obstacle_percentage = checkpoint.checkpoints_reached * 0.01
         self._all_obstacles = {"barriers": [], "holes": []}
         self._y_coord = 0
         self._speed = car._speed
@@ -54,38 +55,33 @@ class Obstacle:
     def create_obstacles(self):
         """
         Calls all functions to make the obstacles
-        The chance increase over time
         """
-        elapsed_time = (py.time.get_ticks() - self._status.start_time) / 1000
-        scale = min(
-            1 + elapsed_time / 60, 2
-        )  # cap at 2x the base chance at 1 minute
 
-        if random.random() < 0.5 * scale:
-            self.create_barriers(scale)
-        if random.random() < 0.5 * scale:
-            self.create_holes(scale)
+        if random.random() < 0.5:
+            self.create_barriers()
+        if random.random() < 0.5:
+            self.create_holes()
 
-    def create_barriers(self, scale):
+    def create_barriers(self):
         """Generates barriers randomly"""
         barriers = self._all_obstacles["barriers"]
         if (
-            random.random() < 0.05
+            random.random() < (0.05 + self._obstacle_percentage)
             and len(barriers) < 5
-            and self.check_distance(400 - scale * 100)
+            and self.check_distance(300)
         ):
-            new_barrier = Barrier(self._car, self._road, self._status)
+            new_barrier = Barrier(self._car, self._road, self._checkpoint)
             barriers.append(new_barrier)
 
-    def create_holes(self, scale):
+    def create_holes(self):
         """Generates holes randomly"""
         holes = self._all_obstacles["holes"]
         if (
-            random.random() < 0.05
+            random.random() < (0.05 + self._obstacle_percentage)
             and len(holes) < 5
-            and self.check_distance(400 - scale * 100)
+            and self.check_distance(300)
         ):
-            new_hole = Hole(self._car, self._road, self._status)
+            new_hole = Hole(self._car, self._road, self._checkpoint)
             holes.append(new_hole)
 
     def check_distance(self, distance):
@@ -128,8 +124,8 @@ class Obstacle:
 class Barrier(Obstacle):
     """Class that creates a barrier shape"""
 
-    def __init__(self, car, road, status):
-        super().__init__(car, road, status)
+    def __init__(self, car, road, checkpoint):
+        super().__init__(car, road, checkpoint)
         self._x_coord = random.randint(220, 950)
         self._y_coord = 0
         self._width = 150
@@ -162,8 +158,12 @@ class Barrier(Obstacle):
 class Hole(Obstacle):
     """class that creates a hole object as an obstacle in the road"""
 
-    def __init__(self, car, road, status):
-        super().__init__(car, road, status)
+    def __init__(self, car, road, checkpoint):
+        super().__init__(
+            car,
+            road,
+            checkpoint,
+        )
         self._x_coord = random.randint(220, 950)
         self._y_coord = 0
         self._width = 150

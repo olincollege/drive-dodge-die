@@ -26,6 +26,8 @@ status = StatusTracker()
 obstacle = Obstacle(car, road, status)
 all_obstacles = obstacle.all_obstacles
 check_point = CheckPoint(car, road, status)
+obstacle = Obstacle(car, road, check_point)
+all_obstacles = obstacle.all_obstacles
 view = View(car, all_obstacles, road, status, check_point)
 controller = Controller(status, view, car)
 
