@@ -113,9 +113,8 @@ class StatusTracker:
         return self._time_left
 
     def add_time(self, checkpoint_num):
-        self._countdown_time_ms = (
-            self._countdown_time_ms
-            + (5 + int(5 * (checkpoint_num) ** 0.5)) * 1000
+        self._countdown_time_ms = self._countdown_time_ms + (
+            5 + int(5 * checkpoint_num) * 1000
         )
 
     def check_time_up(self):
@@ -144,7 +143,7 @@ class CheckPoint(Road):
         speed = self._car.speed
         if self._y_coord < 960 and self._y_coord >= 0:
             self._y_coord += speed
-        elif self._road.distance_traveled - self._tracked_distance >= 0:
+        elif self._road.distance_traveled - self._tracked_distance >= -720:
             self._y_coord = 0
             self._tracked_distance += self._length
 
