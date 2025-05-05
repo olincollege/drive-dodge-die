@@ -1,7 +1,7 @@
 # drive-dodge-die
 
 drive-dodge-die is a Python-based car racing game that uses the Model-View-Controller (MVC) architecture. The objective is to get to the checkpoint within the time limit while avoiding obstacles. The score is calculated based on how far you get and how quickly you can get there. The farther you get in the track, the more obstacles there will be. As the game goes on, you can get power ups so that you can accelerate more or hit obstacles without dying.
-["start"](images/website/start.png)
+["start"](media/images/website/start.png)
 
 ## Setup
 ### Cloning the repository

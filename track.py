@@ -23,7 +23,7 @@ class Road:
         self._width = 1280
         self._height = 950
         self._length = 5000
-        self._image = py.image.load("images/track.png")
+        self._image = py.image.load("media/images/track.png")
         self._distance_traveled = 0
 
     def update_travel_distance(self, new_distance):

@@ -183,7 +183,7 @@ def calculate_score(road, checkpoint, status):
         score["checkpoints"]
     )  # exponential reward for more checkpoints
     time_score = (
-        math.log2(score["time_sec"] + 1) * 100
+        math.log2(score["time"] + 1) * 100
     )  # very high weight at early stage, reduce afterward
 
     score["total"] = (distance_score + time_score) * checkpoint_score

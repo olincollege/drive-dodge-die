@@ -20,14 +20,16 @@ def welcome():
     option2 = subtext_font.render("Leaderboard", True, (255, 255, 255))
 
     # Load images
-    play = pygame.image.load("images/buttons/play-button.png").convert_alpha()
-    info = pygame.image.load("images/buttons/info.png").convert_alpha()
+    play = pygame.image.load(
+        "media/images/buttons/play-button.png"
+    ).convert_alpha()
+    info = pygame.image.load("media/images/buttons/info.png").convert_alpha()
     info = pygame.transform.scale(info, (150, 150))
     high_score = pygame.image.load(
-        "images/buttons/high_score.png"
+        "media/images/buttons/high_score.png"
     ).convert_alpha()
     high_score = pygame.transform.scale(high_score, (150, 150))
-    flag_left = pygame.image.load("images/flag_left.png").convert_alpha()
+    flag_left = pygame.image.load("media/images/flag_left.png").convert_alpha()
     flag_left = pygame.transform.scale(flag_left, (300, 300))
     flag_right = pygame.transform.flip(flag_left, True, False)
 
