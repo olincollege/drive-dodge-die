@@ -42,9 +42,9 @@ while True:
         print("new frame")
         pygame.display.update()
         clock.tick(30)
-        # if obstacle.check_collision() or status.check_time_up():
-        #     end_screen.draw_end(road, check_point, status)
-        #     break
+        if obstacle.check_collision() or status.check_time_up():
+            end_screen.draw_end(road, check_point, status)
+            break
 
     else:
         if status.is_powerup:

@@ -214,7 +214,7 @@ class CarModel1(Car):
             idle=0.2,
             brake=0.4,
             gas_refresh=10,
-            car_image_path="images/cars/car.png",
+            car_image_path="media/images/cars/car.png",
         )
 
 
@@ -237,7 +237,7 @@ class CarModel2(Car):
             idle=0.2,
             brake=0.4,
             gas_refresh=6,
-            car_image_path="images/cars/car2.png",
+            car_image_path="media/images/cars/car2.png",
         )
 
 
@@ -260,5 +260,5 @@ class CarModel3(Car):
             idle=0.2,
             brake=0.3,
             gas_refresh=10,
-            car_image_path="images/cars/car3.png",
+            car_image_path="media/images/cars/car3.png",
         )

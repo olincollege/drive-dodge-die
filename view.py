@@ -46,7 +46,7 @@ class View:
         # self._start_time = pygame.time.get_ticks()
 
         self._pause_img = pygame.image.load(
-            "images/buttons/pause.png"
+            "media/images/buttons/pause.png"
         ).convert_alpha()
         self._pause_img = pygame.transform.scale(
             self._pause_img, (50, 50)
@@ -140,7 +140,7 @@ class View:
     def draw_gas(self):
         """draws amount of gas left"""
         # draws gas bar gradient
-        gas_img = pygame.image.load("images/gas_bar.png").convert_alpha()
+        gas_img = pygame.image.load("media/images/gas_bar.png").convert_alpha()
         gas_img = pygame.transform.scale(gas_img, (75, 400))
         gas_bar = gas_img.get_rect(topleft=(1150, 180))
 
@@ -279,7 +279,7 @@ class View:
         draws the checkpoint line
         """
         line_img = pygame.image.load(
-            "images/other/check_point.png"
+            "media/images/other/check_point.png"
         ).convert_alpha()
         line_img = pygame.transform.scale(
             line_img,
@@ -357,11 +357,11 @@ class View:
         ]
 
         image_paths = [
-            "images/powerup/speed.png",
-            "images/powerup/gas_max.png",
-            "images/powerup/acceleration.png",
-            "images/powerup/gas_refresh.png",
-            "images/powerup/gas_refill.png",
+            "media/images/powerup/speed.png",
+            "media/images/powerup/gas_max.png",
+            "media/images/powerup/acceleration.png",
+            "media/images/powerup/gas_refresh.png",
+            "media/images/powerup/gas_refill.png",
         ]
 
         text_to_image = dict(zip(button_texts, image_paths))

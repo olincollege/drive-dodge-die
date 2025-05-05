@@ -129,7 +129,7 @@ class Barrier(Obstacle):
         self._width = 150
         self._height = 30
         self._image = py.image.load(
-            "images/obstacles/barrier.png"
+            "media/images/obstacles/barrier.png"
         ).convert_alpha()
 
     @property
@@ -166,7 +166,7 @@ class Hole(Obstacle):
         self._y_coord = 0
         self._width = 150
         self._height = 50
-        self._image = py.image.load("images/obstacles/hole.png").convert_alpha()
+        self._image = py.image.load("media/images/obstacles/hole.png").convert_alpha()
 
     @property
     def x_coord(self):
