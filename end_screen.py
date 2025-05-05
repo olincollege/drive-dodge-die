@@ -175,6 +175,17 @@ def calculate_score(road, checkpoint, status):
     score["checkpoints"] = checkpoint.checkpoints_reached
     score["time"] = (pygame.time.get_ticks() - status.start_time) // 1000
 
-    score["total"] = score["distance"] // score["time"] + score["checkpoints"]
+    # Scoring components
+    distance_score = math.sqrt(
+        score["distance"]
+    )  # sqrt: diminishing returns on long distance
+    checkpoint_score = math.sqrt(
+        score["checkpoints"]
+    )  # exponential reward for more checkpoints
+    time_score = (
+        math.log2(score["time_sec"] + 1) * 100
+    )  # very high weight at early stage, reduce afterward
+
+    score["total"] = (distance_score + time_score) * checkpoint_score
 
     return score
