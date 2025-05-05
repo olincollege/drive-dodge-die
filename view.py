@@ -22,7 +22,13 @@ class View:
         pause_img: pause button image
         pause_button: pygame Rect object of the pause button
         overlay_buttons: dict of buttons on the pause overlay
-        powerup_choice: dict of buttons for powerup choices
+            key: string of what button it is
+            value: rect of image of the button
+        powerup_choice: dict of buttons for power up choices
+            key: string of what power up is shown
+            value: rect of image of the  power up button
+        chosen_texts: list of two strings representing the power
+            up options that are shown
         countdown_time: int of time in milliseconds for the countdown
         time_left: int representing the remaining time in milliseconds
     """
@@ -435,6 +441,7 @@ class View:
                 self._screen.blit(text_surface, text_rect)
 
     def reset_chosen_texts(self):
+        """resets the chosen texts (the randomly chosen powerups)"""
         self._chosen_texts = None
 
     @property

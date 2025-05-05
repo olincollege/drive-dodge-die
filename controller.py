@@ -1,15 +1,31 @@
+"""file for controller class in Model, View, Controller Architecture"""
+
 import pygame
-import sounds
 
 
 class Controller:
+    """
+    Controller class. Contains all functions to control
+    the car and other buttons during the game
+
+    Private Attributes:
+        status: status tracker object
+        view: view object
+        car: car object
+    """
+
     def __init__(self, status, view, car):
         self._status = status
         self._view = view
         self._car = car
-        self._car_controller = CarController(car)
 
     def basic_event(self):
+        """
+        Maps out what to do in a basic event
+        (events that have to do with buttons)
+        This includes pausing the game, going home,
+        and choosing a power up option.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -95,18 +111,6 @@ class Controller:
                         self._view.reset_chosen_texts()
 
     def game_event(self):
-        self._car_controller.handle_input()
-
-
-class CarController:
-    """
-    Controller class for the car
-    """
-
-    def __init__(self, car):
-        self._car = car
-
-    def handle_input(self):
         """
         Determines what actions must be taken by the car
         when arrow keys are pressed in the game

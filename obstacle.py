@@ -9,12 +9,17 @@ class Obstacle:
     A class to create and control obstacles in the game
 
     Attributes:
-        car: contains all the methods of the car class
-        all_obstacles: dictionary to store all obstacles
+        Private Attributes:
+            car: car object
+            road: road object
+            checkpoint: checkpoint object
+            obstacle_percentage: float representing how often an
+                obstacle shows up
+            all_obstacles: dictionary to store all obstacles
                         keys: strings representing type of obstacle
                         values: list of all instances of obstacles
-        y_coord: int representing the y-coordinate of the obstacle
-        speed: int representing the car's current speed
+            y_coord: int representing the y-coordinate of the obstacle
+            speed: int representing the car's current speed
     """
 
     def __init__(self, car, road, checkpoint):
@@ -25,11 +30,6 @@ class Obstacle:
         self._all_obstacles = {"barriers": [], "holes": []}
         self._y_coord = 0
         self._speed = car._speed
-
-    @property
-    def all_obstacles(self):
-        """Returns the dictionary of all obstacles"""
-        return self._all_obstacles
 
     def update_obstacles(self):
         """Method that updates obstacles"""
@@ -56,7 +56,6 @@ class Obstacle:
         """
         Calls all functions to make the obstacles
         """
-
         self.create_barriers()
         self.create_holes()
 
@@ -114,6 +113,11 @@ class Obstacle:
         return False
 
     @property
+    def all_obstacles(self):
+        """Returns the dictionary of all obstacles"""
+        return self._all_obstacles
+
+    @property
     def y_coord(self):
         """return y_coord"""
         return self._y_coord
@@ -166,7 +170,9 @@ class Hole(Obstacle):
         self._y_coord = 0
         self._width = 150
         self._height = 50
-        self._image = py.image.load("media/images/obstacles/hole.png").convert_alpha()
+        self._image = py.image.load(
+            "media/images/obstacles/hole.png"
+        ).convert_alpha()
 
     @property
     def x_coord(self):
