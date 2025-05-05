@@ -27,7 +27,8 @@ class View:
         powerup_choice: dict of buttons for power up choices
             key: string of what power up is shown
             value: rect of image of the  power up button
-        chosen_texts: list of two strings representing the power up options that are shown
+        chosen_texts: list of two strings representing the power
+            up options that are shown
         countdown_time: int of time in milliseconds for the countdown
         time_left: int representing the remaining time in milliseconds
     """
