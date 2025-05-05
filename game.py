@@ -38,8 +38,6 @@ while True:
         check_point.check_reach_checkpoint()
         view.draw()
         sounds.unpause_sound()
-        print(car.speed)
-        print("new frame")
         pygame.display.update()
         clock.tick(30)
         # if obstacle.check_collision() or status.check_time_up():

@@ -106,6 +106,11 @@ def welcome():
                     pygame.quit()
                     show_high_scores()
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    running = True
+                    return
+
 
 def info_text():
     """
@@ -158,7 +163,6 @@ def show_high_scores():
     h = 700
     w = 700
     screen = pygame.display.set_mode((w, h))
-    pygame.display.set_caption("Leaderboard")
     # initiate variables
     heading_font = pygame.font.SysFont("Times New Roman", 40)
     header_text = heading_font.render("Leaderboard", True, (255, 255, 255))

@@ -52,7 +52,7 @@ class View:
             self._pause_img, (50, 50)
         )  # width, height
         self._pause_button = self._pause_img.get_rect(
-            topright=(1260, 20)
+            topright=(1260, 10)
         )  # x_coord, y_coord
 
         self._checkpoint = check_point
@@ -82,56 +82,71 @@ class View:
         self.draw_check_point()
         self.draw_car()
         self.draw_obstacles()
+        self.draw_header()
         self.draw_timer()
         self.draw_progress_bar()
         self.draw_gas()
         self.draw_speed()
         self.draw_pause_button()
 
+    def draw_header(self):
+        """
+        Draws a transparent rectangle at the top of the screen so
+        that we can see the text and other informational
+        elements clearly"""
+        header = pygame.Surface((self._road.width, 70), pygame.SRCALPHA)
+        header.fill((10, 10, 10, 128))
+        self._screen.blit(header, (0, 0))
+
     def draw_progress_bar(self):
         """
         Draws a progress bar on the screen that shows
-        the total distance of the race track,
-        how far the car has traveled,
-        and the distance left until the next checkpoint
+        the distance left until the next checkpoint
+        and writes the distance left.
         """
-        # draws the total length of the road
+
+        # draws length until next checkpoint.
         pygame.draw.rect(
             self._screen,
             (120, 0, 0),
-            (250, 30, self._road.length // 10, 20),
+            (270, 30, self._checkpoint.checkpoint_length // 10, 20),
         )
-        # draws the position of the car
-        pygame.draw.rect(
-            self._screen,
-            (0, 120, 0),
-            (250 + self._road.distance_traveled // 10, 40, 10, 10),
+        mini_checkpoint = pygame.Rect(
+            270 + self._checkpoint.checkpoint_length // 10, 30, 10, 20
         )
+        pygame.draw.rect(self._screen, (255, 192, 203), mini_checkpoint)
 
-        # # draws length until next checkpoint.
-        # pygame.draw.rect(
-        #     self._screen,
-        #     (120, 0, 0),
-        #     (250, 60, self._checkpoint.checkpoint_length // 10, 20),
-        # )
-
-        # draws the position of the car in the checkpoint
-        checkpoint_traveled = self._checkpoint.checkpoint_length - (
+        # how far the car has traveled in the current checkpoint
+        distance_in_segment = (
             self._checkpoint.tracked_distance - self._road.distance_traveled
         )
+        # how far left until the next checkpoint
+        distance_left_to_checkpoint = (
+            self._checkpoint.checkpoint_length - distance_in_segment
+        )
+
+        distance_left_to_checkpoint = min(
+            distance_left_to_checkpoint, self._checkpoint.checkpoint_length
+        )
+        distance_left_to_checkpoint = max(distance_left_to_checkpoint, 0)
+
+        progress_position = distance_left_to_checkpoint // 10
+
+        distance_left_to_checkpoint = (
+            self._checkpoint.checkpoint_length - distance_left_to_checkpoint
+        )
+
+        # draw car position
         pygame.draw.rect(
             self._screen,
             (0, 120, 0),
-            (250 + checkpoint_traveled // 10, 70, 10, 10),
+            (270 + progress_position, 40, 10, 10),
         )
 
-        # writes out how far you have traveled
-        distance_left = math.ceil(
-            self._road.length - self._road.distance_traveled
-        )
+        distance_left_text = math.ceil(distance_left_to_checkpoint)
+
         minimap_text = self._small_font.render(
-            f"Distance left until next checkpoint: {distance_left}, length:"
-            f" {self._road.length}, dist: {self._road.distance_traveled}",
+            f"Distance left until next checkpoint: {distance_left_text}",
             True,
             (255, 255, 255),
         )
@@ -219,8 +234,7 @@ class View:
         # Update scroll position
         self._scroll += self._car.speed
         self._road.update_travel_distance(self._scroll)
-        print(self._road.distance_traveled)
-
+        (self._road.distance_traveled)
 
     def draw_car(self):
         """
