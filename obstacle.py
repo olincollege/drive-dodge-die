@@ -57,10 +57,8 @@ class Obstacle:
         Calls all functions to make the obstacles
         """
 
-        if random.random() < 0.5:
-            self.create_barriers()
-        if random.random() < 0.5:
-            self.create_holes()
+        self.create_barriers()
+        self.create_holes()
 
     def create_barriers(self):
         """Generates barriers randomly"""

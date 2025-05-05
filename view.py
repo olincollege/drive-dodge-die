@@ -108,12 +108,12 @@ class View:
             (250 + self._road.distance_traveled // 10, 40, 10, 10),
         )
 
-        # draws length until next checkpoint.
-        pygame.draw.rect(
-            self._screen,
-            (120, 0, 0),
-            (250, 60, self._checkpoint.checkpoint_length // 10, 20),
-        )
+        # # draws length until next checkpoint.
+        # pygame.draw.rect(
+        #     self._screen,
+        #     (120, 0, 0),
+        #     (250, 60, self._checkpoint.checkpoint_length // 10, 20),
+        # )
 
         # draws the position of the car in the checkpoint
         checkpoint_traveled = self._checkpoint.checkpoint_length - (
