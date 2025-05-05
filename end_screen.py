@@ -172,7 +172,7 @@ def calculate_score(road, checkpoint, status):
     """calculate total score"""
     score = {}
     score["distance"] = math.ceil(road.distance_traveled)
-    score["checkpoints"] = checkpoint.checkpoints_reached
+    score["checkpoints"] = checkpoint.checkpoints_reached + 1
     score["time"] = (pygame.time.get_ticks() - status.start_time) // 1000
 
     # Scoring components
@@ -186,6 +186,6 @@ def calculate_score(road, checkpoint, status):
         math.log2(score["time"] + 1) * 100
     )  # very high weight at early stage, reduce afterward
 
-    score["total"] = (distance_score + time_score) * checkpoint_score
+    score["total"] = math.ceil(distance_score + time_score) * checkpoint_score
 
     return score
