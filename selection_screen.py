@@ -38,11 +38,6 @@ def select_car():
         True,
         (255, 255, 255),
     )
-    # CarModel1: Balanced and beginner-friendly.
-
-    # CarModel2: High top speed and fast acceleration.
-
-    # CarModel3: Large gas capacity and quick start.
 
     # Load images
     display["car1_image"] = pygame.transform.scale(

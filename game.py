@@ -17,7 +17,6 @@ while True:
     if GAME_MODE == "start":
         # welcome screen
         welcome_screen.welcome()
->>>>>>> dfa224f4fe0758aab43ae571f22399ddff17f0b8
 
         # start screen set up
         car = selection_screen.select_car()
@@ -59,7 +58,9 @@ while True:
             else:
                 controller.basic_event()
                 view.draw_paused_overlay()
+                GAME_MODE = status.check_home()
                 pygame.display.update()
                 clock.tick(60)
+                sounds.pause_sound()
     else:
         break

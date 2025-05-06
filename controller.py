@@ -52,7 +52,7 @@ class Controller:
                     ):
                         self._status.toggle_pause()
                     if (
-                        text == "Back to Home Screen"
+                        text == "Return Home"
                         and self._status.paused
                         and self._status.is_powerup is False
                         and button.collidepoint(event.pos)

@@ -182,11 +182,13 @@ class StatusTracker:
             per checkpoint
         time_left: integer of the milliseconds the player has left to
              get past a checkpoint
+        back_home: boolean of if the user chooses to end game and return to home screen
     """
 
     def __init__(self):
         self.paused = False
         self.is_powerup = False
+        self._back_home = False
         self._start_time = py.time.get_ticks()
         self._countdown_time_ms = 15 * 1000
         self._time_left = None
@@ -203,9 +205,19 @@ class StatusTracker:
 
     def back_to_home(self):
         """
-        goes back to start screen
+        changes back home to true
         """
-        welcome_screen.welcome()
+        self._back_home = True
+
+    def check_home(self):
+        """
+        checks if the user has pressed back to home button.
+        returns
+            string "start" if true, and string "drive" if false.
+        """
+        if self._back_home:
+            return "start"
+        return "drive"
 
     def update_time_left(self):
         """update time left"""

@@ -340,7 +340,7 @@ class View:
         button_height = 50
         button_spacing = 50
 
-        button_texts = ["Resume", "Back to Home Screen"]
+        button_texts = ["Resume", "Return Home"]
 
         start_y = overlay_y + 175
 
