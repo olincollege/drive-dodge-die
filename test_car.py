@@ -1,9 +1,14 @@
+"""Test suite for CarModel1 behavior."""
+
 import pytest
 from car import CarModel1
+
+# pylint: disable=redefined-outer-name, protected-access
 
 
 @pytest.fixture
 def car():
+    """Returns a CarModel1 instance."""
     return CarModel1()
 
 
@@ -22,17 +27,14 @@ def test_right_bound(car):
 
 
 def test_idle(car):
-    """
-    After speeding up, idling should reduce speed but not below min_speed,
-    and gas should increase up to max_gas.
-    """
+    """Idle should reduce speed and increase gas, within limits."""
     for _ in range(10):
         car.speed_up()
     top_speed = car.speed
     initial_gas = car.gas_amt
     for _ in range(10):
         car.idle()
-    assert car.speed >= car._min_speed
+    assert car.speed >= car._min_speed  # pylint: disable=protected-access
     assert car.speed < top_speed
     assert car.gas_amt > initial_gas or car.gas_amt == car.max_gas
 
@@ -47,7 +49,7 @@ def test_speed_up(car):
 
 
 def test_speed_up_no_gas(car):
-    """If gas runs out, speed_up should not increase speed and may decrease it."""
+    """If gas runs out, speed_up should not increase speed."""
     while car.gas_amt > 0:
         car.speed_up()
     prev_speed = car.speed
@@ -56,51 +58,50 @@ def test_speed_up_no_gas(car):
 
 
 def test_brake(car):
-    """
-    Brake should lower speed but not below min_speed,
-    and gas should refill up to max_gas.
-    """
+    """Brake lowers speed (not below min) and refills gas (up to max)."""
     for _ in range(10):
         car.speed_up()
     prev_speed = car.speed
     prev_gas = car.gas_amt
     car.brake()
-    assert car.speed < prev_speed or car.speed == car._min_speed
+    assert (
+        car.speed < prev_speed or car.speed == car._min_speed
+    )  # pylint: disable=protected-access
     assert car.gas_amt > prev_gas or car.gas_amt == car.max_gas
 
 
 def test_inc_max_speed(car):
-    """Power-up that increases max speed should raise max_speed value."""
+    """Power-up increases max speed."""
     prev_max = car.max_speed
     car.increase_max_speed()
     assert car.max_speed > prev_max
 
 
 def test_inc_max_gas(car):
-    """Power-up that increases max gas should raise max_gas value."""
+    """Power-up increases max gas."""
     prev_max = car.max_gas
     car.increase_max_gas()
     assert car.max_gas > prev_max
 
 
 def test_inc_acceleration(car):
-    """Increase acceleration power-up should raise _acceleration value."""
-    prev_acc = car._acceleration
+    """Power-up increases acceleration."""
+    prev_acc = car._acceleration  # pylint: disable=protected-access
     car.increase_acceleration()
-    assert car._acceleration > prev_acc
+    assert car._acceleration > prev_acc  # pylint: disable=protected-access
 
 
 def test_inc_gas_refresh(car):
-    """Increase gas refresh power-up should raise _gas_refresh value."""
-    prev_refresh = car._gas_refresh
+    """Power-up increases gas refresh rate."""
+    prev_refresh = car._gas_refresh  # pylint: disable=protected-access
     car.increase_gas_refresh()
-    assert car._gas_refresh > prev_refresh
+    assert car._gas_refresh > prev_refresh  # pylint: disable=protected-access
 
 
 def test_gas_refill(car):
-    """Refilling gas should increase the current gas amount."""
+    """Refilling gas increases current gas amount."""
     for _ in range(10):
-        car.speed_up()  # use some gas
+        car.speed_up()
     prev_gas = car.gas_amt
     car.gas_refill()
     assert car.gas_amt > prev_gas

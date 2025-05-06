@@ -87,7 +87,7 @@ class Car:  # pylint: disable=R0902
         """Slowly reduces the speed and
         refreshes gas when the acceleration is not pressed"""
         if self._speed > self._min_speed:
-            self._speed -= self._idle_speed
+            self._speed = max(self._speed - self._idle_speed, self._min_speed)
         if self._gas_amt < self._max_gas:
             self._gas_amt += self._gas_refresh
 
