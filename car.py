@@ -4,7 +4,7 @@ sets up the car element of the game
 """
 
 
-class Car:
+class Car:  # pylint: disable=R0902
     """
     A class that contains all the attributes of the car
 
@@ -43,7 +43,7 @@ class Car:
         brake,
         gas_refresh,
         car_image_path,
-    ):
+    ):  # pylint: disable=R0913
         """
         sprite (private)
         speed_cap (private)

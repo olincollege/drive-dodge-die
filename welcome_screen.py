@@ -140,33 +140,44 @@ def info_text():
 
     # Text content
     lines = {}
-    lines[1] = big_font.render("How to Play:", True, (255, 255, 255))
+    lines[1] = big_font.render("How to Play", True, (255, 255, 255))
     lines[2] = small_font.render(
-        "Avoid obstacles, survive, and race to victory!", True, (255, 255, 255)
+        "Dodge the obstacles, survive, and race to victory!",
+        True,
+        (255, 255, 255),
     )
     lines[3] = small_font.render(
+        "Accelerate while you have gas in the tank, drift to refill",
+        True,
+        (255, 255, 255),
+    )
+    lines[4] = small_font.render("", True, (255, 255, 255))
+    lines[5] = small_font.render(
         "Press the _up_ arrow key or _w_ to accelerate", True, (255, 255, 255)
     )
-    lines[4] = small_font.render(
+    lines[6] = small_font.render(
         "Press the _down_ arrow key or _s_ to decelerate", True, (255, 255, 255)
     )
-    lines[5] = small_font.render(
+    lines[7] = small_font.render(
         "Press the _left_ arrow key or _a_ to move left", True, (255, 255, 255)
     )
-    lines[6] = small_font.render(
+    lines[8] = small_font.render(
         "Press the _right_ arrow key or _d_ to move left", True, (255, 255, 255)
     )
-    lines[7] = small_font.render(
+    lines[9] = small_font.render(
         "_Click_ on power-up choices to choose them", True, (255, 255, 255)
     )
-    lines[8] = small_font.render("Press ESC to close", True, (255, 255, 255))
+    lines[10] = small_font.render(
+        "Press C to clear scores", True, (255, 255, 255)
+    )
+    lines[11] = small_font.render("Press ESC to close", True, (255, 255, 255))
 
     running = True
     while running:
         popup_screen.fill((50, 50, 50))
 
-        y_coord = [50, 150, 180, 210, 240, 270, 300, 380]
-        for i in range(8):
+        y_coord = [50, 150, 180, 210, 240, 270, 300, 330, 360, 400, 430]
+        for i in range(11):
             popup_screen.blit(
                 lines[i + 1],
                 (popup_width // 2 - lines[i + 1].get_width() // 2, y_coord[i]),

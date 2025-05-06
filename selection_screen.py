@@ -4,7 +4,7 @@ import pygame
 from car import CarModel1, CarModel2, CarModel3
 
 
-def select_car():
+def select_car():  # pylint: disable=R0912,R0915,R1710
     """function that sets up the car selection page"""
     pygame.init()
     screen = pygame.display.set_mode((1280, 950))
