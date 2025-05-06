@@ -25,7 +25,7 @@ You will also get extra time automatically at checkpoints. However, the distance
 
 ## Game Controls
 Press the _up_ arrow key or _w_ to accelerate  
-Press the _down_ arrow key or _s_ to deccelerate  
+Press the _down_ arrow key or _s_ to decelerate  
 Press the _left_ arrow key or _a_ to move left  
 Press the _right_ arrow key or _d_ to move left  
 _Click_ on power-up choices to choose them
