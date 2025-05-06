@@ -139,27 +139,38 @@ def info_text():
     small_font = pygame.font.SysFont("Times New Roman", 20)
 
     # Text content
-    info_content = big_font.render(
-        "Welcome to Drive-Dodge-Die! Here are the rules", True, (255, 255, 255)
-    )
-    description = small_font.render(
+    lines = {}
+    lines[1] = big_font.render("How to Play:", True, (255, 255, 255))
+    lines[2] = small_font.render(
         "Avoid obstacles, survive, and race to victory!", True, (255, 255, 255)
     )
-    close_text = small_font.render("Press ESC to close", True, (255, 255, 255))
+    lines[3] = small_font.render(
+        "Press the _up_ arrow key or _w_ to accelerate", True, (255, 255, 255)
+    )
+    lines[4] = small_font.render(
+        "Press the _down_ arrow key or _s_ to decelerate", True, (255, 255, 255)
+    )
+    lines[5] = small_font.render(
+        "Press the _left_ arrow key or _a_ to move left", True, (255, 255, 255)
+    )
+    lines[6] = small_font.render(
+        "Press the _right_ arrow key or _d_ to move left", True, (255, 255, 255)
+    )
+    lines[7] = small_font.render(
+        "_Click_ on power-up choices to choose them", True, (255, 255, 255)
+    )
+    lines[8] = small_font.render("Press ESC to close", True, (255, 255, 255))
 
     running = True
     while running:
         popup_screen.fill((50, 50, 50))
 
-        popup_screen.blit(
-            info_content, (popup_width // 2 - info_content.get_width() // 2, 50)
-        )
-        popup_screen.blit(
-            description, (popup_width // 2 - description.get_width() // 2, 150)
-        )
-        popup_screen.blit(
-            close_text, (popup_width // 2 - close_text.get_width() // 2, 300)
-        )
+        y_coord = [50, 150, 180, 210, 240, 270, 300, 380]
+        for i in range(8):
+            popup_screen.blit(
+                lines[i + 1],
+                (popup_width // 2 - lines[i + 1].get_width() // 2, y_coord[i]),
+            )
 
         pygame.display.update()
 

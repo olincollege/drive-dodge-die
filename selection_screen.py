@@ -12,13 +12,32 @@ def select_car():
     pygame.font.init()
     heading_font = pygame.font.SysFont("Times New Roman", 50)
     subtext_font = pygame.font.SysFont("Times New Roman", 20)
+    description_font = pygame.font.SysFont("Times New Roman", 14)
 
     # Text content
+    display = {}
     heading_text = heading_font.render("Select Your Car", True, (255, 255, 255))
-    car1_subtext = subtext_font.render("Car Model 1", True, (255, 255, 255))
-    car2_subtext = subtext_font.render("Car Model 2", True, (255, 255, 255))
-    car3_subtext = subtext_font.render("Car Model 3", True, (255, 255, 255))
+    display["car1_subtext"] = subtext_font.render(
+        "Car Model 1", True, (255, 255, 255)
+    )
+    display["car2_subtext"] = subtext_font.render(
+        "Car Model 2", True, (255, 255, 255)
+    )
+    display["car3_subtext"] = subtext_font.render(
+        "Car Model 3", True, (255, 255, 255)
+    )
 
+    display["car1_description"] = description_font.render(
+        "Balanced and beginner-friendly.", True, (255, 255, 255)
+    )
+    display["car2_description"] = description_font.render(
+        "High top speed and fast acceleration.", True, (255, 255, 255)
+    )
+    display["car3_description"] = description_font.render(
+        "Quick start and large gas capacity.",
+        True,
+        (255, 255, 255),
+    )
     # CarModel1: Balanced and beginner-friendly.
 
     # CarModel2: High top speed and fast acceleration.
@@ -26,25 +45,25 @@ def select_car():
     # CarModel3: Large gas capacity and quick start.
 
     # Load images
-    car1_image = pygame.transform.scale(
+    display["car1_image"] = pygame.transform.scale(
         pygame.image.load("media/images/cars/car.png").convert_alpha(),
         (200, 300),
     )
 
-    car2_image = pygame.transform.scale(
+    display["car2_image"] = pygame.transform.scale(
         pygame.image.load("media/images/cars/car2.png").convert_alpha(),
         (200, 300),
     )
 
-    car3_image = pygame.transform.scale(
+    display["car3_image"] = pygame.transform.scale(
         pygame.image.load("media/images/cars/car3.png").convert_alpha(),
         (200, 300),
     )
 
     # Define car positions
-    car1_rect = car1_image.get_rect(center=(300, 400))
-    car2_rect = car2_image.get_rect(center=(600, 400))
-    car3_rect = car3_image.get_rect(center=(900, 400))
+    display["car1_rect"] = display["car1_image"].get_rect(center=(300, 400))
+    display["car2_rect"] = display["car2_image"].get_rect(center=(600, 400))
+    display["car3_rect"] = display["car3_image"].get_rect(center=(900, 400))
 
     selected_car = None
     running = True
@@ -57,32 +76,24 @@ def select_car():
         )
 
         # Display car images and subtexts
-        screen.blit(car1_image, car1_rect)
-        screen.blit(
-            car1_subtext,
-            (
-                car1_rect.centerx - car1_subtext.get_width() // 2,
-                car1_rect.bottom + 30,
-            ),
-        )
-
-        screen.blit(car2_image, car2_rect)
-        screen.blit(
-            car2_subtext,
-            (
-                car2_rect.centerx - car2_subtext.get_width() // 2,
-                car2_rect.bottom + 30,
-            ),
-        )
-
-        screen.blit(car3_image, car3_rect)
-        screen.blit(
-            car3_subtext,
-            (
-                car3_rect.centerx - car3_subtext.get_width() // 2,
-                car3_rect.bottom + 30,
-            ),
-        )
+        for i in range(1, 4):
+            screen.blit(display[f"car{i}_image"], display[f"car{i}_rect"])
+            screen.blit(
+                display[f"car{i}_subtext"],
+                (
+                    display[f"car{i}_rect"].centerx
+                    - display[f"car{i}_subtext"].get_width() // 2,
+                    display[f"car{i}_rect"].bottom + 30,
+                ),
+            )
+            screen.blit(
+                display[f"car{i}_description"],
+                (
+                    display[f"car{i}_rect"].centerx
+                    - display[f"car{i}_description"].get_width() // 2,
+                    display[f"car{i}_rect"].bottom + 60,
+                ),
+            )
 
         pygame.display.update()
 
@@ -91,13 +102,13 @@ def select_car():
                 running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if car1_rect.collidepoint(event.pos):
+                if display["car1_rect"].collidepoint(event.pos):
                     selected_car = "CarModel1"
                     running = False
-                elif car2_rect.collidepoint(event.pos):
+                elif display["car2_rect"].collidepoint(event.pos):
                     selected_car = "CarModel2"
                     running = False
-                elif car3_rect.collidepoint(event.pos):
+                elif display["car3_rect"].collidepoint(event.pos):
                     selected_car = "CarModel3"
                     running = False
 
