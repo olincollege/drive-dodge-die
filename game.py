@@ -49,6 +49,7 @@ while True:
                 GAME_MODE = end_screen.draw_end(
                     road, check_point, status, "collision"
                 )
+                sounds.collision_sound()
             if status.check_time_up():
                 GAME_MODE = end_screen.draw_end(
                     road, check_point, status, "time"

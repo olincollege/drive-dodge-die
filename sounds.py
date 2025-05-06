@@ -20,3 +20,10 @@ def unpause_sound():
 def stop_sound():
     """Stops sound"""
     pygame.mixer.music.stop()
+
+def collision_sound():
+    """Collision sound"""
+    pygame.mixer.music.stop()
+    pygame.mixer.init()
+    pygame.mixer.music.load('media/crash_sound.mp3')
+    pygame.mixer.music.set_volume(0.5)
