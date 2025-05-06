@@ -113,12 +113,12 @@ class Car:
     # Power ups
     def increase_max_speed(self):
         """Increases the maximum speed the car can attain"""
-        if self._max_speed <= 12:
-            self._max_speed += 2
-        elif self._max_speed <= 20:
-            self._max_speed += 3
-        else:
+        if self._max_speed <= 30:
             self._max_speed += 4
+        elif self._max_speed <= 40:
+            self._max_speed += 6
+        else:
+            self._max_speed += 8
 
     def increase_max_gas(self):
         """Increases the maximum gas tank capacity of the car"""
@@ -141,12 +141,12 @@ class Car:
     def increase_gas_refresh(self):
         """Boosts the gas refresh rate for faster refilling
         of gas when car is idle"""
-        if self._gas_refresh <= 6:
+        if self._gas_refresh <= 4:
+            self._gas_refresh += 0.6
+        elif self._gas_refresh <= 6:
             self._gas_refresh += 1
-        elif self._gas_refresh <= 10:
-            self._gas_refresh += 1.6
         else:
-            self._gas_refresh += 2
+            self._gas_refresh += 1.5
 
     def gas_refill(self):
         """Refills the gas tank"""
@@ -216,9 +216,9 @@ class CarModel1(Car):
             min_speed=6,
             acceleration=0.2,
             max_gas=800,
-            idle=0.2,
+            idle=0.5,
             brake=0.4,
-            gas_refresh=10,
+            gas_refresh=3,
             car_image_path="media/images/cars/car.png",
         )
 
@@ -234,14 +234,14 @@ class CarModel2(Car):
         from the Car class
         """
         super().__init__(
-            speed=6,
-            max_speed=36,
-            min_speed=6,
-            acceleration=0.24,
-            max_gas=900,
-            idle=0.2,
-            brake=0.4,
-            gas_refresh=6,
+            speed=8,
+            max_speed=42,
+            min_speed=8,
+            acceleration=0.26,
+            max_gas=600,
+            idle=0.6,
+            brake=0.5,
+            gas_refresh=4,
             car_image_path="media/images/cars/car2.png",
         )
 
@@ -258,12 +258,12 @@ class CarModel3(Car):
         """
         super().__init__(
             speed=16,
-            max_speed=26,
+            max_speed=24,
             min_speed=10,
-            acceleration=1.6,
+            acceleration=0.16,
             max_gas=1000,
-            idle=0.2,
+            idle=0.4,
             brake=0.3,
-            gas_refresh=10,
+            gas_refresh=2,
             car_image_path="media/images/cars/car3.png",
         )

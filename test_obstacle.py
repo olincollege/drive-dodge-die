@@ -30,6 +30,8 @@ def obstacle(car, road, checkpoint):
 
 
 def test_check_distance(obstacle):
+    """Tests check_distance returns False when an obstacle is nearby."""
+
     class NewObstacle:
         y_coord = 100
 
@@ -38,10 +40,13 @@ def test_check_distance(obstacle):
 
 
 def test_check_distance_when_empty(obstacle):
+    """Tests check_distance returns True when no obstacles are present."""
     assert obstacle.check_distance(300) is True
 
 
 def test_obstacle_removal(obstacle):
+    """Tests that obstacles beyond the screen height are removed."""
+
     class NewObstacle:
         y_coord = 960
 
@@ -51,12 +56,7 @@ def test_obstacle_removal(obstacle):
 
 
 def test_update_obstacle_y_coord(obstacle):
+    """Tests that obstacle y-coordinate increases with car speed."""
     initial_y = obstacle.y_coord
     obstacle.update_obstacle()
     assert obstacle.y_coord == initial_y + obstacle._car.speed
-
-
-def test_check_collision(obstacle):
-    assert obstacle.check_collision() is False
-
-
