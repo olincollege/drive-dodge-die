@@ -10,49 +10,56 @@ import end_screen
 import sounds
 import welcome_screen
 
-# welcome screen
-welcome_screen.welcome()
-
-# start screen set up
-car = selection_screen.select_car()
-
-# main screen setup
-pygame.init()
-clock = pygame.time.Clock()
-pygame.display.set_caption("Drive Dodge Die")
-sounds.play()
-road = Road()
-status = StatusTracker()
-check_point = CheckPoint(car, road, status)
-obstacle = Obstacle(car, road, check_point)
-all_obstacles = obstacle.all_obstacles
-view = View(car, all_obstacles, road, status, check_point)
-controller = Controller(status, view, car)
+game_mode = "start"
 
 # run the game
 while True:
-    if status.paused is False:
-        controller.basic_event()
-        obstacle.update_obstacles()
-        controller.game_event()
-        check_point.check_reach_checkpoint()
-        view.draw()
-        sounds.unpause_sound()
-        pygame.display.update()
-        clock.tick(30)
-        if obstacle.check_collision() or status.check_time_up():
-            end_screen.draw_end(road, check_point, status)
-            break
+    if game_mode == "start":
+        # welcome screen
+        welcome_screen.welcome()
 
-    else:
-        if status.is_powerup:
+        # start screen set up
+        car = selection_screen.select_car()
+
+        # main screen setup
+        pygame.init()
+        clock = pygame.time.Clock()
+        pygame.display.set_caption("Drive Dodge Die")
+        sounds.play()
+        road = Road()
+        status = StatusTracker()
+        check_point = CheckPoint(car, road, status)
+        obstacle = Obstacle(car, road, check_point)
+        all_obstacles = obstacle.all_obstacles
+        view = View(car, all_obstacles, road, status, check_point)
+        controller = Controller(status, view, car)
+        game_mode = "drive"
+
+    elif game_mode == "drive":
+        if status.paused is False:
             controller.basic_event()
-            view.draw_powerup_overlay()
-            sounds.pause_sound()
+            obstacle.update_obstacles()
+            controller.game_event()
+            check_point.check_reach_checkpoint()
+            view.draw()
+            sounds.unpause_sound()
             pygame.display.update()
-            clock.tick(60)
+            clock.tick(30)
+            if obstacle.check_collision() or status.check_time_up():
+                game_mode = end_screen.draw_end(road, check_point, status)
+                print(game_mode)
+
         else:
-            controller.basic_event()
-            view.draw_paused_overlay()
-            pygame.display.update()
-            clock.tick(60)
+            if status.is_powerup:
+                controller.basic_event()
+                view.draw_powerup_overlay()
+                sounds.pause_sound()
+                pygame.display.update()
+                clock.tick(60)
+            else:
+                controller.basic_event()
+                view.draw_paused_overlay()
+                pygame.display.update()
+                clock.tick(60)
+    else:
+        break

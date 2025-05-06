@@ -25,7 +25,7 @@ def draw_end(road, checkpoint, status):
     # initialize user input variables
     base_font = pygame.font.Font(None, 32)
     user_text = ""
-    input_rect = pygame.Rect(500, 360, 140, 32)
+    input_rect = pygame.Rect(500, 390, 140, 32)
     input_rect.centerx = screen.get_width() // 2 + 5
 
     color_active = (0, 0, 0)
@@ -53,12 +53,19 @@ def draw_end(road, checkpoint, status):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SLASH:
                     running = False
+                    return "quit"
                 if (
                     event.key == pygame.K_RETURN
                     or event.key == pygame.K_KP_ENTER
                 ):
                     if user_text != "":
                         save_score(user_text, score["total"])
+                        return "start"
+                    running = False
+                if event.key == pygame.K_TAB:
+                    if user_text != "":
+                        save_score(user_text, score["total"])
+                        return "quit"
                     running = False
                 if active is True:
                     if event.key == pygame.K_BACKSPACE:
@@ -124,7 +131,7 @@ def save_score(username, score):
     """saves the username and the score onto a csv"""
     all_scores = pd.read_csv("high_score.csv")
     new_row = pd.DataFrame({"Username": [username], "Score": [score]})
-    if len(all_scores["Username"]) == 0:
+    if len(all_scores["Username"]) != 0:
         all_scores = pd.concat([all_scores, new_row], ignore_index=True)
     else:
         all_scores = new_row
@@ -135,8 +142,8 @@ def save_score(username, score):
 
 def draw_text(screen, rendered):
     """draws all necessary text"""
-    y_pos = [200, 230, 280, 310, 330]
-    for i in range(5):
+    y_pos = [200, 230, 280, 310, 330, 350]
+    for i in range(6):
         screen.blit(
             rendered[i + 1],
             (
@@ -157,7 +164,12 @@ def get_text(score):
         f" through a total of {score['checkpoints']} checkpoints!"
     )
     line[5] = (
-        "To save your score, input your name in the box below and press ENTER."
+        "To save your score and start over, input your name in the box below"
+        " and press ENTER."
+    )
+    line[6] = (
+        "To save your score and quit, input your name in teh box below and"
+        " press TAB."
     )
     return line
 
@@ -165,7 +177,7 @@ def get_text(score):
 def render_lines(lines, subtext_font, heading_font):
     """returns a dictionary of the rendered 5 lines of text"""
     rendered = {}
-    for i in [1, 3, 4, 5]:
+    for i in [1, 3, 4, 5, 6]:
         rendered[i] = subtext_font.render(lines[i], True, (255, 255, 255))
     rendered[2] = heading_font.render(lines[2], True, (255, 255, 255))
     return rendered
