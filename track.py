@@ -100,9 +100,6 @@ class CheckPoint(Road):
 
     def update_coords(self):
         """updates y coordinate of the checkpoint"""
-        print(f"tracked distance: {self._tracked_distance}")
-        print(f"road length: {self._length}")
-        print(f"distance traveled: {self._road.distance_traveled}")
         speed = self._car.speed
         if self._y_coord < 960 and self._y_coord >= 0:
             self._y_coord += speed
@@ -128,7 +125,6 @@ class CheckPoint(Road):
             if not self.is_colliding_checkpoint:
                 self.trigger_checkpoint()
                 self.is_colliding_checkpoint = True
-                print("reached checkpoint")
         else:
             self.is_colliding_checkpoint = False
 
@@ -146,8 +142,6 @@ class CheckPoint(Road):
         self._status.add_time(self._checkpoints_reached)
         self._distance_traveled = self._tracked_distance
         self._tracked_distance = self._length
-
-        print(f"distance traveled: imm: {self._distance_traveled}")
 
     @property
     def checkpoints_reached(self):

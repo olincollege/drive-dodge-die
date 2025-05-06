@@ -10,25 +10,11 @@ import end_screen
 import sounds
 import welcome_screen
 
-game_mode = "start"
+GAME_MODE = "start"
 
 # run the game
 while True:
-<<<<<<< HEAD
-    if status.paused is False:
-        controller.basic_event()
-        obstacle.update_obstacles()
-        controller.game_event()
-        check_point.check_reach_checkpoint()
-        view.draw()
-        sounds.unpause_sound()
-        pygame.display.update()
-        clock.tick(30)
-        # if obstacle.check_collision() or status.check_time_up():
-        #     end_screen.draw_end(road, check_point, status)
-        #     break
-=======
-    if game_mode == "start":
+    if GAME_MODE == "start":
         # welcome screen
         welcome_screen.welcome()
 >>>>>>> dfa224f4fe0758aab43ae571f22399ddff17f0b8
@@ -48,9 +34,9 @@ while True:
         all_obstacles = obstacle.all_obstacles
         view = View(car, all_obstacles, road, status, check_point)
         controller = Controller(status, view, car)
-        game_mode = "drive"
+        GAME_MODE = "drive"
 
-    elif game_mode == "drive":
+    elif GAME_MODE == "drive":
         if status.paused is False:
             controller.basic_event()
             obstacle.update_obstacles()
@@ -61,8 +47,7 @@ while True:
             pygame.display.update()
             clock.tick(30)
             if obstacle.check_collision() or status.check_time_up():
-                game_mode = end_screen.draw_end(road, check_point, status)
-                print(game_mode)
+                GAME_MODE = end_screen.draw_end(road, check_point, status)
 
         else:
             if status.is_powerup:
