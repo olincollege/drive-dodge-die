@@ -85,7 +85,7 @@ class Obstacle:
         """checks the distance of the closest obstacle.
         returns true if there can be another obstacle, false if there can't"""
         min_y = 950
-        for item in self._all_obstacles: #pylint: disable=C0206
+        for item in self._all_obstacles:  # pylint: disable=C0206
             for obstacle in self._all_obstacles[item]:
                 min_y = min(min_y, obstacle.y_coord)
         if min_y > distance:
