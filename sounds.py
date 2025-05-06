@@ -1,3 +1,5 @@
+"""Contains car racing sounds"""
+
 import pygame
 
 def play():

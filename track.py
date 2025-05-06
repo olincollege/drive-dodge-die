@@ -3,23 +3,27 @@ Creates two classes which are part of the track:
 Road and StatusTracker.
 """
 
-import pygame as py
 import math
+import pygame as py
 import welcome_screen
 
 
 class Road:
     """
-    our road is one really long road. It is meant
-    to scroll as the car(what the user is controlling)
-    moves forward.
+    A class to create and control a scrolling road.
+
+    Private Attributes:
+        width: int of the width of the road, which is also the width
+            of the screen
+        height: int of the height of the road, which is also the width
+            of the screen
+        length: int of the total length of the road (this increases as
+            you pass checkpoints)
+        image: pygame image of the road
+        distance_traveled: how far the car has traveled
     """
 
     def __init__(self):
-        """
-        initializes the road
-        """
-        self._positions = 20
         self._width = 1280
         self._height = 950
         self._length = 5000
@@ -27,7 +31,12 @@ class Road:
         self._distance_traveled = 0
 
     def update_travel_distance(self, new_distance):
-        """updates the distance traveled of the car"""
+        """
+        updates the distance traveled of the car
+
+        Args:
+            new_distance: an integer of the new distance
+        """
         self._distance_traveled = new_distance
 
     @property
@@ -37,23 +46,17 @@ class Road:
 
     @property
     def length(self):
-        """
-        returns length
-        """
+        """returns length"""
         return self._length
 
     @property
     def height(self):
-        """
-        returns height
-        """
+        """returns height"""
         return self._height
 
     @property
     def width(self):
-        """
-        returns width
-        """
+        """returns width"""
         return self._width
 
     @property
@@ -63,6 +66,24 @@ class Road:
 
 
 class CheckPoint(Road):
+    """
+    A subclass of Road that creates and tracks the checkpoints
+
+    Private Attributes:
+        car: car object
+        x_coord: int of x coordinate of the checkpoint
+        y_coord: int of y coordinate of the checkpoint
+        width: int of the width of the checkpoint
+        height: int of the height of the checkpoint
+        road: road object
+        status: status tracker object
+        tracked_distance: int of the sum of all previous checkpoint lengths
+        checkpoints_reached: int of the number of checkpoints reached
+        is_colliding_checkpoint: boolean of if the car and the checkpoint
+            are touching
+        checkpoint_length: int of the length of the checkpoint
+    """
+
     def __init__(self, car, road, status):
         super().__init__()
         self._car = car
@@ -158,7 +179,15 @@ class StatusTracker:
     """
     tracks the status of various things
 
-    self.paused: boolean that tracks whether the game is paused or not
+    Public Attributes:
+        self.paused: boolean that tracks whether the game is paused or not
+        is_powerup: boolean of if the power up screen is showing
+    Private Attributes:
+        start_time: int of ticks at the start time
+        countown_time_ms: integer of the total milliseconds a player has
+            per checkpoint
+        time_left: integer of the milliseconds the player has left to
+             get past a checkpoint
     """
 
     def __init__(self):
@@ -168,16 +197,6 @@ class StatusTracker:
         self._countdown_time_ms = 15 * 1000
         self._time_left = None
 
-    @property
-    def time_left(self):
-        """returns time left"""
-        return self._time_left
-
-    @property
-    def start_time(self):
-        """returns start time"""
-        return self._start_time
-
     def toggle_pause(self):
         """
         toggles between paused and unpaused state
@@ -185,6 +204,7 @@ class StatusTracker:
         self.paused = not self.paused
 
     def toggle_powerup(self):
+        """toggles between the power up screen and the game screen"""
         self.is_powerup = not self.is_powerup
 
     def back_to_home(self):
@@ -201,6 +221,7 @@ class StatusTracker:
         return self._time_left
 
     def add_time(self, checkpoint_num):
+        """adds time to the countdown clock"""
         self._countdown_time_ms = self._countdown_time_ms + (
             5 + int(5 * checkpoint_num) * 1000
         )
@@ -209,3 +230,13 @@ class StatusTracker:
         """check if time is up"""
         if self._time_left == 0:
             return True
+
+    @property
+    def time_left(self):
+        """returns time left"""
+        return self._time_left
+
+    @property
+    def start_time(self):
+        """returns start time"""
+        return self._start_time

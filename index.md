@@ -30,5 +30,10 @@ Press the _left_ arrow key or _a_ to move left
 Press the _right_ arrow key or _d_ to move left  
 _Click_ on power-up choices to choose them
 
+## Play the Game!
+To play the game, go to our repo: https://github.com/olincollege/drive-dodge-die
+and download as a zip file or clone the repository. Then install the requirements and you are ready to play!
+For more specific instructions, read the README in our repository.
+
 ## Contributors
 Antara Mazumdar, Ellie Kung, Yunzhu Chen

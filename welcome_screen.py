@@ -23,14 +23,20 @@ def welcome():
     play = pygame.image.load(
         "media/images/buttons/play-button.png"
     ).convert_alpha()
-    info = pygame.image.load("media/images/buttons/info.png").convert_alpha()
-    info = pygame.transform.scale(info, (150, 150))
-    high_score = pygame.image.load(
-        "media/images/buttons/high_score.png"
-    ).convert_alpha()
-    high_score = pygame.transform.scale(high_score, (150, 150))
-    flag_left = pygame.image.load("media/images/flag_left.png").convert_alpha()
-    flag_left = pygame.transform.scale(flag_left, (300, 300))
+    info = pygame.transform.scale(
+        pygame.image.load("media/images/buttons/info.png").convert_alpha(),
+        (150, 150),
+    )
+    high_score = pygame.transform.scale(
+        pygame.image.load(
+            "media/images/buttons/high_score.png"
+        ).convert_alpha(),
+        (150, 150),
+    )
+    flag_left = pygame.transform.scale(
+        pygame.image.load("media/images/flag_left.png").convert_alpha(),
+        (300, 300),
+    )
     flag_right = pygame.transform.flip(flag_left, True, False)
 
     # Define button positions
@@ -50,6 +56,7 @@ def welcome():
 
     running = True
     while running:
+        pygame.init()
         screen.fill((30, 30, 30))
 
         screen.blit(
@@ -57,8 +64,7 @@ def welcome():
             (screen.get_width() // 2 - heading_text.get_width() // 2, 150),
         )
 
-        # Display car images and subtexts
-
+        # Display images and subtexts
         screen.blit(play, play_rect)
         screen.blit(
             subtext,
@@ -101,11 +107,9 @@ def welcome():
                     return
                 if info_rect.collidepoint(event.pos):
                     running = True
-                    pygame.quit()
                     info_text()
                 if highscore_rect.collidepoint(event.pos):
                     running = True
-                    pygame.quit()
                     show_high_scores()
 
             if event.type == pygame.KEYDOWN:
@@ -162,14 +166,12 @@ def info_text():
 def show_high_scores():
     """Displays all the highscores"""
     pygame.init()
-    h = 700
-    w = 700
-    screen = pygame.display.set_mode((w, h))
+    height = 700
+    width = 700
+    screen = pygame.display.set_mode((width, height))
     # initiate variables
     heading_font = pygame.font.SysFont("Times New Roman", 40)
     header_text = heading_font.render("Leaderboard", True, (255, 255, 255))
-
-    heading_font = pygame.font.SysFont("Times New Roman", 30)
     subtext_font = pygame.font.SysFont("Times New Roman", 20)
 
     # initiate and write words inside of the high score box
@@ -182,29 +184,28 @@ def show_high_scores():
     running = True
     while running:
         screen.fill((50, 50, 50))
-        screen.blit(header_text, (w // 3, 50))
-        screen.blit(username_header, (w // 3 - 50, 150))
+        screen.blit(header_text, (width // 3, 50))
+        screen.blit(username_header, (width // 3 - 50, 150))
         screen.blit(
             score_header,
-            (2 * w // 3, 150),
+            (2 * width // 3, 150),
         )
-        all_scores = pd.read_csv("high_score.csv")
-        for i, (_, row) in enumerate(all_scores.iterrows()):
+        for i, (_, row) in enumerate(pd.read_csv("high_score.csv").iterrows()):
             username_text = subtext_font.render(
                 str(row["Username"]), True, (255, 255, 255)
             )
             score_text = subtext_font.render(
                 str(row["Score"]), True, (255, 255, 255)
             )
-            screen.blit(username_text, (w // 3 - 50, 150 + 50 + i * 25))
+            screen.blit(username_text, (width // 3 - 50, 150 + 50 + i * 25))
             screen.blit(
                 score_text,
                 (
-                    2 * w // 3,
+                    2 * width // 3,
                     150 + 50 + i * 25,
                 ),
             )
-        screen.blit(exit_message, (w // 3, h - 50))
+        screen.blit(exit_message, (width // 3, height - 50))
 
         pygame.display.update()
 
