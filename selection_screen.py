@@ -26,7 +26,6 @@ def select_car():
     # CarModel3: Quick start and strong acceleration, great for short bursts.
 
     # Load images
-<<<<<<< HEAD
     car1_image = pygame.transform.scale(
         pygame.image.load("media/images/cars/car.png").convert_alpha(),
         (200, 300),
@@ -41,16 +40,6 @@ def select_car():
         pygame.image.load("media/images/cars/car3.png").convert_alpha(),
         (200, 300),
     )
-=======
-    car1_image = pygame.image.load("media/images/cars/car.png").convert_alpha()
-    car1_image = pygame.transform.scale(car1_image, (200, 300))
-
-    car2_image = pygame.image.load("media/images/cars/car2.png").convert_alpha()
-    car2_image = pygame.transform.scale(car2_image, (200, 300))
-
-    car3_image = pygame.image.load("media/images/cars/car3.png").convert_alpha()
-    car3_image = pygame.transform.scale(car3_image, (200, 300))
->>>>>>> 4b3fc43faed4f06e7de116bc00a3511d09323af4
 
     # Define car positions
     car1_rect = car1_image.get_rect(center=(300, 400))
