@@ -240,7 +240,6 @@ class View:
         # Update scroll position
         self._scroll += self._car.speed
         self._road.update_travel_distance(self._scroll)
-        (self._road.distance_traveled)
 
     def draw_car(self):
         """

@@ -60,13 +60,13 @@ def draw_end(road, checkpoint, status):
                 ):
                     if user_text != "":
                         save_score(user_text, score["total"])
-                        return "start"
                     running = False
+                    return "start"
                 if event.key == pygame.K_TAB:
                     if user_text != "":
                         save_score(user_text, score["total"])
-                        return "quit"
                     running = False
+                    return "quit"
                 if active is True:
                     if event.key == pygame.K_BACKSPACE:
                         user_text = user_text[:-1]
@@ -168,7 +168,7 @@ def get_text(score):
         " and press ENTER."
     )
     line[6] = (
-        "To save your score and quit, input your name in teh box below and"
+        "To save your score and quit, input your name in the box below and"
         " press TAB."
     )
     return line
