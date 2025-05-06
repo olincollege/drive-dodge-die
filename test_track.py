@@ -28,11 +28,13 @@ def checkpoint(car, road, status):
 
 
 def test_road_distance_update(road):
+    """Test that road distance updates correctly."""
     road.update_travel_distance(1000)
     assert road.distance_traveled == 1000
 
 
 def test_toggle_pause(status):
+    """Test pause state toggles correctly."""
     status.toggle_pause()
     assert status.paused
     status.toggle_pause()
@@ -40,6 +42,7 @@ def test_toggle_pause(status):
 
 
 def test_toggle_powerup(status):
+    """Test powerup state toggles correctly."""
     status.toggle_powerup()
     assert status.is_powerup
     status.toggle_powerup()
@@ -47,12 +50,14 @@ def test_toggle_powerup(status):
 
 
 def test_add_time(status):
+    """Test time is added correctly to countdown."""
     initial = status._countdown_time_ms
     status.add_time(2)
     assert status._countdown_time_ms - initial == pytest.approx(10000, abs=10)
 
 
 def test_check_time_up(status):
+    """Test time-up check returns correct result."""
     status._time_left = 0
     assert status.check_time_up()
     status._time_left = 5
@@ -60,6 +65,7 @@ def test_check_time_up(status):
 
 
 def test_checkpoint_update_coords_moving(checkpoint):
+    """Test checkpoint moves with car speed."""
     checkpoint._y_coord = 100
     initial_y = 100
     checkpoint.update_coords()
@@ -69,6 +75,7 @@ def test_checkpoint_update_coords_moving(checkpoint):
 
 
 def test_checkpoint_update_coords_offscreen(checkpoint, road):
+    """Test checkpoint resets when offscreen and distance exceeded segment length."""
     checkpoint._road = road
     checkpoint._y_coord = -50
     checkpoint._tracked_distance = 5000

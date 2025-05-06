@@ -5,7 +5,6 @@ Road and StatusTracker.
 
 import math
 import pygame as py
-import welcome_screen
 
 
 class Road:

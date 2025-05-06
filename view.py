@@ -423,7 +423,6 @@ class View:  # pylint: disable=R0902
             words = text.split()
             lines = []
             current_line = words[0]
-
             for word in words[1:]:
                 test_line = current_line + " " + word
                 if self._big_font.size(test_line)[0] <= max_line_width:
@@ -458,8 +457,3 @@ class View:  # pylint: disable=R0902
         returns the dictionary of all choices on powerup overlay
         """
         return self._powerup_choice
-
-    # @property
-    # def start_time(self):
-    #     """returns start time"""
-    #     return self._start_time
