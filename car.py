@@ -207,7 +207,7 @@ class CarModel1(Car):
 
     def __init__(self):
         """
-        Initializes the first car, using the init method 
+        Initializes the first car, using the init method
         from the Car class
         """
         super().__init__(
@@ -230,7 +230,7 @@ class CarModel2(Car):
 
     def __init__(self):
         """
-        Initializes the second car, using the init method 
+        Initializes the second car, using the init method
         from the Car class
         """
         super().__init__(
@@ -253,7 +253,7 @@ class CarModel3(Car):
 
     def __init__(self):
         """
-        Initializes the third car, using the init method 
+        Initializes the third car, using the init method
         from the Car class
         """
         super().__init__(

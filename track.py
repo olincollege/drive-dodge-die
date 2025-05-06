@@ -230,6 +230,7 @@ class StatusTracker:
         """check if time is up"""
         if self._time_left == 0:
             return True
+        return False
 
     @property
     def time_left(self):

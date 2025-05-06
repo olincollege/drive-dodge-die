@@ -118,6 +118,14 @@ def welcome():
                     return
 
 
+def clear_score():
+    """clears the high score board"""
+    with open("high_score.csv", "w", encoding="utf-8") as file:
+        file.truncate()
+    headers = pd.DataFrame({"Username": [], "Score": []})
+    headers.to_csv("high_score.csv", index=False)
+
+
 def info_text():
     """
     Creates a pop-up window with game info
@@ -178,7 +186,7 @@ def show_high_scores():
     username_header = heading_font.render("Username: ", True, (255, 255, 255))
     score_header = heading_font.render("Score: ", True, (255, 255, 255))
     exit_message = subtext_font.render(
-        "Press ESC to exit", True, (255, 255, 255)
+        "Press ESC to exit, press C to clear scores", True, (255, 255, 255)
     )
 
     running = True
@@ -212,6 +220,9 @@ def show_high_scores():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                running = False
-                welcome()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                    welcome()
+                if event.key == pygame.K_c:
+                    clear_score()
