@@ -45,8 +45,14 @@ while True:
             sounds.unpause_sound()
             pygame.display.update()
             clock.tick(30)
-            if obstacle.check_collision() or status.check_time_up():
-                GAME_MODE = end_screen.draw_end(road, check_point, status)
+            if obstacle.check_collision():
+                GAME_MODE = end_screen.draw_end(
+                    road, check_point, status, "collision"
+                )
+            if status.check_time_up():
+                GAME_MODE = end_screen.draw_end(
+                    road, check_point, status, "time"
+                )
 
         else:
             if status.is_powerup:
