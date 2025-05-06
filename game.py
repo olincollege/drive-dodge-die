@@ -46,10 +46,10 @@ while True:
             pygame.display.update()
             clock.tick(30)
             if obstacle.check_collision():
+                sounds.collision_sound()
                 GAME_MODE = end_screen.draw_end(
                     road, check_point, status, "collision"
                 )
-                sounds.collision_sound()
             if status.check_time_up():
                 GAME_MODE = end_screen.draw_end(
                     road, check_point, status, "time"
