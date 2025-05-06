@@ -56,7 +56,6 @@ class Obstacle:
         """
         Calls all functions to make the obstacles
         """
-
         self.create_barriers()
         self.create_holes()
 
@@ -166,7 +165,9 @@ class Hole(Obstacle):
         self._y_coord = 0
         self._width = 150
         self._height = 50
-        self._image = py.image.load("media/images/obstacles/hole.png").convert_alpha()
+        self._image = py.image.load(
+            "media/images/obstacles/hole.png"
+        ).convert_alpha()
 
     @property
     def x_coord(self):

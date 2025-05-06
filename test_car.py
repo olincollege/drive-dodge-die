@@ -26,14 +26,14 @@ def test_idle(car):
     After speeding up, idling should reduce speed but not below min_speed,
     and gas should increase up to max_gas.
     """
-    initial_speed = car.speed
-    for _ in range(20):
+    for _ in range(10):
         car.speed_up()
+    top_speed = car.speed
     initial_gas = car.gas_amt
     for _ in range(10):
         car.idle()
     assert car.speed >= car._min_speed
-    assert car.speed < initial_speed or car.speed == car._min_speed
+    assert car.speed < top_speed
     assert car.gas_amt > initial_gas or car.gas_amt == car.max_gas
 
 
