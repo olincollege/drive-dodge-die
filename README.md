@@ -18,9 +18,9 @@ pip install -r requirements.txt
 ```
 
 ## Executing the game
-To run the program, simply run game.py in your terminal. Or press the run button in VS code.
+To run the program, simply run main.py in your terminal. Or press the run button in VS code.
 ``` python
-python3 game.py
+python3 main.py
 ```
 
 ## Game Controls
