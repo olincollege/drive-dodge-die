@@ -30,6 +30,8 @@ The minimap at the top shows length of the road till the next checkpoint and the
 Once you hit the checkpoint, you can choose from two power-ups that make your car stronger. There're five in total - play the game and explore it yourself!
 You will also get extra time automatically at checkpoints. However, the distance between checkpoints get longer and longer as the game goes, so drive fast!  
 
+Here's a more detailed overview of the game and the development process - ![video](https://youtu.be/ZiD3vPCqWbI)
+
 ## Game Controls
 The car is controlled on the track using keyboard inputs:  
 Press the _up_ arrow key or _w_ to accelerate  

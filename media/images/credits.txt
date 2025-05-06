@@ -3,5 +3,4 @@ credits for images:
 gas_bar.png - https://www.pinpng.com/picture/iJhxwxx_progress-bar-red-to-green-hd-png-download/
 pause.png - https://www.vexels.com/png-svg/preview/131706/pause-flat-button
 barrier.png - https://www.shutterstock.com/image-illustration/barrier-street-border-stop-road-signs-1314646040
-hold.png - https://www.istockphoto.com/illustrations/cartoon-hole
-
+hole.png - https://www.istockphoto.com/illustrations/cartoon-hole
