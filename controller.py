@@ -1,5 +1,6 @@
 """file for controller class in Model, View, Controller Architecture"""
 
+import sys
 import pygame
 
 
@@ -19,7 +20,7 @@ class Controller:
         self._view = view
         self._car = car
 
-    def basic_event(self):
+    def basic_event(self):  # pylint: disable=R0912
         """
         Maps out what to do in a basic event
         (events that have to do with buttons)
@@ -29,7 +30,7 @@ class Controller:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
+                sys.exit()
             if (
                 event.type == pygame.KEYDOWN
                 and event.key == pygame.K_ESCAPE

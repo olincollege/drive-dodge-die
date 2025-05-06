@@ -5,7 +5,7 @@ import random
 import pygame
 
 
-class View:
+class View:  # pylint: disable=R0902
     """
     class view - contains all functions related to the view of our game
 
@@ -33,7 +33,9 @@ class View:
         time_left: int representing the remaining time in milliseconds
     """
 
-    def __init__(self, car, all_obstacles, road, status, check_point):
+    def __init__(
+        self, car, all_obstacles, road, status, check_point
+    ):  # pylint: disable=R0913
         """
         Initializes the View object with the given game components
         and screen settings
@@ -313,7 +315,7 @@ class View:
         )
         self._screen.blit(line_img, check_point)
 
-    def draw_paused_overlay(self):
+    def draw_paused_overlay(self):  # pylint: disable=R0914
         """
         draws the overlay of when the game is paused
         """
@@ -358,7 +360,7 @@ class View:
             button_text_rect = button_text.get_rect(center=rect.center)
             self._screen.blit(button_text, button_text_rect)
 
-    def draw_powerup_overlay(self):
+    def draw_powerup_overlay(self):  # pylint: disable=R0914
         """
         Draws two powerup choices with associated images.
         """

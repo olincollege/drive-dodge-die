@@ -6,7 +6,7 @@ import pandas as pd
 import sounds
 
 
-def draw_end(road, checkpoint, status):
+def draw_end(road, checkpoint, status, why_die):
     """draws the end screen"""
     # initialize things
     pygame.init()
@@ -19,7 +19,7 @@ def draw_end(road, checkpoint, status):
 
     # text content
     score = calculate_score(road, checkpoint, status)
-    lines = get_text(score)
+    lines = get_text(score, why_die)
     rendered = render_lines(lines, subtext_font, heading_font)
 
     # initialize user input variables
@@ -153,10 +153,13 @@ def draw_text(screen, rendered):
         )
 
 
-def get_text(score):
+def get_text(score, why_die):
     """returns a dictionary of the 5 lines of text"""
     line = {}
-    line[1] = "Oh no! You died."
+    if why_die == "time":
+        line[1] = "Oh no! You ran out of time."
+    else:
+        line[1] = "Oh no! You died."
     line[2] = f"Total Score: {score["total"]}"
     line[3] = "Good job!"
     line[4] = (
@@ -201,6 +204,6 @@ def calculate_score(road, checkpoint, status):
         math.log2(score["time"] + 1) * 100
     )  # very high weight at early stage, reduce afterward
 
-    score["total"] = math.ceil(distance_score + time_score) * checkpoint_score
+    score["total"] = math.ceil((distance_score + time_score) * checkpoint_score)
 
     return score
